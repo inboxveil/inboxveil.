@@ -1,117 +1,101 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>InboxVeil - Free Disposable Email API</title>
+  <title>InboxVeil - Disposable Email</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{background:#05050F;color:white;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
-.container{max-width:1000px;margin:auto;padding:20px}
-    header{padding:20px 0}
-.logo{font-size:22px;font-weight:800;display:flex;gap:10px;align-items:center}
-.logo-box{background:linear-gradient(135deg,#8B5CF6,#EC4899);padding:10px 12px;border-radius:14px}
-    h1{text-align:center;font-size:32px;margin:30px 0 10px}
-.gradient{background:linear-gradient(90deg,#8B5CF6,#EC4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.subtitle{text-align:center;color:#A0A0C0;margin-bottom:30px}
-.box{background:rgba(15,15,30,0.8);border:1px solid rgba(139,92,246,0.4);border-radius:20px;padding:25px;margin:20px 0}
-.email-display{background:#0A0A1A;border:1px dashed #8B5CF6;padding:15px;border-radius:12px;font-family:monospace;display:flex;justify-content:space-between;margin-bottom:15px}
-.input-group{display:flex;gap:10px;margin-bottom:15px}
-.input{background:#0A0A1A;border:1px solid #8B5CF6;padding:14px;border-radius:12px;color:white;width:100%}
-.domain{background:#0A0A1A;border:1px solid #8B5CF6;padding:14px;border-radius:12px;color:#A78BFA;font-weight:bold}
-.btn{background:linear-gradient(90deg,#8B5CF6,#EC4899);border:none;padding:14px;border-radius:12px;color:white;font-weight:bold;cursor:pointer;width:100%;margin-top:10px}
-.inbox{max-height:400px;overflow-y:auto;margin-top:15px}
-.mail{background:#0A0A1A;padding:15px;border-radius:10px;margin-bottom:10px;border-left:3px solid #EC4899}
-.mail-body{background:#000;padding:12px;border-radius:8px;margin-top:10px;font-family:monospace;white-space:pre-wrap;word-break:break-all}
-.success{color:#4ADE80;text-align:center;padding:10px}
-.loading{color:#A78BFA;text-align:center;padding:10px}
+    body{background:#05050F;color:white;font-family:Segoe UI,sans-serif;padding:20px}
+    h1{text-align:center;background:linear-gradient(90deg,#8B5CF6,#EC4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px}
+   .box{background:rgba(15,15,30,0.8);border:1px solid #8B5CF6;border-radius:20px;padding:25px}
+   .row{display:flex;gap:10px;margin-bottom:15px}
+   .input{background:#0A0A1A;border:1px solid #8B5CF6;padding:14px;border-radius:12px;color:white;width:100%;font-size:16px}
+   .domain{background:#0A0A1A;border:1px solid #8B5CF6;padding:14px;border-radius:12px;color:#A78BFA;font-weight:bold}
+   .btn{background:linear-gradient(90deg,#8B5CF6,#EC4899);border:none;padding:14px;border-radius:12px;color:white;font-weight:bold;width:100%;margin:8px 0;cursor:pointer;font-size:16px}
+   .email{background:#0A0A1A;border:1px dashed #8B5CF6;padding:15px;border-radius:12px;display:flex;justify-content:space-between;margin:15px 0}
+   .mail{background:#0A0A1A;padding:15px;border-radius:10px;margin:10px 0;border-left:3px solid #EC4899}
+   .mail-body{background:#000;padding:12px;border-radius:8px;margin-top:10px;white-space:pre-wrap;word-break:break-all;font-size:13px}
+   .status{text-align:center;padding:10px;color:#4ADE80}
+   .loading{text-align:center;padding:10px;color:#A78BFA}
   </style>
 </head>
 <body>
-  <div class="container">
-    <header><div class="logo"><div class="logo-box">✉️</div> InboxVeil</div></header>
-
-    <h1>Free Disposable Email <span class="gradient">With Full Body</span></h1>
-    <p class="subtitle">Powered by Catchmail.io</p>
-
-    <div class="box">
-      <h3>>_ Your Email</h3>
-      <div class="input-group">
-        <input type="text" id="customName" class="input" placeholder="type name: facebook123" value="">
-        <div class="domain">@catchmail.io</div>
-      </div>
-      <button class="btn" onclick="generateEmail()">Generate Email</button>
-
-      <div class="email-display" style="margin-top:15px">
-        <span id="email">Your email go show here</span>
-        <span onclick="copyEmail()" style="color:#EC4899;cursor:pointer">Copy</span>
-      </div>
-
-      <button class="btn" id="refBtn" onclick="checkInbox()">Refresh Inbox 🔄</button>
-      <div id="status"></div>
-      <div id="inbox" class="inbox"><div style="text-align:center;color:#888;padding:20px">No emails yet</div></div>
+  <h1>InboxVeil</h1>
+  <div class="box">
+    <div class="row">
+      <input id="name" class="input" placeholder="type name: facebook123">
+      <div class="domain">@catchmail.io</div>
     </div>
+    <button class="btn" onclick="gen()">Generate Email</button>
+    <div class="email">
+      <span id="email">email go show here</span>
+      <span onclick="copy()" style="color:#EC4899;cursor:pointer">Copy</span>
+    </div>
+    <button class="btn" id="ref" onclick="check()">Refresh Inbox 🔄</button>
+    <div id="status"></div>
+    <div id="inbox"><div style="text-align:center;color:#888">No emails yet</div></div>
   </div>
 
 <script>
-let address = '';
+let addr = localStorage.getItem('iv_addr') || '';
+const PROXY = 'https://corsproxy.io/?'; // This bypass CORS
 const API = 'https://api.catchmail.io/api/v1';
-const CORS = 'https://corsproxy.io/?';
 
-window.onload = function(){
-  let saved = localStorage.getItem('inboxveil_address');
-  if(saved){
-    address = saved;
-    document.getElementById('email').innerText = address;
-    document.getElementById('customName').value = address.split('@')[0];
-    checkInbox();
-  }
+if(addr){
+  document.getElementById('email').innerText = addr;
+  document.getElementById('name').value = addr.split('@')[0];
+  check();
 }
 
-async function apiFetch(url){
-  let res = await fetch(CORS + encodeURIComponent(url));
+function gen(){
+  let n = document.getElementById('name').value.trim().toLowerCase().replace(/[^a-z0-9]/g,'');
+  if(!n){alert('Type a name first');return;}
+  addr = n + '@catchmail.io';
+  localStorage.setItem('iv_addr', addr);
+  document.getElementById('email').innerText = addr;
+  document.getElementById('status').innerHTML = '<div class="status">✓ Email ready!</div>';
+  check();
+}
+
+async function api(url){
+  // Use proxy to bypass CORS
+  let res = await fetch(PROXY + encodeURIComponent(url));
   return res.json();
 }
 
-function generateEmail(){
-  let name = document.getElementById('customName').value.trim();
-  if(name === ''){alert('Type a name first!');return;}
-  name = name.toLowerCase().replace(/[^a-z0-9]/g, '');
-  address = `${name}@catchmail.io`;
-  localStorage.setItem('inboxveil_address', address);
-  document.getElementById('email').innerText = address;
-  document.getElementById('status').innerHTML = '<div class="success">✓ Email ready. Use it now</div>';
-}
-
-async function checkInbox(){
-  if(!address){alert('Generate email first!');return;}
-  document.getElementById('refBtn').innerText = 'Refreshing...';
-  document.getElementById('status').innerHTML = '<div class="loading">Checking for new emails...</div>';
+async function check(){
+  if(!addr){alert('Generate email first');return;}
+  document.getElementById('ref').innerText = 'Refreshing...';
+  document.getElementById('status').innerHTML = '<div class="loading">Checking for emails...</div>';
   try{
-    let data = await apiFetch(`${API}/mailbox?address=${address}`);
-    let messages = data.messages || [];
-
-    if(messages.length === 0){
-      document.getElementById('inbox').innerHTML = '<div style="text-align:center;color:#888;padding:20px">No emails yet. Wait 10s then refresh again</div>';
+    let data = await api(`${API}/mailbox?address=${addr}`);
+    let msgs = data.messages || [];
+    if(msgs.length==0){
+      document.getElementById('inbox').innerHTML = '<div style="text-align:center;color:#888">No emails yet. Wait 15s and refresh</div>';
     }else{
       let html = '';
-      for(let m of messages){
-        let detail = await apiFetch(`${API}/message/${m.id}?mailbox=${address}`);
+      for(let m of msgs){
+        // FIXED: Use backticks ` not ' '
+        let detail = await api(`${API}/message/${m.id}?mailbox=${addr}`);
         html += `<div class="mail">
           <b>From:</b> ${detail.from}<br>
           <b>Subject:</b> ${detail.subject}<br>
-          <b>Time:</b> ${new Date(detail.date).toLocaleTimeString()}<br>
+          <b>Time:</b> ${new Date(detail.date).toLocaleString()}<br>
           <div class="mail-body">${detail.body.text || detail.body.html}</div>
         </div>`;
       }
       document.getElementById('inbox').innerHTML = html;
+      document.getElementById('status').innerHTML = '';
     }
   }catch(e){
-    document.getElementById('status').innerHTML = '<div style="color:red">Error: '+e.message+'</div>';
+    document.getElementById('status').innerHTML = '<div style="color:red">Error: '+e.message+'. Try refresh</div>';
   }
-  document.getElementById('refBtn').innerText = 'Refresh Inbox 🔄';
+  document.getElementById('ref').innerText = 'Refresh Inbox 🔄';
 }
 
-function copyEmail(){if(address)navigator.clipboard.writeText(address)}
+function copy(){
+  if(addr)navigator.clipboard.writeText(addr);
+}
 </script>
 </body>
 </html>
