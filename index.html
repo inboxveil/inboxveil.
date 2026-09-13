@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>InboxVeil - Free Disposable Email</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:#0B0B14;color:white;font-family:-apple-system,BlinkMacSystemFont,sans-serif;text-align:center}
+    header{padding:20px;display:flex;justify-content:space-between;align-items:center;max-width:1100px;margin:auto}
+    .logo{display:flex;align-items:center;gap:10px;font-size:24px;font-weight:800}
+    .logo-box{background:linear-gradient(135deg,#8B5CF6,#EC4899);padding:10px;border-radius:12px;font-size:20px}
+    .badge{background:#15152A;border:1px solid #2A2A4A;padding:10px 18px;border-radius:50px;display:inline-block;margin:50px 0 20px;font-size:13px}
+    h1{font-size:42px;line-height:1.2;font-weight:800}
+    .gradient{background:linear-gradient(90deg,#8B5CF6,#EC4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .subtitle{color:#A0A0C0;max-width:600px;margin:20px auto;font-size:17px}
+    .features{color:#8B5CF6;font-weight:600;margin:25px 0;font-size:15px}
+    .cta{background:linear-gradient(90deg,#8B5CF6,#EC4899);border:none;padding:15px 35px;border-radius:12px;color:white;font-size:16px;font-weight:bold;cursor:pointer;margin-top:20px;transition:0.3s}
+    .cta:hover{transform:scale(1.05)}
+    footer{margin-top:80px;color:#555;font-size:12px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo"><div class="logo-box">👁️</div> InboxVeil</div>
+    <div>☰</div>
+  </header>
+
+  <div class="badge">✨ 100% Free Forever • No Signup Required 🚀</div>
+  
+  <h1>Free Disposable<br>Email API <span class="gradient">With<br>Custom Domain<br>Support</span></h1>
+  
+  <p class="subtitle">Create temporary email addresses instantly for testing and privacy. Hide your real inbox.</p>
+  
+  <p class="features">REST API • Bring Your Own Domain • Auto-delete in up to 7 days</p>
+
+  <button class="cta" onclick="generateMail()">Generate Free Email</button>
+
+  <footer>© 2026 InboxVeil. Built for privacy.</footer>
+
+<script>
+function generateMail(){
+  let rand = Math.random().toString(36).slice(2,10);
+  let email = `user-${rand}@inboxveil.com`;
+  alert('Your Temp Email:\n\n' + email + '\n\nCopy am and use am anywhere!');
+}
+</script>
+</body>
+                        </html>
