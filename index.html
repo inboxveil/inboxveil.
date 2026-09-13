@@ -1,107 +1,139 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>InboxVeil - Free Disposable Email</title>
+  <title>InboxVeil - Free Disposable Email API</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     body{
       background:#05050F;
       color:white;
-      font-family:-apple-system,BlinkMacSystemFont,sans-serif;
-      text-align:center;
-      min-height:100vh;
-      background-image: 
-        radial-gradient(circle at 50% 10%, rgba(139,92,246,0.25) 0%, transparent 50%),
-        radial-gradient(circle at 80% 90%, rgba(236,72,153,0.15) 0%, transparent 50%);
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      background-image:
+        radial-gradient(circle at 50% 10%, rgba(139,92,246,0.25) 0%, transparent 50%);
     }
-    header{padding:20px 15px;display:flex;justify-content:space-between;align-items:center;max-width:1100px;margin:auto}
-    .logo{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:800}
-    .logo-box{background:linear-gradient(135deg,#8B5CF6,#EC4899);padding:10px 12px;border-radius:14px}
-    .toggle{background:rgba(20,20,40,0.6);border:1px solid rgba(139,92,246,0.3);padding:10px 12px;border-radius:12px;font-size:20px;cursor:pointer}
-    h1{font-size:32px;line-height:1.3;font-weight:800;margin:40px 0 15px}
-    .gradient{background:linear-gradient(90deg,#8B5CF6,#EC4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    .subtitle{color:#A0A0C0;max-width:600px;margin:0 auto 20px;font-size:16px;line-height:1.6}
-    .features{color:#A78BFA;font-weight:600;margin:20px 0 40px;font-size:14px}
-    
-    .mailbox-box{
+   .container{max-width:1000px;margin:auto;padding:20px}
+    header{padding:20px 0;display:flex;justify-content:space-between;align-items:center}
+   .logo{font-size:22px;font-weight:800;display:flex;gap:10px;align-items:center}
+   .logo-box{background:linear-gradient(135deg,#8B5CF6,#EC4899);padding:10px 12px;border-radius:14px}
+   .toggle{padding:10px;border-radius:12px;background:rgba(20,20,40,0.6);cursor:pointer}
+
+    h1{text-align:center;font-size:36px;margin:40px 0 15px;font-weight:800}
+   .gradient{background:linear-gradient(90deg,#8B5CF6,#EC4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+   .subtitle{text-align:center;color:#A0A0C0;margin-bottom:40px}
+
+   .box{
       background:rgba(15,15,30,0.8);
       border:1px solid rgba(139,92,246,0.4);
       border-radius:20px;
       padding:25px;
-      max-width:520px;
-      margin:0 auto;
-      backdrop-filter:blur(10px);
-      text-align:left
+      margin:20px 0;
+      backdrop-filter:blur(10px)
     }
-    .label{color:#A78BFA;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-    .input-group{display:flex;gap:10px;margin-bottom:15px}
-    input, select{
+   .email-display{
       background:#0A0A1A;
-      border:1px solid rgba(139,92,246,0.4);
-      color:white;
-      padding:14px;
+      border:1px dashed #8B5CF6;
+      padding:15px;
       border-radius:12px;
-      font-size:15px;
-      outline:none;
-      width:100%
+      font-family:monospace;
+      display:flex;
+      justify-content:space-between;
+      margin-bottom:15px
     }
-    input:focus{border-color:#EC4899}
-    .at{padding:14px 5px;font-size:18px;color:#888}
-    .cta{
+   .btn{
       background:linear-gradient(90deg,#8B5CF6,#EC4899);
       border:none;
-      padding:16px;
-      border-radius:14px;
+      padding:14px;
+      border-radius:12px;
       color:white;
-      font-size:16px;
       font-weight:bold;
       cursor:pointer;
       width:100%;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      gap:8px;
-      transition:0.3s
+      margin-top:10px
     }
-    .cta:hover{transform:scale(1.02);box-shadow:0 0 30px rgba(139,92,246,0.5)}
-    footer{margin-top:60px;color:#444;font-size:12px;padding:20px}
+   .btn:hover{box-shadow:0 0 20px rgba(139,92,246,0.5)}
+   .inbox{max-height:300px;overflow-y:auto;margin-top:15px}
+   .mail{background:#0A0A1A;padding:12px;border-radius:10px;margin-bottom:10px;border-left:3px solid #EC4899}
+
+   .tabs{display:flex;gap:10px;margin-bottom:15px}
+   .tab{padding:10px 20px;border-radius:10px;background:rgba(20,20,40,0.6);cursor:pointer;border:1px solid transparent}
+   .tab.active{background:#8B5CF6;border-color:#EC4899}
+    pre{background:#0A0A1A;padding:15px;border-radius:12px;overflow-x:auto;font-size:13px;border:1px solid rgba(139,92,246,0.3)}
+    code{color:#A78BFA}
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo"><div class="logo-box">✉️</div> InboxVeil</div>
-    <div class="toggle" onclick="alert('Dark mode on!')">☀️</div>
-  </header>
+  <div class="container">
+    <header>
+      <div class="logo"><div class="logo-box">✉️</div> InboxVeil</div>
+      <div class="toggle">☀️</div>
+    </header>
 
-  <h1>Email API <span class="gradient">With<br>Custom Domain<br>Support</span></h1>
-  
-  <p class="subtitle">Create temporary email addresses instantly for testing and privacy.</p>
-  
-  <p class="features">REST API • Bring Your Own Domain • Auto-delete in up to 7 days</p>
+    <h1>Powerful API for <span class="gradient">Developers</span></h1>
+    <p class="subtitle">Integrate disposable email into your testing workflow with our REST API</p>
 
-  <div class="mailbox-box">
-    <div class="label">>_ Enter your email address</div>
-    <div class="input-group">
-      <input type="text" id="username" placeholder="yourname">
-      <span class="at">@</span>
-      <select id="domain">
-        <option>inboxveil.com</option>
-        <option>inboxveil.io</option>
-      </select>
+    <!-- EMAIL GENERATOR -->
+    <div class="box">
+      <h3>>_ Your Disposable Email</h3>
+      <div class="email-display">
+        <span id="email">Click button to generate</span>
+        <span onclick="copyEmail()" style="color:#EC4899;cursor:pointer">Copy</span>
+      </div>
+      <button class="btn" onclick="generateEmail()">Generate New Email</button>
+      <button class="btn" onclick="checkInbox()">Refresh Inbox 🔄</button>
+      <div id="inbox" class="inbox"><div style="text-align:center;color:#888;padding:20px">No emails yet</div></div>
     </div>
-    <button class="cta" onclick="openMailbox()">✉️ Open My Mailbox →</button>
+
+    <!-- API DOCS -->
+    <div class="box">
+      <h3>Simple & RESTful</h3>
+      <p style="color:#A0A0C0;margin:10px 0 20px">Clean REST API with JSON responses. No authentication required.</p>
+
+      <div class="tabs">
+        <div class="tab active" onclick="showTab('curl')">cURL</div>
+        <div class="tab" onclick="showTab('js')">JavaScript</div>
+        <div class="tab" onclick="showTab('python')">Python</div>
+      </div>
+
+      <pre id="code-block"><code># List messages in a mailbox
+curl "https://api.mail.tm/messages" -H "Authorization: Bearer TOKEN"
+
+# Get a specific message
+curl "https://api.mail.tm/messages/ID" -H "Authorization: Bearer TOKEN"
+
+# Create new account
+curl -X POST "https://api.mail.tm/accounts" \
+-H "Content-Type: application/json" \
+-d '{"address":"user@mail.tm","password":"pass"}'</code></pre>
+    </div>
   </div>
 
-  <footer>© 2026 InboxVeil. Built for privacy.</footer>
-
 <script>
-function openMailbox(){
-  let user = document.getElementById('username').value || 'user'+Math.random().toString(36).slice(2,6);
-  let domain = document.getElementById('domain').value;
-  let email = user + '@' + domain;
-  alert('Your Temp Email:\n\n' + email + '\n\nCopy am and use am anywhere!\n\nNote: This is a demo. Real inbox coming soon 🔥');
+let token = ''; let address = '';
+async function getDomain(){let res=await fetch('https://api.mail.tm/domains');let data=await res.json();return data['hydra:member'][0].domain}
+async function generateEmail(){
+  let domain=await getDomain();
+  address=`user${Math.random().toString(36).slice(2,8)}@${domain}`;
+  let password=Math.random().toString(36).slice(2,12);
+  await fetch('https://api.mail.tm/accounts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({address,password})});
+  let res=await fetch('https://api.mail.tm/token',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({address,password})});
+  let data=await res.json(); token=data.token;
+  document.getElementById('email').innerText=address; checkInbox();
 }
+async function checkInbox(){
+  if(!token)return;
+  let res=await fetch('https://api.mail.tm/messages',{headers:{'Authorization':'Bearer '+token}});
+  let data=await res.json(); let messages=data['hydra:member'];
+  document.getElementById('inbox').innerHTML=messages.length?messages.map(m=>`<div class="mail"><b>From:</b> ${m.from.address}<br><b>Subject:</b> ${m.subject}</div>`).join(''):'<div style="text-align:center;color:#888;padding:20px">No emails yet</div>';
+}
+function copyEmail(){navigator.clipboard.writeText(address)}
+function showTab(lang){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  event.target.classList.add('active');
+  let code={curl:`# List messages\ncurl "https://api.mail.tm/messages" -H "Authorization: Bearer TOKEN"`,js:`// List messages\nfetch("https://api.mail.tm/messages", {\n headers: {"Authorization": "Bearer TOKEN"}\n})`,python:`# List messages\nimport requests\nrequests.get("https://api.mail.tm/messages",\nheaders={"Authorization": "Bearer TOKEN"})`};
+  document.getElementById('code-block').innerText=code[lang];
+}
+setInterval(checkInbox,10000);
 </script>
 </body>
 </html>
