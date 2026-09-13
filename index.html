@@ -6,65 +6,46 @@
   <title>InboxVeil - Free Disposable Email</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{
-      background:linear-gradient(135deg,#05050F 0%,#0A0A1A 100%);
-      color:white;
-      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      min-height:100vh;
-    }
-   .container{max-width:900px;margin:auto;padding:20px}
-   .logo{font-size:24px;font-weight:800;display:flex;gap:12px;align-items:center;padding:20px 0}
-   .logo-box{background:linear-gradient(135deg,#8B5CF6,#EC4899);padding:10px 14px;border-radius:14px;font-size:20px}
-    h1{text-align:center;font-size:36px;margin:10px 0 30px;background:linear-gradient(90deg,#8B5CF6,#EC4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800}
-   .box{background:rgba(15,15,30,0.8);border:1px solid rgba(139,92,246,0.4);border-radius:20px;padding:30px;margin:20px 0;backdrop-filter:blur(10px)}
-   .input-group{display:flex;gap:10px;margin-bottom:15px}
-   .input{background:#0A0A1A;border:2px solid #8B5CF6;padding:14px;border-radius:12px;color:white;width:100%;font-size:16px;outline:none}
-   .input:focus{border-color:#EC4899}
-   .domain{background:#0A0A1A;border:2px solid #8B5CF6;padding:14px;border-radius:12px;color:#A78BFA;font-weight:bold;white-space:nowrap}
-   .email-display{background:#0A0A1A;border:2px dashed #8B5CF6;padding:15px;border-radius:12px;display:flex;justify-content:space-between;align-items:center;margin:15px 0;word-break:break-all}
-   .btn{background:linear-gradient(90deg,#8B5CF6,#EC4899);border:none;padding:14px;border-radius:12px;color:white;font-weight:bold;width:100%;margin-top:10px;cursor:pointer;font-size:16px;transition:0.2s}
-   .btn:hover{transform:scale(1.02)}
-   .btn:active{transform:scale(0.98)}
-   .inbox{max-height:500px;overflow-y:auto;margin-top:20px}
-   .mail{background:#0A0A1A;padding:18px;border-radius:12px;margin-bottom:12px;border-left:4px solid #EC4899}
-   .mail-body{background:#000;padding:14px;border-radius:8px;margin-top:10px;white-space:pre-wrap;word-break:break-all;font-size:14px;color:#4ADE80;font-family:'Courier New', monospace}
-   .success{color:#4ADE80;text-align:center;padding:10px;font-weight:bold}
-   .loading{text-align:center;padding:10px;color:#A78BFA}
-   .copy-btn{color:#EC4899;cursor:pointer;font-weight:bold}
-   .copy-btn:hover{text-decoration:underline}
+    body{background:linear-gradient(135deg,#05050F 0%,#0A0A1A 100%);color:white;font-family:'Segoe UI', sans-serif;min-height:100vh}
+ .container{max-width:900px;margin:auto;padding:20px}
+ .logo{font-size:24px;font-weight:800;display:flex;gap:12px;align-items:center;padding:20px 0}
+ .logo-box{background:linear-gradient(135deg,#8B5CF6,#EC4899);padding:10px 14px;border-radius:14px;font-size:20px}
+    h1{text-align:center;font-size:32px;margin:10px 0 30px;background:linear-gradient(90deg,#8B5CF6,#EC4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800}
+ .box{background:rgba(15,15,30,0.8);border:1px solid rgba(139,92,246,0.4);border-radius:20px;padding:25px}
+ .input-group{display:flex;gap:10px;margin-bottom:15px}
+ .input{background:#0A0A1A;border:2px solid #8B5CF6;padding:14px;border-radius:12px;color:white;width:100%;font-size:16px}
+ .domain{background:#0A0A1A;border:2px solid #8B5CF6;padding:14px;border-radius:12px;color:#A78BFA;font-weight:bold}
+ .email-display{background:#0A0A1A;border:2px dashed #8B5CF6;padding:15px;border-radius:12px;display:flex;justify-content:space-between;margin:15px 0;word-break:break-all}
+ .btn{background:linear-gradient(90deg,#8B5CF6,#EC4899);border:none;padding:14px;border-radius:12px;color:white;font-weight:bold;width:100%;margin-top:10px;cursor:pointer;font-size:16px}
+ .mail{background:#0A0A1A;padding:18px;border-radius:12px;margin-bottom:12px;border-left:4px solid #EC4899}
+ .mail-body{background:#000;padding:14px;border-radius:8px;margin-top:10px;white-space:pre-wrap;word-break:break-all;color:#4ADE80;font-family:'Courier New', monospace}
+ .error{color:#F87171;text-align:center;padding:10px}
+ .loading{text-align:center;padding:10px;color:#A78BFA}
+ .success{color:#4ADE80;text-align:center;padding:10px}
   </style>
 </head>
 <body>
   <div class="container">
     <div class="logo"><div class="logo-box">✉️</div> InboxVeil</div>
     <h1>Free Disposable Email</h1>
-
     <div class="box">
       <div class="input-group">
-        <input type="text" id="customName" class="input" placeholder="type name: facebook123, github456">
+        <input type="text" id="customName" class="input" placeholder="type name: facebook123">
         <div class="domain">@catchmail.io</div>
       </div>
       <button class="btn" onclick="generateEmail()">Generate Email</button>
-
       <div class="email-display">
         <span id="email">Your email will appear here</span>
-        <span class="copy-btn" onclick="copyEmail()">Copy</span>
+        <span onclick="copyEmail()" style="color:#EC4899;cursor:pointer;font-weight:bold">Copy</span>
       </div>
-
       <button class="btn" id="refBtn" onclick="checkInbox()">Refresh Inbox 🔄</button>
       <div id="status"></div>
       <div id="inbox"><div style="text-align:center;color:#888;padding:30px">No emails yet</div></div>
-    </div>
-
-    <div style="text-align:center;color:#666;font-size:12px;margin-top:20px">
-      Emails auto-delete after 24 hours
     </div>
   </div>
 
 <script>
 let address = '';
-const PROXY = 'https://corsproxy.io/?key=cb7cd468&url='; // YOUR KEY
-const API = 'https://api.catchmail.io/api/v1';
 
 window.onload = function(){
   let saved = localStorage.getItem('inboxveil_address');
@@ -77,20 +58,12 @@ window.onload = function(){
 }
 
 function generateEmail(){
-  let name = document.getElementById('customName').value.trim();
-  if(name === ''){alert('Please type a name first!');return;}
-  name = name.toLowerCase().replace(/[^a-z0-9]/g, '');
-  if(name.length < 3){alert('Name too short!');return;}
+  let name = document.getElementById('customName').value.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+  if(name === ''){alert('Type a name first!');return;}
   address = `${name}@catchmail.io`;
   localStorage.setItem('inboxveil_address', address);
   document.getElementById('email').innerText = address;
-  document.getElementById('status').innerHTML = '<div class="success">✓ Email ready! Use it to sign up now</div>';
-}
-
-async function api(url){
-  let res = await fetch(PROXY + encodeURIComponent(url));
-  if(!res.ok) throw new Error('Proxy error');
-  return res.json();
+  document.getElementById('status').innerHTML = '<div class="success">✓ Email ready!</div>';
 }
 
 async function checkInbox(){
@@ -98,37 +71,33 @@ async function checkInbox(){
   document.getElementById('refBtn').innerText = 'Refreshing...';
   document.getElementById('status').innerHTML = '<div class="loading">Checking for new emails...</div>';
   try{
-    let data = await api(`${API}/mailbox?address=${address}`);
+    let res = await fetch(`/.netlify/functions/mail?address=${address}`);
+    let data = await res.json();
+    if(data.error) throw new Error(data.error);
+    
     let messages = data.messages || [];
     if(messages.length === 0){
-      document.getElementById('inbox').innerHTML = '<div style="text-align:center;color:#888;padding:30px">No emails yet. Wait 15s and refresh again</div>';
+      document.getElementById('inbox').innerHTML = '<div style="text-align:center;color:#888;padding:30px">No emails yet. Wait 15s and refresh</div>';
     }else{
       let html = '';
       for(let m of messages){
-        let detail = await api(`${API}/message/${m.id}?mailbox=${address}`);
         html += `<div class="mail">
-          <b>From:</b> ${detail.from}<br>
-          <b>Subject:</b> ${detail.subject}<br>
-          <b>Time:</b> ${new Date(detail.date).toLocaleString()}<br>
-          <div class="mail-body">${detail.body.text || detail.body.html || 'No content'}</div>
+          <b>From:</b> ${m.from}<br>
+          <b>Subject:</b> ${m.subject}<br>
+          <b>Time:</b> ${new Date(m.date).toLocaleString()}<br>
+          <div class="mail-body">${m.body}</div>
         </div>`;
       }
       document.getElementById('inbox').innerHTML = html;
       document.getElementById('status').innerHTML = '';
     }
   }catch(e){
-    document.getElementById('status').innerHTML = `<div style="color:red">Error: ${e.message}. Try refresh</div>`;
+    document.getElementById('status').innerHTML = `<div class="error">Error: ${e.message}</div>`;
   }
   document.getElementById('refBtn').innerText = 'Refresh Inbox 🔄';
 }
 
-function copyEmail(){
-  if(address){
-    navigator.clipboard.writeText(address);
-    document.getElementById('status').innerHTML = '<div class="success">✓ Copied to clipboard!</div>';
-    setTimeout(()=>{document.getElementById('status').innerHTML=''},2000);
-  }
-}
+function copyEmail(){if(address)navigator.clipboard.writeText(address)}
 </script>
 </body>
 </html>
