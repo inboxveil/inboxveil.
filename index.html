@@ -5,135 +5,127 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{
-      background:#05050F;
-      color:white;
-      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-      background-image:
-        radial-gradient(circle at 50% 10%, rgba(139,92,246,0.25) 0%, transparent 50%);
-    }
+    body{background:#05050F;color:white;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background-image:radial-gradient(circle at 50% 10%, rgba(139,92,246,0.25) 0%, transparent 50%)}
    .container{max-width:1000px;margin:auto;padding:20px}
     header{padding:20px 0;display:flex;justify-content:space-between;align-items:center}
    .logo{font-size:22px;font-weight:800;display:flex;gap:10px;align-items:center}
    .logo-box{background:linear-gradient(135deg,#8B5CF6,#EC4899);padding:10px 12px;border-radius:14px}
-   .toggle{padding:10px;border-radius:12px;background:rgba(20,20,40,0.6);cursor:pointer}
-
     h1{text-align:center;font-size:36px;margin:40px 0 15px;font-weight:800}
    .gradient{background:linear-gradient(90deg,#8B5CF6,#EC4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
    .subtitle{text-align:center;color:#A0A0C0;margin-bottom:40px}
-
-   .box{
-      background:rgba(15,15,30,0.8);
-      border:1px solid rgba(139,92,246,0.4);
-      border-radius:20px;
-      padding:25px;
-      margin:20px 0;
-      backdrop-filter:blur(10px)
-    }
-   .email-display{
-      background:#0A0A1A;
-      border:1px dashed #8B5CF6;
-      padding:15px;
-      border-radius:12px;
-      font-family:monospace;
-      display:flex;
-      justify-content:space-between;
-      margin-bottom:15px
-    }
-   .btn{
-      background:linear-gradient(90deg,#8B5CF6,#EC4899);
-      border:none;
-      padding:14px;
-      border-radius:12px;
-      color:white;
-      font-weight:bold;
-      cursor:pointer;
-      width:100%;
-      margin-top:10px
-    }
+   .box{background:rgba(15,15,30,0.8);border:1px solid rgba(139,92,246,0.4);border-radius:20px;padding:25px;margin:20px 0;backdrop-filter:blur(10px)}
+   .email-display{background:#0A0A1A;border:1px dashed #8B5CF6;padding:15px;border-radius:12px;font-family:monospace;display:flex;justify-content:space-between;margin-bottom:15px}
+   .btn{background:linear-gradient(90deg,#8B5CF6,#EC4899);border:none;padding:14px;border-radius:12px;color:white;font-weight:bold;cursor:pointer;width:100%;margin-top:10px}
    .btn:hover{box-shadow:0 0 20px rgba(139,92,246,0.5)}
+   .btn:disabled{opacity:0.5;cursor:not-allowed}
    .inbox{max-height:300px;overflow-y:auto;margin-top:15px}
    .mail{background:#0A0A1A;padding:12px;border-radius:10px;margin-bottom:10px;border-left:3px solid #EC4899}
-
-   .tabs{display:flex;gap:10px;margin-bottom:15px}
-   .tab{padding:10px 20px;border-radius:10px;background:rgba(20,20,40,0.6);cursor:pointer;border:1px solid transparent}
-   .tab.active{background:#8B5CF6;border-color:#EC4899}
-    pre{background:#0A0A1A;padding:15px;border-radius:12px;overflow-x:auto;font-size:13px;border:1px solid rgba(139,92,246,0.3)}
-    code{color:#A78BFA}
+   .loading{text-align:center;color:#A78BFA;padding:20px}
+   .error{color:#FF6B6B;text-align:center;padding:10px}
   </style>
 </head>
 <body>
   <div class="container">
     <header>
       <div class="logo"><div class="logo-box">✉️</div> InboxVeil</div>
-      <div class="toggle">☀️</div>
     </header>
 
-    <h1>Powerful API for <span class="gradient">Developers</span></h1>
-    <p class="subtitle">Integrate disposable email into your testing workflow with our REST API</p>
+    <h1>Free Disposable Email <span class="gradient">With Real Inbox</span></h1>
+    <p class="subtitle">For developers and privacy. No registration required.</p>
 
-    <!-- EMAIL GENERATOR -->
     <div class="box">
       <h3>>_ Your Disposable Email</h3>
       <div class="email-display">
         <span id="email">Click button to generate</span>
         <span onclick="copyEmail()" style="color:#EC4899;cursor:pointer">Copy</span>
       </div>
-      <button class="btn" onclick="generateEmail()">Generate New Email</button>
-      <button class="btn" onclick="checkInbox()">Refresh Inbox 🔄</button>
+      <button class="btn" id="genBtn" onclick="generateEmail()">Generate New Email</button>
+      <button class="btn" id="refBtn" onclick="checkInbox()">Refresh Inbox 🔄</button>
       <div id="inbox" class="inbox"><div style="text-align:center;color:#888;padding:20px">No emails yet</div></div>
     </div>
 
-    <!-- API DOCS -->
     <div class="box">
-      <h3>Simple & RESTful</h3>
-      <p style="color:#A0A0C0;margin:10px 0 20px">Clean REST API with JSON responses. No authentication required.</p>
-
-      <div class="tabs">
-        <div class="tab active" onclick="showTab('curl')">cURL</div>
-        <div class="tab" onclick="showTab('js')">JavaScript</div>
-        <div class="tab" onclick="showTab('python')">Python</div>
-      </div>
-
-      <pre id="code-block"><code># List messages in a mailbox
-curl "https://api.mail.tm/messages" -H "Authorization: Bearer TOKEN"
-
-# Get a specific message
-curl "https://api.mail.tm/messages/ID" -H "Authorization: Bearer TOKEN"
-
-# Create new account
-curl -X POST "https://api.mail.tm/accounts" \
--H "Content-Type: application/json" \
--d '{"address":"user@mail.tm","password":"pass"}'</code></pre>
+      <h3>Simple & RESTful API</h3>
+      <p style="color:#A0A0C0;margin:10px 0">Powered by mail.tm. Free for developers.</p>
+      <pre style="background:#0A0A1A;padding:15px;border-radius:12px;overflow-x:auto;font-size:13px"><code>curl "https://api.mail.tm/messages" -H "Authorization: Bearer TOKEN"</code></pre>
     </div>
   </div>
 
 <script>
-let token = ''; let address = '';
-async function getDomain(){let res=await fetch('https://api.mail.tm/domains');let data=await res.json();return data['hydra:member'][0].domain}
+let token = '';
+let address = '';
+let password = '';
+
+const API = 'https://api.mail.tm';
+
 async function generateEmail(){
-  let domain=await getDomain();
-  address=`user${Math.random().toString(36).slice(2,8)}@${domain}`;
-  let password=Math.random().toString(36).slice(2,12);
-  await fetch('https://api.mail.tm/accounts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({address,password})});
-  let res=await fetch('https://api.mail.tm/token',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({address,password})});
-  let data=await res.json(); token=data.token;
-  document.getElementById('email').innerText=address; checkInbox();
+  document.getElementById('genBtn').disabled = true;
+  document.getElementById('genBtn').innerText = 'Generating...';
+  try{
+    // 1. Get domain
+    let domRes = await fetch(API + '/domains');
+    let domData = await domRes.json();
+    let domain = domData['hydra:member'][0].domain;
+
+    // 2. Create account
+    address = `user${Math.random().toString(36).slice(2,8)}@${domain}`;
+    password = Math.random().toString(36).slice(2,12);
+
+    await fetch(API + '/accounts', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({address,password})
+    });
+
+    // 3. Get token
+    let tokenRes = await fetch(API + '/token', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({address,password})
+    });
+    let tokenData = await tokenRes.json();
+    token = tokenData.token;
+
+    document.getElementById('email').innerText = address;
+    document.getElementById('genBtn').innerText = 'Generate New Email';
+    checkInbox();
+  }catch(e){
+    document.getElementById('inbox').innerHTML = `<div class="error">Error: ${e.message}. Try refresh page</div>`;
+    document.getElementById('genBtn').disabled = false;
+    document.getElementById('genBtn').innerText = 'Generate New Email';
+  }
 }
+
 async function checkInbox(){
-  if(!token)return;
-  let res=await fetch('https://api.mail.tm/messages',{headers:{'Authorization':'Bearer '+token}});
-  let data=await res.json(); let messages=data['hydra:member'];
-  document.getElementById('inbox').innerHTML=messages.length?messages.map(m=>`<div class="mail"><b>From:</b> ${m.from.address}<br><b>Subject:</b> ${m.subject}</div>`).join(''):'<div style="text-align:center;color:#888;padding:20px">No emails yet</div>';
+  if(!token){
+    alert('Generate email first!');
+    return;
+  }
+  document.getElementById('refBtn').innerText = 'Refreshing...';
+  try{
+    let res = await fetch(API + '/messages', {
+      headers:{'Authorization':'Bearer '+token}
+    });
+    let data = await res.json();
+    let messages = data['hydra:member'];
+
+    if(messages.length === 0){
+      document.getElementById('inbox').innerHTML = '<div style="text-align:center;color:#888;padding:20px">No emails yet</div>';
+    }else{
+      document.getElementById('inbox').innerHTML = messages.map(m =>
+        `<div class="mail"><b>From:</b> ${m.from.address}<br><b>Subject:</b> ${m.subject}<br><b>Time:</b> ${new Date(m.createdAt).toLocaleTimeString()}</div>`
+      ).join('');
+    }
+  }catch(e){
+    document.getElementById('inbox').innerHTML = `<div class="error">Error loading inbox</div>`;
+  }
+  document.getElementById('refBtn').innerText = 'Refresh Inbox 🔄';
 }
-function copyEmail(){navigator.clipboard.writeText(address)}
-function showTab(lang){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  event.target.classList.add('active');
-  let code={curl:`# List messages\ncurl "https://api.mail.tm/messages" -H "Authorization: Bearer TOKEN"`,js:`// List messages\nfetch("https://api.mail.tm/messages", {\n headers: {"Authorization": "Bearer TOKEN"}\n})`,python:`# List messages\nimport requests\nrequests.get("https://api.mail.tm/messages",\nheaders={"Authorization": "Bearer TOKEN"})`};
-  document.getElementById('code-block').innerText=code[lang];
+
+function copyEmail(){
+  if(address) navigator.clipboard.writeText(address);
+  else alert('Generate email first!');
 }
-setInterval(checkInbox,10000);
 </script>
 </body>
 </html>
