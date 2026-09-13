@@ -1,176 +1,109 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>InboxVeil - Free Disposable Email API for Developers</title>
+  <title>InboxVeil - Free Disposable Email API</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Free disposable email with API. Create temp email in 1 second. No registration. Perfect for developers testing signup flows.">
-  <meta name="keywords" content="temp mail, disposable email, temporary email, email api, 10 minute mail, inboxveil">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{background:#05050F;color:white;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.6}
-   .container{max-width:1100px;margin:auto;padding:20px}
+    body{background:#05050F;color:white;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background-image:radial-gradient(circle at 50% 10%, rgba(139,92,246,0.25) 0%, transparent 50%)}
+  .container{max-width:1000px;margin:auto;padding:20px}
     header{padding:20px 0;display:flex;justify-content:space-between;align-items:center}
-   .logo{font-size:22px;font-weight:800;display:flex;gap:10px;align-items:center}
-   .logo-box{background:linear-gradient(135deg,#8B5CF6,#EC4899);padding:10px 12px;border-radius:14px}
-   .nav a{color:#A78BFA;text-decoration:none;margin-left:20px}
-
-    h1{text-align:center;font-size:42px;margin:40px 0 15px;font-weight:800}
-   .gradient{background:linear-gradient(90deg,#8B5CF6,#EC4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-   .subtitle{text-align:center;color:#A0A0C0;margin-bottom:40px;font-size:18px}
-
-   .box{background:rgba(15,15,30,0.8);border:1px solid rgba(139,92,246,0.4);border-radius:20px;padding:25px;margin:20px 0}
-   .email-display{background:#0A0A1A;border:1px dashed #8B5CF6;padding:15px;border-radius:12px;font-family:monospace;display:flex;justify-content:space-between;margin-bottom:15px}
-   .btn{background:linear-gradient(90deg,#8B5CF6,#EC4899);border:none;padding:14px;border-radius:12px;color:white;font-weight:bold;cursor:pointer;width:100%;margin-top:10px;font-size:16px}
-   .btn:hover{box-shadow:0 0 20px rgba(139,92,246,0.5)}
-   .inbox{max-height:300px;overflow-y:auto;margin-top:15px}
-   .mail{background:#0A0A1A;padding:12px;border-radius:10px;margin-bottom:10px;border-left:3px solid #EC4899}
-
-   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin:30px 0}
-   .card{background:rgba(20,20,40,0.6);padding:20px;border-radius:16px;border:1px solid rgba(139,92,246,0.3)}
-   .card h3{color:#EC4899;margin-bottom:10px}
-
-   .faq-item{margin:15px 0;padding:15px;background:#0A0A1A;border-radius:12px}
-   .faq-item h4{color:#A78BFA;margin-bottom:8px}
-
-   .ad-space{background:rgba(20,20,40,0.5);border:1px dashed #8B5CF6;border-radius:12px;padding:30px;text-align:center;color:#888;margin:20px 0}
-   .footer{margin-top:50px;padding:30px;text-align:center;border-top:1px solid rgba(139,92,246,0.3)}
-   .footer a{color:#A78BFA;margin:0 15px;text-decoration:none}
-    h2{font-size:28px;margin:40px 0 20px;text-align:center}
-    pre{background:#0A0A1A;padding:15px;border-radius:12px;overflow-x:auto;font-size:13px}
+  .logo{font-size:22px;font-weight:800;display:flex;gap:10px;align-items:center}
+  .logo-box{background:linear-gradient(135deg,#8B5CF6,#EC4899);padding:10px 12px;border-radius:14px}
+    h1{text-align:center;font-size:36px;margin:40px 0 15px;font-weight:800}
+  .gradient{background:linear-gradient(90deg,#8B5CF6,#EC4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .subtitle{text-align:center;color:#A0A0C0;margin-bottom:40px}
+  .box{background:rgba(15,15,30,0.8);border:1px solid rgba(139,92,246,0.4);border-radius:20px;padding:25px;margin:20px 0;backdrop-filter:blur(10px)}
+  .email-display{background:#0A0A1A;border:1px dashed #8B5CF6;padding:15px;border-radius:12px;font-family:monospace;display:flex;justify-content:space-between;margin-bottom:15px}
+  .btn{background:linear-gradient(90deg,#8B5CF6,#EC4899);border:none;padding:14px;border-radius:12px;color:white;font-weight:bold;cursor:pointer;width:100%;margin-top:10px;font-size:16px}
+  .btn:hover{box-shadow:0 0 20px rgba(139,92,246,0.5)}
+  .btn:disabled{opacity:0.5}
+  .inbox{max-height:300px;overflow-y:auto;margin-top:15px}
+  .mail{background:#0A0A1A;padding:12px;border-radius:10px;margin-bottom:10px;border-left:3px solid #EC4899}
+  .error{color:#FF6B6B;text-align:center;padding:10px;margin-top:10px}
   </style>
 </head>
 <body>
   <div class="container">
     <header>
       <div class="logo"><div class="logo-box">✉️</div> InboxVeil</div>
-      <div class="nav">
-        <a href="#features">Features</a>
-        <a href="#api">API</a>
-        <a href="#faq">FAQ</a>
-        <a href="privacy.html">Privacy</a>
-      </div>
     </header>
 
-    <!-- 1. HERO -->
     <h1>Free Disposable Email <span class="gradient">With Real Inbox</span></h1>
-    <p class="subtitle">The fastest temp mail API for developers. Create unlimited emails in 1 second. No signup required.</p>
+    <p class="subtitle">For developers and privacy. No registration required.</p>
 
-    <!-- 2. AD 1 -->
-    <div class="ad-space">AD SPACE</div>
-
-    <!-- 3. EMAIL GENERATOR -->
     <div class="box">
       <h3>>_ Your Disposable Email</h3>
       <div class="email-display">
         <span id="email">Click button to generate</span>
         <span onclick="copyEmail()" style="color:#EC4899;cursor:pointer">Copy</span>
       </div>
-      <button class="btn" onclick="generateEmail()">Generate New Email</button>
-      <button class="btn" onclick="checkInbox()">Refresh Inbox 🔄</button>
+      <button class="btn" id="genBtn" onclick="generateEmail()">Generate New Email</button>
+      <button class="btn" id="refBtn" onclick="checkInbox()">Refresh Inbox 🔄</button>
+      <div id="error" class="error"></div>
       <div id="inbox" class="inbox"><div style="text-align:center;color:#888;padding:20px">No emails yet</div></div>
-    </div>
-
-    <!-- 4. AD 2 -->
-    <div class="ad-space">AD SPACE</div>
-
-    <!-- 5. WHY INBOXVEIL -->
-    <h2 id="features">Why Developers Love InboxVeil</h2>
-    <div class="grid">
-      <div class="card"><h3>1. Instant Email</h3><p>Generate a new disposable email in 1 second. No registration, no password.</p></div>
-      <div class="card"><h3>2. Real Inbox</h3><p>Receive real emails instantly. Perfect for OTP and verification codes.</p></div>
-      <div class="card"><h3>3. REST API</h3><p>Full REST API for automation. Integrate into your testing workflow.</p></div>
-      <div class="card"><h3>4. 100% Free</h3><p>No limits. No credit card. No catch. Built for developers.</p></div>
-      <div class="card"><h3>5. Privacy First</h3><p>We don't store your emails. Everything auto-deletes after a few hours.</p></div>
-      <div class="card"><h3>6. Open Source</h3><p>Powered by mail.tm. Transparent and reliable backend.</p></div>
-    </div>
-
-    <!-- 6. HOW IT WORKS -->
-    <h2>How It Works in 3 Steps</h2>
-    <div class="grid">
-      <div class="card"><h3>Step 1</h3><p>Click "Generate New Email" above. Copy the address.</p></div>
-      <div class="card"><h3>Step 2</h3><p>Use it to sign up on any website or app.</p></div>
-      <div class="card"><h3>Step 3</h3><p>Come back and click "Refresh Inbox" to see your code.</p></div>
-    </div>
-
-    <!-- 7. API DOCS -->
-    <div class="box" id="api">
-      <h2>Simple REST API for Developers</h2>
-      <p style="color:#A0A0C0;margin:10px 0">Integrate disposable email into your testing in 5 minutes.</p>
-      <pre><code>curl "https://api.mail.tm/messages" -H "Authorization: Bearer TOKEN"</code></pre>
-      <p style="margin-top:10px;color:#A78BFA">Full Docs: https://api.mail.tm</p>
-    </div>
-
-    <!-- 8-20. SEO CONTENT BLOCKS -->
-    <h2>What is Disposable Email?</h2>
-    <div class="box"><p>A disposable email address is a temporary email that you can use to sign up for websites without giving your real email. It helps you avoid spam and protect your privacy. InboxVeil gives you unlimited temp emails for free.</p></div>
-
-    <h2>Best Use Cases for Temp Mail</h2>
-    <div class="grid">
-      <div class="card"><h3>7. Testing</h3><p>Test user registration flows without spamming your inbox.</p></div>
-      <div class="card"><h3>8. Avoid Spam</h3><p>Sign up for newsletters and free trials safely.</p></div>
-      <div class="card"><h3>9. OTP Codes</h3><p>Receive verification codes instantly.</p></div>
-      <div class="card"><h3>10. Forums</h3><p>Join forums without linking your real email.</p></div>
-    </div>
-
-    <h2>InboxVeil vs Gmail</h2>
-    <div class="box"><p>Gmail is for permanent email. InboxVeil is for temporary tasks. Don't risk your main inbox with spam. Use InboxVeil for 10 minute tasks.</p></div>
-
-    <h2>Is It Legal?</h2>
-    <div class="box"><p>Yes. Disposable email is 100% legal. But don't use it for fraud or illegal activity. Use responsibly.</p></div>
-
-    <h2>How Long Do Emails Last?</h2>
-    <div class="box"><p>Emails stay for a few hours then auto-delete. This keeps the service fast and free for everyone.</p></div>
-
-    <!-- 21-29. FAQ -->
-    <h2 id="faq">Frequently Asked Questions</h2>
-    <div class="faq-item"><h4>11. Do I need to sign up?</h4><p>No. Just click generate and start using.</p></div>
-    <div class="faq-item"><h4>12. Can I receive Facebook code?</h4><p>Most apps work. Facebook and Google sometimes block temp emails.</p></div>
-    <div class="faq-item"><h4>13. Is there an API limit?</h4><p>No. Powered by mail.tm free tier.</p></div>
-    <div class="faq-item"><h4>14. Can I choose username?</h4><p>Not yet. Pro version coming soon with custom names.</p></div>
-    <div class="faq-item"><h4>15. Do you store my emails?</h4><p>No. We cannot read your emails.</p></div>
-    <div class="faq-item"><h4>16. Is it really free?</h4><p>Yes forever. We make money from ads.</p></div>
-    <div class="faq-item"><h4>17. Mobile friendly?</h4><p>Yes. Works perfectly on phone and desktop.</p></div>
-    <div class="faq-item"><h4>18. Can I use for business?</h4><p>For testing yes. For real customers use paid email service.</p></div>
-    <div class="faq-item"><h4>19. How to contact support?</h4><p>Email: inboxveil@gmail.com</p></div>
-
-    <!-- 30. FINAL CTA -->
-    <h2>Start Using Free Temp Mail Now</h2>
-    <div class="box" style="text-align:center">
-      <p style="font-size:18px;margin-bottom:20px">Join 1000+ developers using InboxVeil to test faster.</p>
-      <button class="btn" onclick="window.scrollTo(0,0)">Generate Email Above ↑</button>
-    </div>
-
-    <!-- AD 3 -->
-    <div class="ad-space">AD SPACE</div>
-
-    <div class="footer">
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="terms.html">Terms</a>
-      <a href="#api">API Docs</a>
-      <p style="margin-top:20px;color:#666">© 2026 InboxVeil. Built for privacy and speed.</p>
     </div>
   </div>
 
 <script>
 let token = ''; let address = ''; let password = '';
+const PROXY = 'https://api.allorigins.win/raw?url=';
 const API = 'https://api.mail.tm';
-async function generateEmail(){
-  try{
-    let domRes = await fetch(API + '/domains'); let domData = await domRes.json();
-    let domain = domData['hydra:member'][0].domain;
-    address = `user${Math.random().toString(36).slice(2,8)}@${domain}`; password = Math.random().toString(36).slice(2,12);
-    await fetch(API + '/accounts', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({address,password})});
-    let tokenRes = await fetch(API + '/token', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({address,password})});
-    let tokenData = await tokenRes.json(); token = tokenData.token;
-    document.getElementById('email').innerText = address; checkInbox();
-  }catch(e){alert('Error: '+e.message)}
+
+async function apiFetch(url, options={}){
+  let res = await fetch(PROXY + encodeURIComponent(url), options);
+  if(!res.ok) throw new Error('Network error');
+  return res.json();
 }
+
+async function generateEmail(){
+  document.getElementById('genBtn').disabled = true;
+  document.getElementById('genBtn').innerText = 'Generating...';
+  document.getElementById('error').innerText = '';
+  try{
+    let domData = await apiFetch(API + '/domains');
+    let domain = domData['hydra:member'][0].domain;
+    address = `user${Math.random().toString(36).slice(2,8)}@${domain}`;
+    password = Math.random().toString(36).slice(2,12);
+
+    await apiFetch(API + '/accounts', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({address,password})
+    });
+
+    let tokenData = await apiFetch(API + '/token', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({address,password})
+    });
+    token = tokenData.token;
+    document.getElementById('email').innerText = address;
+    checkInbox();
+  }catch(e){
+    document.getElementById('error').innerText = 'Error: '+e.message+'. Try again';
+  }
+  document.getElementById('genBtn').disabled = false;
+  document.getElementById('genBtn').innerText = 'Generate New Email';
+}
+
 async function checkInbox(){
   if(!token){alert('Generate email first!');return;}
-  let res = await fetch(API + '/messages', {headers:{'Authorization':'Bearer '+token}});
-  let data = await res.json(); let messages = data['hydra:member'];
-  document.getElementById('inbox').innerHTML = messages.length? messages.map(m => `<div class="mail"><b>From:</b> ${m.from.address}<br><b>Subject:</b> ${m.subject}</div>`).join('') : '<div style="text-align:center;color:#888;padding:20px">No emails yet</div>';
+  document.getElementById('refBtn').innerText = 'Refreshing...';
+  try{
+    let data = await apiFetch(API + '/messages', {
+      headers:{'Authorization':'Bearer '+token}
+    });
+    let messages = data['hydra:member'];
+    document.getElementById('inbox').innerHTML = messages.length?
+      messages.map(m => `<div class="mail"><b>From:</b> ${m.from.address}<br><b>Subject:</b> ${m.subject}</div>`).join('')
+      : '<div style="text-align:center;color:#888;padding:20px">No emails yet</div>';
+  }catch(e){
+    document.getElementById('error').innerText = 'Error loading inbox';
+  }
+  document.getElementById('refBtn').innerText = 'Refresh Inbox 🔄';
 }
+
 function copyEmail(){if(address)navigator.clipboard.writeText(address)}
 </script>
 </body>
