@@ -7,21 +7,24 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
     body { background: #f5f7ff; padding: 20px; display: flex; justify-content: center; }
-  .container { max-width: 500px; width: 100%; background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-  .logo { color: #4a6bff; font-weight: 700; font-size: 20px; margin-bottom: 10px; }
+    .container { max-width: 500px; width: 100%; background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .logo { color: #4a6bff; font-weight: 700; font-size: 20px; margin-bottom: 10px; }
     h1 { color: #4a6bff; font-size: 24px; margin-bottom: 10px; }
-  .tags { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
-  .tag { background: #eef2ff; color: #4a6bff; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
-    input { width: 100%; padding: 14px; border: 2px solid #e5e7eb; border-radius: 10px; margin-bottom: 10px; font-size: 16px; }
-  .domain { color: #4a6bff; font-weight: 700; background: #f5f7ff; }
+    .tags { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+    .tag { background: #eef2ff; color: #4a6bff; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+    .row { display: flex; gap: 10px; margin-bottom: 10px; }
+    input, select { width: 100%; padding: 14px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 16px; }
+    select { flex: 1; }
     button { width: 100%; padding: 14px; background: linear-gradient(90deg, #4a6bff, #6a8aff); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; margin: 10px 0; }
-  .email-box { border: 2px dashed #4a6bff; border-radius: 10px; padding: 15px; margin: 15px 0; background: #f5f7ff; display: flex; justify-content: space-between; align-items: center; }
-  .copy { color: #4a6bff; cursor: pointer; font-weight: 700; }
-  .refresh { background: white; color: #4a6bff; border: 2px solid #4a6bff; }
-  .emails { margin-top: 20px; }
-  .email { background: #f5f7ff; padding: 15px; border-radius: 10px; margin-bottom: 10px; }
-  .email-from { font-weight: 700; }
-  .email-subject { color: #666; }
+    .email-box { border: 2px dashed #4a6bff; border-radius: 10px; padding: 15px; margin: 15px 0; background: #f5f7ff; display: flex; justify-content: space-between; align-items: center; }
+    .copy { color: #4a6bff; cursor: pointer; font-weight: 700; }
+    .refresh { background: white; color: #4a6bff; border: 2px solid #4a6bff; }
+    .emails { margin-top: 20px; }
+    .email { background: #f5f7ff; padding: 15px; border-radius: 10px; margin-bottom: 10px; }
+    .email-from { font-weight: 700; }
+    .email-subject { color: #666; }
+    .btn-row { display: flex; gap: 10px; }
+    .btn-row button { flex: 1; }
   </style>
 </head>
 <body>
@@ -31,13 +34,20 @@
     <div class="tags">
       <span class="tag">No Signup</span>
       <span class="tag">Free API</span>
-      <span class="tag">Auto-delete in 7 days</span>
+      <span class="tag">Auto-delete</span>
     </div>
 
-    <input type="text" id="username" placeholder="type name: facebook123">
-    <input type="text" value="@catchmail.io" class="domain" readonly>
+    <p style="color:#666; margin-bottom:10px;">Type any username, pick a domain</p>
+
+    <div class="row">
+      <input type="text" id="username" placeholder="username">
+      <select id="domain"></select>
+    </div>
     
-    <button onclick="createInbox()">Create Inbox</button>
+    <div class="btn-row">
+      <button onclick="randomEmail()">🎲 Random</button>
+      <button onclick="createInbox()">Create Inbox</button>
+    </div>
     
     <div class="email-box">
       <span id="fullEmail">Your email will appear here</span>
@@ -47,20 +57,33 @@
     <button class="refresh" onclick="refreshInbox()">Refresh Inbox 🔄</button>
     
     <div class="emails" id="emails">
-      <p style="text-align:center; color:#999;">No emails yet. Create an inbox above</p>
+      <p style="text-align:center; color:#999;">No emails yet</p>
     </div>
   </div>
 
 <script>
   let currentEmail = '';
-  // PROXY ADDED - So we fit bypass CORS error
-  const API = 'https://api.allorigins.win/raw?url=https://api.catchmail.io';
+  const domains = ["1secmail.com", "1secmail.org", "1secmail.net", "2secmail.com", "wuzupmail.net", "wuzupmail.com"];
+  const API = 'https://www.1secmail.com/api/v1/';
+
+  // Load domains to dropdown
+  domains.forEach(d => {
+    document.getElementById('domain').innerHTML += `<option value="${d}">${d}</option>`;
+  });
+
+  function randomEmail() {
+    const names = ['test', 'user', 'mail', 'temp', 'guest'];
+    const rand = names[Math.floor(Math.random()*names.length)] + Math.floor(Math.random()*9999);
+    document.getElementById('username').value = rand;
+    createInbox();
+  }
 
   async function createInbox() {
     const username = document.getElementById('username').value.trim();
-    if(!username) return alert('Type a name first');
+    const domain = document.getElementById('domain').value;
+    if(!username) return alert('Type a username first');
     
-    currentEmail = username + '@catchmail.io';
+    currentEmail = username + '@' + domain;
     document.getElementById('fullEmail').innerText = currentEmail;
     refreshInbox();
   }
@@ -68,27 +91,32 @@
   async function refreshInbox() {
     if(!currentEmail) return alert('Create an inbox first');
     
-    const username = currentEmail.split('@')[0];
+    const [username, domain] = currentEmail.split('@');
     document.getElementById('emails').innerHTML = '<p>Loading...</p>';
     
     try {
-      // Using proxy to get emails
-      const res = await fetch(`${API}/inboxes/${username}`);
+      const res = await fetch(`${API}?action=getMessages&login=${username}&domain=${domain}`);
       const data = await res.json();
       
-      if(data.emails && data.emails.length > 0) {
-        document.getElementById('emails').innerHTML = data.emails.map(email => `
-          <div class="email">
-            <div class="email-from">From: ${email.from}</div>
-            <div class="email-subject">Subject: ${email.subject}</div>
-            <div style="margin-top:8px;">${email.body}</div>
-          </div>
-        `).join('');
+      if(data.length > 0) {
+        let html = '';
+        for(let msg of data) {
+          const detail = await fetch(`${API}?action=readMessage&login=${username}&domain=${domain}&id=${msg.id}`);
+          const mail = await detail.json();
+          html += `
+            <div class="email">
+              <div class="email-from">From: ${mail.from}</div>
+              <div class="email-subject">Subject: ${mail.subject}</div>
+              <div style="margin-top:8px;">${mail.body}</div>
+            </div>
+          `;
+        }
+        document.getElementById('emails').innerHTML = html;
       } else {
         document.getElementById('emails').innerHTML = '<p style="text-align:center; color:#999;">No emails yet. Send mail to this address</p>';
       }
     } catch(e) {
-      document.getElementById('emails').innerHTML = '<p style="color:red;">Error loading. Wait 1min then refresh</p>';
+      document.getElementById('emails').innerHTML = '<p style="color:red;">Error loading</p>';
     }
   }
 
@@ -98,4 +126,4 @@
   }
 </script>
 </body>
-  </html>
+</html>
