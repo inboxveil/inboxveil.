@@ -14,7 +14,7 @@
     .tag { background: #eef2ff; color: #4a6bff; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
     .row { display: flex; gap: 10px; margin-bottom: 10px; }
     input, select { width: 100%; padding: 14px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 16px; }
-    select { flex: 1; }
+    select { width: 100px; }
     button { width: 100%; padding: 14px; background: linear-gradient(90deg, #4a6bff, #6a8aff); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; margin: 10px 0; }
     .email-box { border: 2px dashed #4a6bff; border-radius: 10px; padding: 15px; margin: 15px 0; background: #f5f7ff; display: flex; justify-content: space-between; align-items: center; }
     .copy { color: #4a6bff; cursor: pointer; font-weight: 700; }
@@ -63,16 +63,17 @@
 
 <script>
   let currentEmail = '';
-  const domains = ["1secmail.com", "1secmail.org", "1secmail.net", "2secmail.com", "wuzupmail.net", "wuzupmail.com"];
+  const domains = ["1secmail.com", "1secmail.org", "1secmail.net", "wuzupmail.net", "wuzupmail.com"];
+  // PROXY ADDED
+  const PROXY = 'https://api.allorigins.win/raw?url=';
   const API = 'https://www.1secmail.com/api/v1/';
 
-  // Load domains to dropdown
   domains.forEach(d => {
     document.getElementById('domain').innerHTML += `<option value="${d}">${d}</option>`;
   });
 
   function randomEmail() {
-    const names = ['test', 'user', 'mail', 'temp', 'guest'];
+    const names = ['user', 'mail', 'temp', 'test', 'guest'];
     const rand = names[Math.floor(Math.random()*names.length)] + Math.floor(Math.random()*9999);
     document.getElementById('username').value = rand;
     createInbox();
@@ -95,19 +96,21 @@
     document.getElementById('emails').innerHTML = '<p>Loading...</p>';
     
     try {
-      const res = await fetch(`${API}?action=getMessages&login=${username}&domain=${domain}`);
+      const url = `${API}?action=getMessages&login=${username}&domain=${domain}`;
+      const res = await fetch(PROXY + encodeURIComponent(url));
       const data = await res.json();
       
       if(data.length > 0) {
         let html = '';
         for(let msg of data) {
-          const detail = await fetch(`${API}?action=readMessage&login=${username}&domain=${domain}&id=${msg.id}`);
+          const url2 = `${API}?action=readMessage&login=${username}&domain=${domain}&id=${msg.id}`;
+          const detail = await fetch(PROXY + encodeURIComponent(url2));
           const mail = await detail.json();
           html += `
             <div class="email">
               <div class="email-from">From: ${mail.from}</div>
               <div class="email-subject">Subject: ${mail.subject}</div>
-              <div style="margin-top:8px;">${mail.body}</div>
+              <div style="margin-top:8px;">${mail.textBody || mail.body}</div>
             </div>
           `;
         }
@@ -116,7 +119,7 @@
         document.getElementById('emails').innerHTML = '<p style="text-align:center; color:#999;">No emails yet. Send mail to this address</p>';
       }
     } catch(e) {
-      document.getElementById('emails').innerHTML = '<p style="color:red;">Error loading</p>';
+      document.getElementById('emails').innerHTML = '<p style="color:red;">Error loading. Wait 10s then refresh</p>';
     }
   }
 
