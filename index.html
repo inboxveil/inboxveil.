@@ -3,130 +3,101 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>InboxVeil - Disposable Emails</title>
+  <title>InboxVeil - Free Disposable Email</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-    body { background: #f5f7ff; padding: 20px; display: flex; justify-content: center; }
-    .container { max-width: 500px; width: 100%; background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-    .logo { color: #4a6bff; font-weight: 700; font-size: 20px; margin-bottom: 10px; }
-    h1 { color: #4a6bff; font-size: 24px; margin-bottom: 10px; }
-    .tags { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
-    .tag { background: #eef2ff; color: #4a6bff; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
-    .row { display: flex; gap: 10px; margin-bottom: 10px; }
-    input, select { width: 100%; padding: 14px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 16px; }
-    select { width: 100px; }
-    button { width: 100%; padding: 14px; background: linear-gradient(90deg, #4a6bff, #6a8aff); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; margin: 10px 0; }
-    .email-box { border: 2px dashed #4a6bff; border-radius: 10px; padding: 15px; margin: 15px 0; background: #f5f7ff; display: flex; justify-content: space-between; align-items: center; }
-    .copy { color: #4a6bff; cursor: pointer; font-weight: 700; }
-    .refresh { background: white; color: #4a6bff; border: 2px solid #4a6bff; }
-    .emails { margin-top: 20px; }
-    .email { background: #f5f7ff; padding: 15px; border-radius: 10px; margin-bottom: 10px; }
-    .email-from { font-weight: 700; }
-    .email-subject { color: #666; }
-    .btn-row { display: flex; gap: 10px; }
-    .btn-row button { flex: 1; }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:linear-gradient(135deg,#05050F 0%,#0A0A1A 100%);color:white;font-family:'Segoe UI', sans-serif;min-height:100vh}
+ .container{max-width:900px;margin:auto;padding:20px}
+ .logo{font-size:24px;font-weight:800;display:flex;gap:12px;align-items:center;padding:20px 0}
+ .logo-box{background:linear-gradient(135deg,#8B5CF6,#EC4899);padding:10px 14px;border-radius:14px;font-size:20px}
+    h1{text-align:center;font-size:32px;margin:10px 0 30px;background:linear-gradient(90deg,#8B5CF6,#EC4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800}
+ .box{background:rgba(15,15,30,0.8);border:1px solid rgba(139,92,246,0.4);border-radius:20px;padding:25px}
+ .input-group{display:flex;gap:10px;margin-bottom:15px}
+ .input{background:#0A0A1A;border:2px solid #8B5CF6;padding:14px;border-radius:12px;color:white;width:100%;font-size:16px}
+ .domain{background:#0A0A1A;border:2px solid #8B5CF6;padding:14px;border-radius:12px;color:#A78BFA;font-weight:bold}
+ .email-display{background:#0A0A1A;border:2px dashed #8B5CF6;padding:15px;border-radius:12px;display:flex;justify-content:space-between;margin:15px 0;word-break:break-all}
+ .btn{background:linear-gradient(90deg,#8B5CF6,#EC4899);border:none;padding:14px;border-radius:12px;color:white;font-weight:bold;width:100%;margin-top:10px;cursor:pointer;font-size:16px}
+ .mail{background:#0A0A1A;padding:18px;border-radius:12px;margin-bottom:12px;border-left:4px solid #EC4899}
+ .mail-body{background:#000;padding:14px;border-radius:8px;margin-top:10px;white-space:pre-wrap;word-break:break-all;color:#4ADE80;font-family:'Courier New', monospace}
+ .error{color:#F87171;text-align:center;padding:10px}
+ .loading{text-align:center;padding:10px;color:#A78BFA}
+ .success{color:#4ADE80;text-align:center;padding:10px}
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="logo">InboxVeil</div>
-    <h1>Disposable Emails. Built for Developers.</h1>
-    <div class="tags">
-      <span class="tag">No Signup</span>
-      <span class="tag">Free API</span>
-      <span class="tag">Auto-delete</span>
-    </div>
-
-    <p style="color:#666; margin-bottom:10px;">Type any username, pick a domain</p>
-
-    <div class="row">
-      <input type="text" id="username" placeholder="username">
-      <select id="domain"></select>
-    </div>
-    
-    <div class="btn-row">
-      <button onclick="randomEmail()">🎲 Random</button>
-      <button onclick="createInbox()">Create Inbox</button>
-    </div>
-    
-    <div class="email-box">
-      <span id="fullEmail">Your email will appear here</span>
-      <span class="copy" onclick="copyEmail()">Copy</span>
-    </div>
-    
-    <button class="refresh" onclick="refreshInbox()">Refresh Inbox 🔄</button>
-    
-    <div class="emails" id="emails">
-      <p style="text-align:center; color:#999;">No emails yet</p>
+    <div class="logo"><div class="logo-box">✉️</div> InboxVeil</div>
+    <h1>Free Disposable Email</h1>
+    <div class="box">
+      <div class="input-group">
+        <input type="text" id="customName" class="input" placeholder="type name: facebook123">
+        <div class="domain">@catchmail.io</div>
+      </div>
+      <button class="btn" onclick="generateEmail()">Generate Email</button>
+      <div class="email-display">
+        <span id="email">Your email will appear here</span>
+        <span onclick="copyEmail()" style="color:#EC4899;cursor:pointer;font-weight:bold">Copy</span>
+      </div>
+      <button class="btn" id="refBtn" onclick="checkInbox()">Refresh Inbox 🔄</button>
+      <div id="status"></div>
+      <div id="inbox"><div style="text-align:center;color:#888;padding:30px">No emails yet</div></div>
     </div>
   </div>
 
 <script>
-  let currentEmail = '';
-  const domains = ["1secmail.com", "1secmail.org", "1secmail.net", "wuzupmail.net", "wuzupmail.com"];
-  // PROXY ADDED
-  const PROXY = 'https://api.allorigins.win/raw?url=';
-  const API = 'https://www.1secmail.com/api/v1/';
+let address = '';
 
-  domains.forEach(d => {
-    document.getElementById('domain').innerHTML += `<option value="${d}">${d}</option>`;
-  });
-
-  function randomEmail() {
-    const names = ['user', 'mail', 'temp', 'test', 'guest'];
-    const rand = names[Math.floor(Math.random()*names.length)] + Math.floor(Math.random()*9999);
-    document.getElementById('username').value = rand;
-    createInbox();
+window.onload = function(){
+  let saved = localStorage.getItem('inboxveil_address');
+  if(saved){
+    address = saved;
+    document.getElementById('email').innerText = address;
+    document.getElementById('customName').value = address.split('@')[0];
+    checkInbox();
   }
+}
 
-  async function createInbox() {
-    const username = document.getElementById('username').value.trim();
-    const domain = document.getElementById('domain').value;
-    if(!username) return alert('Type a username first');
-    
-    currentEmail = username + '@' + domain;
-    document.getElementById('fullEmail').innerText = currentEmail;
-    refreshInbox();
-  }
+function generateEmail(){
+  let name = document.getElementById('customName').value.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+  if(name === ''){alert('Type a name first!');return;}
+  address = `${name}@catchmail.io`;
+  localStorage.setItem('inboxveil_address', address);
+  document.getElementById('email').innerText = address;
+  document.getElementById('status').innerHTML = '<div class="success">✓ Email ready!</div>';
+}
 
-  async function refreshInbox() {
-    if(!currentEmail) return alert('Create an inbox first');
+async function checkInbox(){
+  if(!address){alert('Generate email first!');return;}
+  document.getElementById('refBtn').innerText = 'Refreshing...';
+  document.getElementById('status').innerHTML = '<div class="loading">Checking for new emails...</div>';
+  try{
+    let res = await fetch(`/.netlify/functions/mail?address=${address}`);
+    let data = await res.json();
+    if(data.error) throw new Error(data.error);
     
-    const [username, domain] = currentEmail.split('@');
-    document.getElementById('emails').innerHTML = '<p>Loading...</p>';
-    
-    try {
-      const url = `${API}?action=getMessages&login=${username}&domain=${domain}`;
-      const res = await fetch(PROXY + encodeURIComponent(url));
-      const data = await res.json();
-      
-      if(data.length > 0) {
-        let html = '';
-        for(let msg of data) {
-          const url2 = `${API}?action=readMessage&login=${username}&domain=${domain}&id=${msg.id}`;
-          const detail = await fetch(PROXY + encodeURIComponent(url2));
-          const mail = await detail.json();
-          html += `
-            <div class="email">
-              <div class="email-from">From: ${mail.from}</div>
-              <div class="email-subject">Subject: ${mail.subject}</div>
-              <div style="margin-top:8px;">${mail.textBody || mail.body}</div>
-            </div>
-          `;
-        }
-        document.getElementById('emails').innerHTML = html;
-      } else {
-        document.getElementById('emails').innerHTML = '<p style="text-align:center; color:#999;">No emails yet. Send mail to this address</p>';
+    let messages = data.messages || [];
+    if(messages.length === 0){
+      document.getElementById('inbox').innerHTML = '<div style="text-align:center;color:#888;padding:30px">No emails yet. Wait 15s and refresh</div>';
+    }else{
+      let html = '';
+      for(let m of messages){
+        html += `<div class="mail">
+          <b>From:</b> ${m.from}<br>
+          <b>Subject:</b> ${m.subject}<br>
+          <b>Time:</b> ${new Date(m.date).toLocaleString()}<br>
+          <div class="mail-body">${m.body}</div>
+        </div>`;
       }
-    } catch(e) {
-      document.getElementById('emails').innerHTML = '<p style="color:red;">Error loading. Wait 10s then refresh</p>';
+      document.getElementById('inbox').innerHTML = html;
+      document.getElementById('status').innerHTML = '';
     }
+  }catch(e){
+    document.getElementById('status').innerHTML = `<div class="error">Error: ${e.message}</div>`;
   }
+  document.getElementById('refBtn').innerText = 'Refresh Inbox 🔄';
+}
 
-  function copyEmail() {
-    navigator.clipboard.writeText(currentEmail);
-    alert('Copied: ' + currentEmail);
-  }
+function copyEmail(){if(address)navigator.clipboard.writeText(address)}
 </script>
 </body>
 </html>
