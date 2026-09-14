@@ -7,21 +7,21 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
     body { background: #f5f7ff; padding: 20px; display: flex; justify-content: center; }
-   .container { max-width: 500px; width: 100%; background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-   .logo { color: #4a6bff; font-weight: 700; font-size: 20px; margin-bottom: 10px; }
+  .container { max-width: 500px; width: 100%; background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+  .logo { color: #4a6bff; font-weight: 700; font-size: 20px; margin-bottom: 10px; }
     h1 { color: #4a6bff; font-size: 24px; margin-bottom: 10px; }
-   .tags { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
-   .tag { background: #eef2ff; color: #4a6bff; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+  .tags { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+  .tag { background: #eef2ff; color: #4a6bff; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
     input { width: 100%; padding: 14px; border: 2px solid #e5e7eb; border-radius: 10px; margin-bottom: 10px; font-size: 16px; }
-   .domain { color: #4a6bff; font-weight: 700; }
+  .domain { color: #4a6bff; font-weight: 700; background: #f5f7ff; }
     button { width: 100%; padding: 14px; background: linear-gradient(90deg, #4a6bff, #6a8aff); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; margin: 10px 0; }
-   .email-box { border: 2px dashed #4a6bff; border-radius: 10px; padding: 15px; margin: 15px 0; background: #f5f7ff; display: flex; justify-content: space-between; align-items: center; }
-   .copy { color: #4a6bff; cursor: pointer; font-weight: 700; }
-   .refresh { background: white; color: #4a6bff; border: 2px solid #4a6bff; }
-   .emails { margin-top: 20px; }
-   .email { background: #f5f7ff; padding: 15px; border-radius: 10px; margin-bottom: 10px; }
-   .email-from { font-weight: 700; }
-   .email-subject { color: #666; }
+  .email-box { border: 2px dashed #4a6bff; border-radius: 10px; padding: 15px; margin: 15px 0; background: #f5f7ff; display: flex; justify-content: space-between; align-items: center; }
+  .copy { color: #4a6bff; cursor: pointer; font-weight: 700; }
+  .refresh { background: white; color: #4a6bff; border: 2px solid #4a6bff; }
+  .emails { margin-top: 20px; }
+  .email { background: #f5f7ff; padding: 15px; border-radius: 10px; margin-bottom: 10px; }
+  .email-from { font-weight: 700; }
+  .email-subject { color: #666; }
   </style>
 </head>
 <body>
@@ -53,7 +53,8 @@
 
 <script>
   let currentEmail = '';
-  const API = 'https://api.catchmail.io'; // REAL API
+  // PROXY ADDED - So we fit bypass CORS error
+  const API = 'https://api.allorigins.win/raw?url=https://api.catchmail.io';
 
   async function createInbox() {
     const username = document.getElementById('username').value.trim();
@@ -71,7 +72,7 @@
     document.getElementById('emails').innerHTML = '<p>Loading...</p>';
     
     try {
-      // Catchmail API to get emails
+      // Using proxy to get emails
       const res = await fetch(`${API}/inboxes/${username}`);
       const data = await res.json();
       
@@ -87,7 +88,7 @@
         document.getElementById('emails').innerHTML = '<p style="text-align:center; color:#999;">No emails yet. Send mail to this address</p>';
       }
     } catch(e) {
-      document.getElementById('emails').innerHTML = '<p style="color:red;">Error loading. Try again</p>';
+      document.getElementById('emails').innerHTML = '<p style="color:red;">Error loading. Wait 1min then refresh</p>';
     }
   }
 
@@ -97,4 +98,4 @@
   }
 </script>
 </body>
-</html>
+  </html>
