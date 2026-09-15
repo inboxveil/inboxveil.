@@ -20,7 +20,7 @@ button,input{font:inherit}button{cursor:pointer}
 .mailbox{padding:18px;border:1px solid var(--border);border-radius:20px;background:linear-gradient(145deg,rgba(0,205,164,.12),rgba(7,140,240,.07))}
 .label{margin-bottom:8px;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.5px}
 .address-row{display:flex;align-items:center;gap:8px}
-.address{flex:1;min-width:0;font-size:18px;font-weight:800;word-break:break-all}
+.address{flex:1;min-width:0;font-size:16px;font-weight:800;word-break:break-all}
 .copy{flex-shrink:0;border:0;border-radius:10px;padding:10px 12px;background:#1b2941;color:white;font-size:12px;font-weight:700}
 .mailbox-status{display:flex;justify-content:space-between;gap:10px;margin-top:14px;color:var(--muted);font-size:11px}
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:15px}
@@ -83,7 +83,7 @@ button,input{font:inherit}button{cursor:pointer}
 <div class="inbox-header"><div class="inbox-title">Inbox <span id="unread" class="badge">0</span></div><button class="refresh-small" onclick="refreshInbox()">Refresh</button></div>
 <div id="emailList" class="email-list"></div>
 </section>
-<footer class="footer">Free temporary email powered by <a href="https://catchmail.io/" target="_blank">Catchmail.io</a><br>Messages are provided through the Catchmail API.</footer>
+<footer class="footer">Free temporary email powered by <a href="https://catchmail.io/" target="_blank">Catchmail.io</a></footer>
 </main>
 </div>
 <div id="messageModal" class="modal" onclick="outsideMessage(event)">
@@ -94,7 +94,11 @@ button,input{font:inherit}button{cursor:pointer}
 </div>
 <script>
 const API = "https://api.catchmail.io";
-const PROXY = "https://api.codetabs.com/v1/proxy?quest=";
+const PROXIES = [
+  "https://corsproxy.io/?",
+  "https://api.allorigins.win/raw?url=",
+  "https://thingproxy.freeboard.name/fetch/"
+];
 let mailbox = localStorage.getItem("catchmail_address");
 let messages = [];
 let refreshTimer = null;
@@ -102,8 +106,20 @@ let seconds = 10;
 function $(id){return document.getElementById(id)}
 function escapeHTML(v){if(v==null)return"";return String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
 function stripHTML(h){const d=document.createElement("div");d.innerHTML=h;return d.textContent||d.innerText||""}
-function showStatus(t,type="info"){const b=$("status");b.textContent=t;b.className="status show "+type;setTimeout(()=>{b.className="status"},3000)}
+function showStatus(t,type="info"){const b=$("status");b.textContent=t;b.className="status show "+type;setTimeout(()=>{b.className="status"},3500)}
 function generateLocalPart(){const l="abcdefghijklmnopqrstuvwxyz";let n="";for(let i=0;i<9;i++){n+=l[Math.floor(Math.random()*l.length)]}return n+Math.floor(100+Math.random()*900)}
+
+async function fetchWithProxy(url, options={}){
+  for(let proxy of PROXIES){
+    try{
+      const res = await fetch(proxy+encodeURIComponent(url), {cache:"no-store", ...options});
+      if(res.ok) return res;
+    }catch(e){ continue; }
+  }
+  // last try direct (for local testing)
+  return fetch(url, {cache:"no-store", ...options});
+}
+
 function newEmail(){
   if(mailbox && !confirm("Create a new temporary email address? Your current address will be replaced.")) return;
   mailbox=generateLocalPart()+"@catchmail.io";
@@ -133,8 +149,7 @@ async function refreshInbox(){
   $("accountStatus").textContent="Checking inbox...";
   try{
     const url = API+"/api/v1/mailbox?address="+encodeURIComponent(mailbox)+"&page=1&page_size=50";
-    const response = await fetch(PROXY+encodeURIComponent(url),{cache:"no-store"});
-    if(!response.ok) throw new Error("HTTP "+response.status);
+    const response = await fetchWithProxy(url);
     const data = await response.json();
     messages = Array.isArray(data.messages) ? data.messages : [];
     $("accountStatus").textContent="Mailbox active";
@@ -143,9 +158,9 @@ async function refreshInbox(){
     seconds=10;updateTimer();
   }catch(error){
     console.error(error);
-    $("accountStatus").textContent="Connection error";
+    $("accountStatus").textContent="Connection error - retrying...";
     $("accountStatus").style.color="#ff829c";
-    $("emailList").innerHTML=`<div class="empty"><div class="empty-icon">⚠️</div><div class="empty-title">Could not load inbox</div><div class="empty-text">${escapeHTML(error.message)}<br><br>Tap Refresh to try again.</div></div>`;
+    setTimeout(refreshInbox, 3000);
   }
 }
 function renderMessages(){
@@ -177,8 +192,7 @@ async function openMessage(message){
   $("messageModal").classList.add("show");
   try{
     const url=API+"/api/v1/message/"+encodeURIComponent(message.id)+"?mailbox="+encodeURIComponent(mailbox);
-    const response=await fetch(PROXY+encodeURIComponent(url),{cache:"no-store"});
-    if(!response.ok) throw new Error("HTTP "+response.status);
+    const response=await fetchWithProxy(url);
     const full=await response.json();
     markAsRead(String(message.id));
     renderFullMessage(full);
@@ -198,16 +212,16 @@ function renderFullMessage(message){
   const text=body.text||stripHTML(body.html||"")||"This email has no text content.";
   const from=message.from||"Unknown";
   let to=Array.isArray(message.to)?message.to.join(", "):mailbox;
-  $("messageContent").innerHTML=`<div class="message-meta"><div class="meta"><div class="meta-label">From</div><div class="meta-value">${escapeHTML(from)}</div></div><div class="meta"><div class="meta-label">To</div><div class="meta-value">${escapeHTML(to)}</div></div><div class="meta"><div class="meta-label">Date</div><div class="meta-value">${escapeHTML(formatDate(message.date))}</div></div><div class="meta"><div class="meta-label">Size</div><div class="meta-value">${escapeHTML(formatSize(message.size))}</div></div></div><div class="message-body">${escapeHTML(text)}</div><div class="message-buttons"><button onclick="copyText(${JSON.stringify(text).replace(/"/g,'&quot;')})">Copy</button><button onclick="deleteMessage('${String(message.id)}')">Delete</button></div>`;
+  $("messageContent").innerHTML=`<div class="message-meta"><div class="meta"><div class="meta-label">From</div><div class="meta-value">${escapeHTML(from)}</div></div><div class="meta"><div class="meta-label">To</div><div class="meta-value">${escapeHTML(to)}</div></div><div class="meta"><div class="meta-label">Date</div><div class="meta-value">${escapeHTML(formatDate(message.date))}</div></div></div><div class="message-body">${escapeHTML(text)}</div><div class="message-buttons"><button onclick="copyText('${escapeHTML(text).replace(/'/g,"\\'")}')">Copy</button><button onclick="deleteMessage('${String(message.id)}')">Delete</button></div>`;
 }
 async function deleteMessage(id){
   if(!confirm("Permanently delete this email?")) return;
   try{
     const url=API+"/api/v1/message/"+encodeURIComponent(id)+"?mailbox="+encodeURIComponent(mailbox);
-    const response=await fetch(PROXY+encodeURIComponent(url),{method:"DELETE"});
+    await fetchWithProxy(url,{method:"DELETE"});
     messages=messages.filter(m=>String(m.id)!==String(id));
     closeMessage();renderMessages();showStatus("Email deleted.","success");
-  }catch(error){showStatus("Could not delete email: "+error.message,"error")}
+  }catch(error){showStatus("Could not delete email","error")}
 }
 function clearMailbox(){
   if(!confirm("Remove this temporary email from this browser?")) return;
