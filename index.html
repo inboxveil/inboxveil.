@@ -2,772 +2,717 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#061019">
-<meta name="description" content="InboxVeil - Temporary email made simple.">
 
-<title>InboxVeil - Temporary Email</title>
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+<meta name="theme-color" content="#0b1020">
+
+<title>QuickMail - Temporary Email</title>
 
 <style>
-:root{
-  --bg:#061019;
-  --panel:#0b1721;
-  --panel2:#0f1d28;
-  --panel3:#142531;
-  --primary:#00c2a8;
-  --primary2:#00e0c2;
-  --blue:#1687ff;
-  --text:#f3f8fa;
-  --muted:#8ea3b3;
-  --line:#203340;
-  --danger:#ff5268;
-  --success:#20d69b;
-  --warning:#ffc857;
-  --shadow:0 20px 60px rgba(0,0,0,.35);
-}
-
 *{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 html,body{
-  width:100%;
-  min-height:100%;
-  font-family:Arial,Helvetica,sans-serif;
-  background:var(--bg);
-  color:var(--text);
+    width:100%;
+    min-height:100%;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+    background:#070b14;
+    color:#fff;
 }
 
 body{
-  min-height:100vh;
-  overflow-x:hidden;
+    min-height:100vh;
 }
 
 button,
 input,
 select{
-  font:inherit;
+    font:inherit;
 }
 
 button{
-  cursor:pointer;
+    cursor:pointer;
 }
-
-.hidden{
-  display:none!important;
-}
-
-/* =========================
-   APP
-========================= */
 
 .app{
-  width:100%;
-  min-height:100vh;
-  background:
-    radial-gradient(circle at 10% 0%,rgba(0,194,168,.12),transparent 30%),
-    radial-gradient(circle at 90% 10%,rgba(22,135,255,.12),transparent 28%),
-    var(--bg);
+    width:100%;
+    max-width:900px;
+    min-height:100vh;
+    margin:auto;
+    background:#0b1020;
 }
 
-.container{
-  width:min(1100px,100%);
-  margin:auto;
-  padding:20px;
-}
-
-/* =========================
-   HEADER
-========================= */
+/* ================= HEADER ================= */
 
 .header{
-  height:72px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  border-bottom:1px solid rgba(255,255,255,.06);
-}
+    position:sticky;
+    top:0;
+    z-index:50;
 
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:16px 18px;
+
+    background:#10182a;
+    border-bottom:1px solid rgba(255,255,255,.07);
 }
 
 .logo{
-  width:42px;
-  height:42px;
-  border-radius:13px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(135deg,var(--primary),var(--blue));
-  color:#031017;
-  font-size:23px;
-  font-weight:900;
-  box-shadow:0 8px 25px rgba(0,194,168,.2);
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
 
-.brand h1{
-  font-size:21px;
-  letter-spacing:.3px;
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:12px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:linear-gradient(135deg,#00d4a8,#168cff);
+
+    font-size:20px;
+    font-weight:800;
 }
 
-.brand span{
-  display:block;
-  color:var(--muted);
-  font-size:11px;
-  margin-top:2px;
+.logo-text{
+    font-size:19px;
+    font-weight:800;
 }
 
-.menu-btn{
-  width:44px;
-  height:44px;
-  border:1px solid var(--line);
-  border-radius:12px;
-  background:var(--panel);
-  color:white;
-  font-size:21px;
+.logo-sub{
+    color:#7f8aa3;
+    font-size:11px;
+    margin-top:2px;
 }
 
-/* =========================
-   HERO
-========================= */
+.refresh-btn{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:12px;
 
-.hero{
-  padding:45px 0 28px;
-  text-align:center;
+    background:#18233a;
+    color:#fff;
+
+    font-size:20px;
 }
 
-.hero h2{
-  font-size:clamp(30px,6vw,52px);
-  line-height:1.05;
-  max-width:750px;
-  margin:auto;
-  letter-spacing:-1.5px;
+.refresh-btn:active{
+    transform:scale(.94);
 }
 
-.hero h2 strong{
-  color:var(--primary);
+/* ================= MAIN ================= */
+
+.main{
+    padding:18px;
 }
 
-.hero p{
-  color:var(--muted);
-  max-width:650px;
-  margin:17px auto 0;
-  line-height:1.7;
+/* ================= MAILBOX CARD ================= */
+
+.mailbox-card{
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0,212,168,.13),
+            rgba(22,140,255,.08)
+        );
+
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:20px;
+
+    padding:18px;
+
+    box-shadow:0 20px 50px rgba(0,0,0,.2);
 }
 
-/* =========================
-   GENERATOR
-========================= */
-
-.generator{
-  background:linear-gradient(145deg,rgba(15,29,40,.96),rgba(8,21,30,.96));
-  border:1px solid var(--line);
-  border-radius:24px;
-  padding:22px;
-  box-shadow:var(--shadow);
+.small-label{
+    color:#8490a9;
+    font-size:12px;
+    margin-bottom:8px;
 }
 
-.section-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  margin-bottom:17px;
+.email-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
 }
 
-.section-title h3{
-  font-size:16px;
-}
+.email-address{
+    flex:1;
 
-.badge{
-  font-size:11px;
-  color:var(--primary2);
-  border:1px solid rgba(0,194,168,.25);
-  background:rgba(0,194,168,.08);
-  padding:6px 9px;
-  border-radius:999px;
-}
+    min-width:0;
 
-.provider-row{
-  display:grid;
-  grid-template-columns:180px 1fr;
-  gap:12px;
-}
+    color:#fff;
+    font-size:18px;
+    font-weight:700;
 
-.field{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-
-.field label{
-  color:var(--muted);
-  font-size:12px;
-}
-
-.field input,
-.field select{
-  width:100%;
-  height:50px;
-  border:1px solid var(--line);
-  outline:none;
-  border-radius:13px;
-  background:#08151e;
-  color:white;
-  padding:0 14px;
-}
-
-.field input:focus,
-.field select:focus{
-  border-color:var(--primary);
-  box-shadow:0 0 0 3px rgba(0,194,168,.08);
-}
-
-.address-preview{
-  margin-top:15px;
-  padding:15px;
-  border:1px dashed rgba(0,194,168,.3);
-  background:rgba(0,194,168,.04);
-  border-radius:14px;
-  color:var(--primary2);
-  word-break:break-all;
-  font-size:14px;
-}
-
-.actions{
-  display:flex;
-  gap:10px;
-  margin-top:15px;
-}
-
-.btn{
-  min-height:48px;
-  border:0;
-  border-radius:13px;
-  padding:0 18px;
-  font-weight:700;
-  color:white;
-  background:var(--panel3);
-  border:1px solid var(--line);
-}
-
-.btn:hover{
-  filter:brightness(1.1);
-}
-
-.btn-primary{
-  flex:1;
-  background:linear-gradient(135deg,var(--primary),#008fca);
-  color:#031017;
-  border:0;
-}
-
-.btn-blue{
-  background:var(--blue);
-  border:0;
-}
-
-.btn-danger{
-  background:rgba(255,82,104,.1);
-  color:#ff7182;
-  border-color:rgba(255,82,104,.25);
-}
-
-/* =========================
-   MAILBOX
-========================= */
-
-.mailbox{
-  margin-top:22px;
-  border:1px solid var(--line);
-  background:var(--panel);
-  border-radius:22px;
-  overflow:hidden;
-}
-
-.mailbox-head{
-  padding:20px;
-  border-bottom:1px solid var(--line);
-}
-
-.mailbox-address{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-}
-
-.address{
-  font-size:18px;
-  font-weight:700;
-  word-break:break-all;
-  color:white;
+    word-break:break-all;
 }
 
 .copy-btn{
-  flex-shrink:0;
-  border:1px solid var(--line);
-  background:var(--panel2);
-  color:var(--primary2);
-  border-radius:10px;
-  padding:9px 12px;
+    flex-shrink:0;
+
+    border:none;
+    border-radius:10px;
+
+    background:#1c2941;
+    color:#fff;
+
+    padding:10px 12px;
+
+    font-size:13px;
 }
 
-.mailbox-tools{
-  display:flex;
-  gap:8px;
-  margin-top:15px;
-  flex-wrap:wrap;
+.copy-btn:hover{
+    background:#243554;
 }
 
-.small-btn{
-  height:38px;
-  border-radius:10px;
-  padding:0 13px;
-  background:var(--panel2);
-  color:white;
-  border:1px solid var(--line);
+.mailbox-info{
+    display:flex;
+    justify-content:space-between;
+
+    margin-top:15px;
+
+    color:#7f8aa3;
+    font-size:12px;
 }
+
+/* ================= ACTIONS ================= */
+
+.actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+
+    gap:10px;
+
+    margin-top:14px;
+}
+
+.action-btn{
+    min-height:48px;
+
+    border:none;
+    border-radius:13px;
+
+    color:#fff;
+    font-weight:700;
+
+    background:#17233a;
+}
+
+.action-btn.primary{
+    background:linear-gradient(135deg,#00cda4,#078cf0);
+}
+
+.action-btn.danger{
+    background:#351b27;
+    color:#ff8ca8;
+}
+
+.action-btn:active{
+    transform:scale(.98);
+}
+
+/* ================= STATUS ================= */
 
 .status{
-  margin-top:13px;
-  color:var(--muted);
-  font-size:12px;
+    display:none;
+
+    margin-top:12px;
+
+    padding:12px 14px;
+
+    border-radius:12px;
+
+    background:#131e32;
+
+    color:#aab5ca;
+
+    font-size:13px;
+    line-height:1.5;
 }
 
-.status-dot{
-  display:inline-block;
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:var(--success);
-  margin-right:6px;
+.status.show{
+    display:block;
 }
 
-/* =========================
-   DOMAIN LOADER
-========================= */
-
-.domain-loader{
-  margin-top:12px;
+.status.success{
+    color:#58e7be;
 }
 
-.load-more{
-  width:100%;
-  min-height:42px;
+.status.error{
+    color:#ff7f99;
 }
 
-/* =========================
-   MESSAGES
-========================= */
+/* ================= INBOX ================= */
 
-.messages{
-  min-height:230px;
+.inbox-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    margin-top:25px;
+    margin-bottom:12px;
 }
+
+.inbox-title{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    font-size:18px;
+    font-weight:800;
+}
+
+.badge{
+    min-width:23px;
+    height:23px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:0 7px;
+
+    border-radius:20px;
+
+    background:#00cda4;
+    color:#03130f;
+
+    font-size:11px;
+    font-weight:900;
+}
+
+.inbox-tools{
+    display:flex;
+    gap:8px;
+}
+
+.tool-btn{
+    border:none;
+    border-radius:9px;
+
+    background:#17233a;
+    color:#d7deeb;
+
+    padding:8px 10px;
+
+    font-size:12px;
+}
+
+/* ================= EMAIL LIST ================= */
+
+.email-list{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.email-item{
+    width:100%;
+
+    padding:15px;
+
+    border-radius:15px;
+
+    background:#10192b;
+    border:1px solid rgba(255,255,255,.05);
+
+    transition:.15s;
+}
+
+.email-item:active{
+    transform:scale(.99);
+}
+
+.email-item.unread{
+    background:#12263a;
+    border-color:rgba(0,205,164,.22);
+}
+
+.email-top{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+}
+
+.email-from{
+    min-width:0;
+
+    font-size:14px;
+    font-weight:800;
+
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.email-time{
+    flex-shrink:0;
+
+    color:#68758e;
+    font-size:10px;
+}
+
+.email-subject{
+    margin-top:7px;
+
+    color:#d9dfeb;
+
+    font-size:13px;
+    font-weight:600;
+}
+
+.email-intro{
+    margin-top:6px;
+
+    color:#78859d;
+
+    font-size:12px;
+    line-height:1.45;
+
+    overflow:hidden;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+}
+
+.email-dot{
+    width:8px;
+    height:8px;
+
+    border-radius:50%;
+
+    background:#00d4a8;
+
+    display:inline-block;
+
+    margin-right:7px;
+}
+
+/* ================= EMPTY ================= */
 
 .empty{
-  min-height:230px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  padding:30px;
-  text-align:center;
-  color:var(--muted);
+    padding:55px 20px;
+
+    text-align:center;
+
+    color:#65728b;
 }
 
 .empty-icon{
-  width:64px;
-  height:64px;
-  border-radius:20px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:rgba(0,194,168,.07);
-  color:var(--primary);
-  font-size:28px;
-  margin-bottom:13px;
+    font-size:42px;
+    margin-bottom:12px;
 }
 
-.message{
-  display:flex;
-  gap:14px;
-  padding:17px 20px;
-  border-bottom:1px solid rgba(255,255,255,.055);
-  transition:.2s;
+.empty-title{
+    color:#cbd3e1;
+    font-size:15px;
+    font-weight:700;
 }
 
-.message:hover{
-  background:rgba(255,255,255,.025);
+.empty-text{
+    margin-top:6px;
+
+    font-size:12px;
+    line-height:1.5;
 }
 
-.message-icon{
-  width:44px;
-  height:44px;
-  flex-shrink:0;
-  border-radius:13px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:rgba(22,135,255,.12);
-  color:#5fa9ff;
-}
+/* ================= LOADER ================= */
 
-.message-content{
-  min-width:0;
-  flex:1;
-}
+.loader{
+    width:25px;
+    height:25px;
 
-.message-top{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-}
+    margin:20px auto;
 
-.message-from{
-  font-weight:700;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
+    border:3px solid rgba(255,255,255,.12);
+    border-top-color:#00d4a8;
 
-.message-time{
-  color:var(--muted);
-  font-size:11px;
-  white-space:nowrap;
-}
+    border-radius:50%;
 
-.message-subject{
-  margin-top:5px;
-  font-size:14px;
-  color:#dce7eb;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.message-preview{
-  margin-top:5px;
-  color:var(--muted);
-  font-size:12px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.message.unread{
-  background:rgba(0,194,168,.035);
-}
-
-.unread-dot{
-  width:7px;
-  height:7px;
-  background:var(--primary);
-  border-radius:50%;
-  margin-top:6px;
-}
-
-/* =========================
-   MODAL
-========================= */
-
-.modal{
-  position:fixed;
-  inset:0;
-  z-index:100;
-  background:rgba(0,0,0,.72);
-  backdrop-filter:blur(8px);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:16px;
-}
-
-.modal-box{
-  width:min(850px,100%);
-  max-height:90vh;
-  background:#091721;
-  border:1px solid var(--line);
-  border-radius:20px;
-  overflow:hidden;
-  box-shadow:0 30px 100px rgba(0,0,0,.55);
-  display:flex;
-  flex-direction:column;
-}
-
-.modal-head{
-  padding:17px 18px;
-  border-bottom:1px solid var(--line);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-}
-
-.modal-title{
-  min-width:0;
-}
-
-.modal-title strong{
-  display:block;
-  font-size:16px;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.modal-title span{
-  display:block;
-  color:var(--muted);
-  font-size:11px;
-  margin-top:5px;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.close{
-  width:38px;
-  height:38px;
-  border-radius:10px;
-  background:var(--panel2);
-  color:white;
-  border:1px solid var(--line);
-  flex-shrink:0;
-}
-
-.modal-body{
-  overflow:auto;
-  padding:18px;
-}
-
-.email-meta{
-  padding:14px;
-  background:var(--panel2);
-  border-radius:13px;
-  margin-bottom:15px;
-}
-
-.email-meta div{
-  margin:5px 0;
-  font-size:13px;
-  word-break:break-word;
-}
-
-.email-meta b{
-  color:var(--muted);
-  font-weight:500;
-}
-
-.email-frame{
-  width:100%;
-  min-height:350px;
-  border:1px solid var(--line);
-  border-radius:13px;
-  background:white;
-}
-
-/* =========================
-   SIDE MENU
-========================= */
-
-.drawer-overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.5);
-  z-index:150;
-}
-
-.drawer{
-  position:fixed;
-  top:0;
-  right:0;
-  width:min(350px,90%);
-  height:100%;
-  z-index:151;
-  background:#08151e;
-  border-left:1px solid var(--line);
-  padding:22px;
-  transform:translateX(100%);
-  transition:.25s ease;
-}
-
-.drawer.open{
-  transform:translateX(0);
-}
-
-.drawer-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:25px;
-}
-
-.drawer-header h3{
-  font-size:18px;
-}
-
-.menu-item{
-  width:100%;
-  text-align:left;
-  padding:15px;
-  border-radius:12px;
-  background:transparent;
-  border:1px solid transparent;
-  color:white;
-  margin-bottom:7px;
-}
-
-.menu-item:hover{
-  background:var(--panel2);
-  border-color:var(--line);
-}
-
-.menu-item small{
-  display:block;
-  color:var(--muted);
-  margin-top:4px;
-}
-
-/* =========================
-   TOAST
-========================= */
-
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:25px;
-  transform:translate(-50%,20px);
-  opacity:0;
-  pointer-events:none;
-  z-index:300;
-  background:#10232d;
-  border:1px solid var(--line);
-  padding:12px 17px;
-  border-radius:12px;
-  box-shadow:var(--shadow);
-  transition:.25s;
-  font-size:13px;
-}
-
-.toast.show{
-  opacity:1;
-  transform:translate(-50%,0);
-}
-
-/* =========================
-   LOADING
-========================= */
-
-.loading{
-  padding:35px;
-  text-align:center;
-  color:var(--muted);
-}
-
-.spinner{
-  width:28px;
-  height:28px;
-  border:3px solid rgba(255,255,255,.1);
-  border-top-color:var(--primary);
-  border-radius:50%;
-  animation:spin .8s linear infinite;
-  margin:0 auto 12px;
+    animation:spin .8s linear infinite;
 }
 
 @keyframes spin{
-  to{transform:rotate(360deg)}
+    to{
+        transform:rotate(360deg);
+    }
 }
 
-/* =========================
-   FOOTER
-========================= */
+/* ================= MODAL ================= */
 
-.footer{
-  text-align:center;
-  color:#607583;
-  font-size:11px;
-  padding:30px 10px;
-  line-height:1.7;
+.modal{
+    position:fixed;
+    inset:0;
+
+    z-index:100;
+
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+
+    background:rgba(0,0,0,.72);
+    backdrop-filter:blur(5px);
 }
 
-/* =========================
-   MOBILE
-========================= */
+.modal.show{
+    display:flex;
+}
 
-@media(max-width:650px){
-
-  .container{
-    padding:12px;
-  }
-
-  .header{
-    height:62px;
-  }
-
-  .hero{
-    padding:32px 7px 22px;
-  }
-
-  .hero h2{
-    font-size:34px;
-  }
-
-  .generator{
-    padding:15px;
-    border-radius:18px;
-  }
-
-  .provider-row{
-    grid-template-columns:1fr;
-  }
-
-  .actions{
-    flex-direction:column;
-  }
-
-  .btn{
+.modal-box{
     width:100%;
-  }
+    max-width:900px;
 
-  .mailbox-address{
-    align-items:flex-start;
-  }
+    max-height:90vh;
+    overflow:auto;
 
-  .address{
-    font-size:15px;
-  }
+    background:#10182a;
 
-  .message{
-    padding:14px;
-  }
+    border-radius:22px 22px 0 0;
 
-  .message-icon{
+    padding:20px;
+}
+
+.modal-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:15px;
+
+    margin-bottom:18px;
+}
+
+.modal-title{
+    font-size:18px;
+    font-weight:800;
+}
+
+.close-btn{
     width:38px;
     height:38px;
-  }
 
-  .message-time{
-    font-size:10px;
-  }
+    border:none;
+    border-radius:50%;
 
-  .modal{
-    padding:0;
-  }
+    background:#1b2840;
+    color:#fff;
 
-  .modal-box{
+    font-size:18px;
+}
+
+/* ================= MESSAGE ================= */
+
+.message-meta{
+    padding:14px;
+
+    border-radius:14px;
+
+    background:#0b1220;
+}
+
+.meta-row{
+    display:flex;
+
+    gap:10px;
+
+    margin-bottom:9px;
+}
+
+.meta-label{
+    width:65px;
+
+    flex-shrink:0;
+
+    color:#68758e;
+
+    font-size:11px;
+}
+
+.meta-value{
+    flex:1;
+
+    color:#d9dfeb;
+
+    font-size:12px;
+
+    word-break:break-word;
+}
+
+.message-body{
+    margin-top:14px;
+
+    padding:16px;
+
+    border-radius:15px;
+
+    background:#0b1220;
+
+    color:#dce3ef;
+
+    font-size:14px;
+    line-height:1.65;
+
+    white-space:pre-wrap;
+    word-break:break-word;
+}
+
+.message-actions{
+    display:flex;
+    gap:8px;
+
+    margin-top:14px;
+}
+
+.message-actions button{
+    flex:1;
+
+    min-height:44px;
+
+    border:none;
+    border-radius:11px;
+
+    background:#1b2941;
+    color:#fff;
+}
+
+/* ================= CREATE MODAL ================= */
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-label{
+    display:block;
+
+    color:#8793aa;
+
+    font-size:12px;
+
+    margin-bottom:7px;
+}
+
+.form-input,
+.form-select{
     width:100%;
-    height:100%;
-    max-height:100%;
-    border-radius:0;
-  }
 
-  .email-frame{
-    min-height:450px;
-  }
+    min-height:48px;
+
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:12px;
+
+    background:#0b1220;
+
+    color:#fff;
+
+    padding:0 13px;
+
+    outline:none;
+}
+
+.form-input:focus,
+.form-select:focus{
+    border-color:#00cda4;
+}
+
+.create-btn{
+    width:100%;
+
+    min-height:50px;
+
+    border:none;
+    border-radius:13px;
+
+    background:linear-gradient(135deg,#00cda4,#078cf0);
+
+    color:#fff;
+
+    font-weight:800;
+}
+
+.password-row{
+    display:flex;
+    gap:8px;
+}
+
+.password-row .form-input{
+    flex:1;
+}
+
+.generate-btn{
+    border:none;
+    border-radius:11px;
+
+    padding:0 12px;
+
+    background:#1a2941;
+    color:#fff;
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+    padding:25px 18px 35px;
+
+    text-align:center;
+
+    color:#59657d;
+
+    font-size:11px;
+    line-height:1.6;
+}
+
+.footer a{
+    color:#6edfc5;
+    text-decoration:none;
+}
+
+/* ================= DESKTOP ================= */
+
+@media(min-width:700px){
+
+    body{
+        padding:20px;
+    }
+
+    .app{
+        min-height:calc(100vh - 40px);
+
+        border-radius:24px;
+
+        overflow:hidden;
+
+        box-shadow:
+            0 30px 80px rgba(0,0,0,.45);
+    }
+
+    .modal{
+        align-items:center;
+    }
+
+    .modal-box{
+        border-radius:22px;
+
+        max-width:650px;
+    }
 }
 </style>
 </head>
@@ -776,447 +721,551 @@ button{
 
 <div class="app">
 
-<div class="container">
+    <!-- HEADER -->
+    <header class="header">
 
-<header class="header">
-  <div class="brand">
-    <div class="logo">◈</div>
-    <div>
-      <h1>InboxVeil</h1>
-      <span>Private temporary inbox</span>
-    </div>
-  </div>
+        <div class="logo">
 
-  <button class="menu-btn" onclick="openDrawer()">☰</button>
-</header>
+            <div class="logo-icon">
+                @
+            </div>
 
+            <div>
+                <div class="logo-text">
+                    QuickMail
+                </div>
 
-<section class="hero">
-  <h2>
-    Temporary Email<br>
-    <strong>Behind the Veil.</strong>
-  </h2>
+                <div class="logo-sub">
+                    Temporary email inbox
+                </div>
+            </div>
 
-  <p>
-    Create a temporary inbox, receive emails instantly,
-    and keep your real email address private.
-  </p>
-</section>
-
-
-<section class="generator">
-
-  <div class="section-title">
-    <h3>Create your temporary inbox</h3>
-    <span class="badge">FREE</span>
-  </div>
-
-  <div class="provider-row">
-
-    <div class="field">
-      <label>Email provider</label>
-
-      <select id="provider" onchange="providerChanged()">
-        <option value="mailtm">Mail.tm</option>
-        <option value="catchmail">Catchmail</option>
-      </select>
-    </div>
-
-    <div class="field">
-      <label>Username</label>
-
-      <input
-        id="username"
-        type="text"
-        autocomplete="off"
-        placeholder="example"
-        oninput="updatePreview()"
-      >
-    </div>
-
-  </div>
-
-  <div class="field" style="margin-top:12px;">
-    <label>Domain</label>
-
-    <select id="domainSelect" onchange="updatePreview()">
-      <option value="">Loading domains...</option>
-    </select>
-  </div>
-
-  <div class="address-preview" id="addressPreview">
-    Your temporary address will appear here
-  </div>
-
-  <div class="domain-loader hidden" id="domainLoader">
-    <button
-      class="btn small-btn load-more"
-      id="loadMoreDomains"
-      onclick="loadMoreDomains()"
-    >
-      Load More Domains
-    </button>
-  </div>
-
-  <div class="actions">
-    <button class="btn btn-primary" onclick="createInbox()">
-      Create Temporary Inbox
-    </button>
-  </div>
-
-</section>
-
-
-<section class="mailbox hidden" id="mailbox">
-
-  <div class="mailbox-head">
-
-    <div class="mailbox-address">
-
-      <div class="address" id="currentAddress">
-        -
-      </div>
-
-      <button class="copy-btn" onclick="copyAddress()">
-        Copy
-      </button>
-
-    </div>
-
-    <div class="mailbox-tools">
-
-      <button class="small-btn" onclick="refreshInbox()">
-        ↻ Refresh
-      </button>
-
-      <button class="small-btn" onclick="newInbox()">
-        + New Inbox
-      </button>
-
-    </div>
-
-    <div class="status" id="status">
-      <span class="status-dot"></span>
-      Ready
-    </div>
-
-  </div>
-
-
-  <div class="messages" id="messages">
-
-    <div class="empty">
-      <div class="empty-icon">✉</div>
-
-      <strong>No messages yet</strong>
-
-      <p style="margin-top:7px;">
-        Emails sent to this address will appear here.
-      </p>
-    </div>
-
-  </div>
-
-</section>
-
-
-<footer class="footer">
-  InboxVeil is a temporary email interface.<br>
-  Do not use temporary email for sensitive or important accounts.
-</footer>
-
-</div>
-</div>
-
-
-<!-- EMAIL MODAL -->
-
-<div class="modal hidden" id="emailModal">
-
-  <div class="modal-box">
-
-    <div class="modal-head">
-
-      <div class="modal-title">
-        <strong id="modalSubject">Message</strong>
-        <span id="modalFrom"></span>
-      </div>
-
-      <button class="close" onclick="closeModal()">×</button>
-
-    </div>
-
-    <div class="modal-body">
-
-      <div class="email-meta">
-
-        <div>
-          <b>From:</b>
-          <span id="metaFrom"></span>
         </div>
-
-        <div>
-          <b>To:</b>
-          <span id="metaTo"></span>
-        </div>
-
-        <div>
-          <b>Date:</b>
-          <span id="metaDate"></span>
-        </div>
-
-      </div>
-
-      <iframe
-        id="emailFrame"
-        class="email-frame"
-        sandbox="allow-same-origin"
-      ></iframe>
-
-      <div style="display:flex;gap:8px;margin-top:12px;">
 
         <button
-          class="btn btn-danger"
-          onclick="deleteCurrentMessage()"
-          style="flex:1;"
-        >
-          Delete Message
+            class="refresh-btn"
+            onclick="refreshInbox()"
+            title="Refresh inbox">
+            ↻
         </button>
 
-      </div>
+    </header>
 
-    </div>
 
-  </div>
+    <main class="main">
+
+        <!-- MAILBOX -->
+        <section class="mailbox-card">
+
+            <div class="small-label">
+                YOUR TEMPORARY EMAIL
+            </div>
+
+            <div class="email-row">
+
+                <div
+                    id="emailAddress"
+                    class="email-address">
+                    Loading...
+                </div>
+
+                <button
+                    class="copy-btn"
+                    onclick="copyAddress()">
+                    Copy
+                </button>
+
+            </div>
+
+
+            <div class="mailbox-info">
+
+                <span id="accountStatus">
+                    Connecting...
+                </span>
+
+                <span id="mailboxTimer">
+                    Auto refresh: 10s
+                </span>
+
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    class="action-btn primary"
+                    onclick="openCreateModal()">
+                    + New Email
+                </button>
+
+                <button
+                    class="action-btn"
+                    onclick="copyPassword()">
+                    Copy Password
+                </button>
+
+                <button
+                    class="action-btn"
+                    onclick="refreshInbox()">
+                    Refresh Inbox
+                </button>
+
+                <button
+                    class="action-btn danger"
+                    onclick="deleteMailbox()">
+                    Delete Mailbox
+                </button>
+
+            </div>
+
+
+            <div
+                id="status"
+                class="status">
+            </div>
+
+        </section>
+
+
+        <!-- INBOX -->
+
+        <section>
+
+            <div class="inbox-header">
+
+                <div class="inbox-title">
+
+                    Inbox
+
+                    <span
+                        id="unreadBadge"
+                        class="badge">
+                        0
+                    </span>
+
+                </div>
+
+                <div class="inbox-tools">
+
+                    <button
+                        class="tool-btn"
+                        onclick="refreshInbox()">
+                        Refresh
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="emailList"
+                class="email-list">
+
+                <div class="empty">
+
+                    <div class="loader"></div>
+
+                    <div class="empty-title">
+                        Loading inbox...
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <footer class="footer">
+
+            Powered by
+            <a
+                href="https://mail.tm"
+                target="_blank"
+                rel="noopener">
+                Mail.tm
+            </a>
+
+            <br>
+
+            This website uses the Mail.tm API.
+            Mail.tm currently requires visible attribution
+            when using its API.
+
+        </footer>
+
+    </main>
 
 </div>
 
 
-<!-- DRAWER -->
+<!-- ================= CREATE MAILBOX MODAL ================= -->
 
 <div
-  class="drawer-overlay hidden"
-  id="drawerOverlay"
-  onclick="closeDrawer()"
-></div>
+    id="createModal"
+    class="modal"
+    onclick="closeModalOutside(event)">
 
-<aside class="drawer" id="drawer">
+    <div class="modal-box">
 
-  <div class="drawer-header">
-    <h3>InboxVeil</h3>
+        <div class="modal-header">
 
-    <button class="close" onclick="closeDrawer()">×</button>
-  </div>
+            <div class="modal-title">
+                Create Temporary Email
+            </div>
 
-  <button class="menu-item" onclick="newInbox();closeDrawer();">
-    ✉ New Inbox
-    <small>Create another temporary email.</small>
-  </button>
+            <button
+                class="close-btn"
+                onclick="closeCreateModal()">
+                ×
+            </button>
 
-  <button class="menu-item" onclick="copyAddress();closeDrawer();">
-    ⧉ Copy Address
-    <small>Copy your current temporary address.</small>
-  </button>
-
-  <button class="menu-item" onclick="refreshInbox();closeDrawer();">
-    ↻ Refresh Inbox
-    <small>Check for new messages.</small>
-  </button>
-
-  <button class="menu-item" onclick="showAbout();">
-    ℹ About
-    <small>About InboxVeil.</small>
-  </button>
-
-  <button class="menu-item" onclick="showPrivacy();">
-    🔒 Privacy
-    <small>Temporary email privacy information.</small>
-  </button>
-
-  <button class="menu-item" onclick="clearSavedInbox();">
-    🗑 Clear Saved Inbox
-    <small>Remove the locally saved inbox.</small>
-  </button>
-
-</aside>
+        </div>
 
 
-<div class="toast" id="toast"></div>
+        <div class="form-group">
+
+            <label class="form-label">
+                Username
+            </label>
+
+            <input
+                id="usernameInput"
+                class="form-input"
+                type="text"
+                autocomplete="off"
+                placeholder="example123">
+
+        </div>
 
 
-<script type="module">
+        <div class="form-group">
 
-/* =====================================================
-   API CONFIGURATION
-===================================================== */
+            <label class="form-label">
+                Domain
+            </label>
 
-const CATCHMAIL_API =
-  "https://api.catchmail.io/api/v1";
+            <select
+                id="domainSelect"
+                class="form-select">
 
-const MAILTM_API =
-  "https://api.mail.tm";
+                <option value="">
+                    Loading domains...
+                </option>
+
+            </select>
+
+        </div>
 
 
-/* =====================================================
-   APPLICATION STATE
-===================================================== */
+        <div class="form-group">
 
-const state = {
+            <label class="form-label">
+                Password
+            </label>
 
-  provider: "mailtm",
+            <div class="password-row">
 
-  address: "",
+                <input
+                    id="passwordInput"
+                    class="form-input"
+                    type="text"
+                    autocomplete="off">
 
-  password: "",
+                <button
+                    class="generate-btn"
+                    onclick="generatePassword()">
+                    Generate
+                </button>
 
-  token: "",
+            </div>
 
-  messages: [],
+        </div>
 
-  currentMessage: null,
 
-  mailTmPage: 1,
+        <div
+            id="createError"
+            class="status">
+        </div>
 
-  mailTmTotal: 0,
 
-  mailTmLoadedDomains: [],
+        <button
+            id="createBtn"
+            class="create-btn"
+            onclick="createMailbox()">
 
-  mailTmHasNext: true,
+            Create Email
 
-  catchmailDomain: "catchmail.io"
+        </button>
 
+    </div>
+
+</div>
+
+
+<!-- ================= MESSAGE MODAL ================= -->
+
+<div
+    id="messageModal"
+    class="modal"
+    onclick="closeMessageOutside(event)">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <div
+                id="messageTitle"
+                class="modal-title">
+                Email
+            </div>
+
+            <button
+                class="close-btn"
+                onclick="closeMessage()">
+                ×
+            </button>
+
+        </div>
+
+
+        <div
+            id="messageContent">
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+/* =========================================================
+   QUICKMAIL
+   MAIL.TM API CLIENT
+========================================================= */
+
+const API = "https://api.mail.tm";
+
+let domains = [];
+
+let currentAccount = {
+    id: null,
+    address: null,
+    password: null,
+    token: null
 };
 
+let messages = [];
 
-/* =====================================================
-   ELEMENTS
-===================================================== */
+let refreshInterval = null;
 
-const provider =
-  document.getElementById("provider");
-
-const username =
-  document.getElementById("username");
-
-const domainSelect =
-  document.getElementById("domainSelect");
-
-const addressPreview =
-  document.getElementById("addressPreview");
-
-const mailbox =
-  document.getElementById("mailbox");
-
-const currentAddress =
-  document.getElementById("currentAddress");
-
-const messages =
-  document.getElementById("messages");
-
-const status =
-  document.getElementById("status");
-
-const domainLoader =
-  document.getElementById("domainLoader");
-
-const loadMoreDomains =
-  document.getElementById("loadMoreDomains");
-
-const emailModal =
-  document.getElementById("emailModal");
-
-const modalSubject =
-  document.getElementById("modalSubject");
-
-const modalFrom =
-  document.getElementById("modalFrom");
-
-const metaFrom =
-  document.getElementById("metaFrom");
-
-const metaTo =
-  document.getElementById("metaTo");
-
-const metaDate =
-  document.getElementById("metaDate");
-
-const emailFrame =
-  document.getElementById("emailFrame");
+let countdown = 10;
 
 
-/* =====================================================
-   INITIALIZATION
-===================================================== */
+/* =========================================================
+   DOM HELPERS
+========================================================= */
 
-document.addEventListener("DOMContentLoaded", async () => {
+function $(id){
+    return document.getElementById(id);
+}
 
-  providerChanged();
 
-  await loadMailTmDomains(true);
+/* =========================================================
+   STATUS
+========================================================= */
 
-  restoreSavedInbox();
+function showStatus(message, type = ""){
 
-  setInterval(() => {
+    const el = $("status");
 
-    if(state.address){
-      refreshInbox(true);
+    el.textContent = message;
+
+    el.className = "status show " + type;
+}
+
+function hideStatus(){
+
+    $("status").className = "status";
+}
+
+
+/* =========================================================
+   API REQUEST
+========================================================= */
+
+async function apiFetch(
+    endpoint,
+    options = {},
+    requiresAuth = false
+){
+
+    const headers = {
+        "Accept": "application/json",
+        ...(options.headers || {})
+    };
+
+    if(requiresAuth){
+
+        if(!currentAccount.token){
+            throw new Error("Authentication token is missing.");
+        }
+
+        headers["Authorization"] =
+            "Bearer " + currentAccount.token;
     }
 
-  },30000);
+    const response = await fetch(
+        API + endpoint,
+        {
+            ...options,
+            headers
+        }
+    );
 
-});
+    let data = null;
+
+    const contentType =
+        response.headers.get("content-type") || "";
+
+    if(
+        contentType.includes("application/json") ||
+        contentType.includes("application/ld+json")
+    ){
+        try{
+            data = await response.json();
+        }catch(e){
+            data = null;
+        }
+    }
+
+    if(!response.ok){
+
+        let message =
+            `Request failed (${response.status})`;
+
+        if(data){
+
+            if(data.detail){
+                message = data.detail;
+            }
+            else if(data.message){
+                message = data.message;
+            }
+        }
+
+        throw new Error(message);
+    }
+
+    return data;
+}
 
 
-/* =====================================================
-   PROVIDER CHANGE
-===================================================== */
+/* =========================================================
+   LOAD DOMAINS
+========================================================= */
 
-window.providerChanged = async function(){
+async function loadDomains(){
 
-  state.provider = provider.value;
+    const select = $("domainSelect");
 
-  if(state.provider === "catchmail"){
-
-    domainSelect.innerHTML = `
-      <option value="catchmail.io">
-        catchmail.io
-      </option>
+    select.innerHTML = `
+        <option value="">
+            Loading domains...
+        </option>
     `;
 
-    domainLoader.classList.add("hidden");
+    try{
 
-    username.placeholder = "example";
+        /*
+         * Mail.tm exposes domains without authentication.
+         */
 
-  }else{
+        const data =
+            await apiFetch("/domains?page=1");
 
-    username.placeholder = "example";
+        console.log("Mail.tm domain response:", data);
 
-    if(state.mailTmLoadedDomains.length === 0){
+        const list =
+            Array.isArray(data["hydra:member"])
+                ? data["hydra:member"]
+                : [];
 
-      domainSelect.innerHTML =
-        `<option value="">Loading domains...</option>`;
+        domains =
+            list.filter(domain =>
+                domain &&
+                domain.domain &&
+                domain.isActive === true
+            );
 
-      await loadMailTmDomains(true);
+        if(domains.length === 0){
 
-    }else{
+            throw new Error(
+                "Mail.tm returned no active domains."
+            );
+        }
 
-      renderMailTmDomains();
+        select.innerHTML = "";
+
+        domains.forEach(domain => {
+
+            const option =
+                document.createElement("option");
+
+            option.value = domain.domain;
+
+            option.textContent =
+                "@" + domain.domain;
+
+            select.appendChild(option);
+
+        });
+
+        console.log(
+            "Loaded domains:",
+            domains.map(d => d.domain)
+        );
 
     }
+    catch(error){
 
-    domainLoader.classList.remove("hidden");
-  }
+        console.error(
+            "Domain loading error:",
+            error
+        );
 
-  updatePreview();
-};
+        select.innerHTML = `
+            <option value="">
+                Could not load domains
+            </option>
+        `;
+
+        /*
+         * Retry once after a short delay.
+         */
+        setTimeout(() => {
+
+            if(domains.length === 0){
+                loadDomains();
+            }
+
+        }, 5000);
+    }
+}
 
 
-/* =====================================================
-   ADDRESS PREVIEW
-===================================================== */
+/* =========================================================
+   RANDOM GENERATORS
+========================================================= */
 
-window.updatePreview = function(){
+function randomUsername(){
 
-  let name =
-    username.value.trim()
-      .replace
+    const letters =
+        "abcdefghijklmnopqrstuvwxyz";
+
+    let result = "";
+
+    for(let i 
