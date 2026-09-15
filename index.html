@@ -4,1302 +4,237 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0b1020">
-<meta name="description" content="Free disposable temporary email inbox">
-
-<title>CatchMail - Temporary Email</title>
-
+<title>InboxVeil - Temporary Email</title>
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    --bg: #070b14;
-    --card: #10182a;
-    --card2: #131e32;
-    --border: rgba(255,255,255,.08);
-    --text: #ffffff;
-    --muted: #8290a8;
-    --primary: #00cda4;
-    --primary2: #078cf0;
-    --danger: #ff6d8c;
-}
-
-body {
-    min-height: 100vh;
-    background: var(--bg);
-    color: var(--text);
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Arial,
-        sans-serif;
-}
-
-button,
-input {
-    font: inherit;
-}
-
-button {
-    cursor: pointer;
-}
-
-.app {
-    width: 100%;
-    max-width: 900px;
-    min-height: 100vh;
-    margin: auto;
-    background: #0b1020;
-}
-
-/* HEADER */
-
-.header {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 15px 18px;
-
-    background: #10182a;
-    border-bottom: 1px solid var(--border);
-}
-
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-}
-
-.logo {
-    width: 42px;
-    height: 42px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 12px;
-
-    background: linear-gradient(
-        135deg,
-        var(--primary),
-        var(--primary2)
-    );
-
-    color: white;
-    font-size: 21px;
-    font-weight: 900;
-}
-
-.brand-name {
-    font-size: 19px;
-    font-weight: 800;
-}
-
-.brand-sub {
-    margin-top: 2px;
-    color: var(--muted);
-    font-size: 11px;
-}
-
-.refresh-top {
-    width: 42px;
-    height: 42px;
-
-    border: 0;
-    border-radius: 12px;
-
-    background: #18243b;
-    color: white;
-
-    font-size: 21px;
-}
-
-.refresh-top:active {
-    transform: scale(.94);
-}
-
-/* MAIN */
-
-.main {
-    padding: 18px;
-}
-
-/* MAILBOX */
-
-.mailbox {
-    padding: 18px;
-
-    border: 1px solid var(--border);
-    border-radius: 20px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(0,205,164,.12),
-            rgba(7,140,240,.07)
-        );
-}
-
-.label {
-    margin-bottom: 8px;
-
-    color: var(--muted);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: .5px;
-}
-
-.address-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.address {
-    flex: 1;
-    min-width: 0;
-
-    font-size: 18px;
-    font-weight: 800;
-
-    word-break: break-all;
-}
-
-.copy {
-    flex-shrink: 0;
-
-    border: 0;
-    border-radius: 10px;
-
-    padding: 10px 12px;
-
-    background: #1b2941;
-    color: white;
-
-    font-size: 12px;
-    font-weight: 700;
-}
-
-.mailbox-status {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-
-    margin-top: 14px;
-
-    color: var(--muted);
-    font-size: 11px;
-}
-
-.actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 9px;
-
-    margin-top: 15px;
-}
-
-.action {
-    min-height: 48px;
-
-    border: 0;
-    border-radius: 12px;
-
-    background: #17233a;
-    color: white;
-
-    font-size: 13px;
-    font-weight: 700;
-}
-
-.action.primary {
-    background:
-        linear-gradient(
-            135deg,
-            var(--primary),
-            var(--primary2)
-        );
-}
-
-.action.danger {
-    background: #321b28;
-    color: #ff8da7;
-}
-
-.action:active {
-    transform: scale(.98);
-}
-
-/* STATUS */
-
-.status {
-    display: none;
-
-    margin-top: 12px;
-
-    padding: 11px 13px;
-
-    border-radius: 11px;
-
-    background: var(--card2);
-
-    font-size: 12px;
-    line-height: 1.5;
-}
-
-.status.show {
-    display: block;
-}
-
-.status.success {
-    color: #57e8bd;
-}
-
-.status.error {
-    color: #ff829c;
-}
-
-.status.info {
-    color: #aab8cf;
-}
-
-/* INBOX HEADER */
-
-.inbox-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    margin-top: 25px;
-    margin-bottom: 12px;
-}
-
-.inbox-title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
-    font-size: 18px;
-    font-weight: 800;
-}
-
-.badge {
-    min-width: 23px;
-    height: 23px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 0 7px;
-
-    border-radius: 20px;
-
-    background: var(--primary);
-    color: #001710;
-
-    font-size: 11px;
-    font-weight: 900;
-}
-
-.refresh-small {
-    border: 0;
-    border-radius: 9px;
-
-    padding: 8px 11px;
-
-    background: #17233a;
-    color: #d8e0ed;
-
-    font-size: 12px;
-}
-
-/* EMAIL LIST */
-
-.email-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.email {
-    padding: 15px;
-
-    border: 1px solid rgba(255,255,255,.05);
-    border-radius: 15px;
-
-    background: #10192b;
-
-    transition: transform .12s;
-}
-
-.email:active {
-    transform: scale(.99);
-}
-
-.email.unread {
-    border-color: rgba(0,205,164,.2);
-    background: #12263a;
-}
-
-.email-top {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-}
-
-.sender {
-    min-width: 0;
-
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-
-    font-size: 13px;
-    font-weight: 800;
-}
-
-.date {
-    flex-shrink: 0;
-
-    color: #68758e;
-    font-size: 10px;
-}
-
-.subject {
-    margin-top: 7px;
-
-    color: #e0e6ef;
-
-    font-size: 13px;
-    font-weight: 700;
-}
-
-.preview {
-    margin-top: 6px;
-
-    color: #75839c;
-
-    font-size: 12px;
-    line-height: 1.45;
-
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.unread-dot {
-    display: inline-block;
-
-    width: 7px;
-    height: 7px;
-
-    margin-right: 6px;
-
-    border-radius: 50%;
-
-    background: var(--primary);
-}
-
-/* EMPTY */
-
-.empty {
-    padding: 55px 20px;
-
-    text-align: center;
-
-    color: #64728a;
-}
-
-.empty-icon {
-    margin-bottom: 12px;
-    font-size: 42px;
-}
-
-.empty-title {
-    color: #cbd4e2;
-
-    font-size: 15px;
-    font-weight: 700;
-}
-
-.empty-text {
-    max-width: 400px;
-
-    margin: 7px auto 0;
-
-    font-size: 12px;
-    line-height: 1.55;
-}
-
-/* LOADER */
-
-.loader {
-    width: 28px;
-    height: 28px;
-
-    margin: 0 auto 14px;
-
-    border: 3px solid rgba(255,255,255,.1);
-    border-top-color: var(--primary);
-
-    border-radius: 50%;
-
-    animation: spin .8s linear infinite;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-/* MODAL */
-
-.modal {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-
-    display: none;
-    align-items: flex-end;
-    justify-content: center;
-
-    background: rgba(0,0,0,.75);
-    backdrop-filter: blur(5px);
-}
-
-.modal.show {
-    display: flex;
-}
-
-.modal-box {
-    width: 100%;
-    max-width: 900px;
-    max-height: 92vh;
-
-    overflow-y: auto;
-
-    padding: 20px;
-
-    border-radius: 22px 22px 0 0;
-
-    background: #10182a;
-}
-
-.modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    margin-bottom: 18px;
-}
-
-.modal-title {
-    font-size: 18px;
-    font-weight: 800;
-}
-
-.close {
-    width: 38px;
-    height: 38px;
-
-    border: 0;
-    border-radius: 50%;
-
-    background: #1b2840;
-    color: white;
-
-    font-size: 19px;
-}
-
-/* MESSAGE */
-
-.message-meta {
-    padding: 14px;
-
-    border-radius: 14px;
-
-    background: #0b1220;
-}
-
-.meta {
-    display: flex;
-    gap: 10px;
-
-    margin-bottom: 10px;
-}
-
-.meta:last-child {
-    margin-bottom: 0;
-}
-
-.meta-label {
-    width: 55px;
-    flex-shrink: 0;
-
-    color: #69758c;
-    font-size: 11px;
-}
-
-.meta-value {
-    flex: 1;
-
-    color: #dce3ef;
-
-    font-size: 12px;
-
-    word-break: break-word;
-}
-
-.message-body {
-    margin-top: 14px;
-    padding: 16px;
-
-    border-radius: 15px;
-
-    background: #0b1220;
-
-    color: #dce3ef;
-
-    font-size: 14px;
-    line-height: 1.65;
-
-    white-space: pre-wrap;
-    word-break: break-word;
-}
-
-.message-buttons {
-    display: flex;
-    gap: 8px;
-
-    margin-top: 14px;
-}
-
-.message-buttons button {
-    flex: 1;
-
-    min-height: 44px;
-
-    border: 0;
-    border-radius: 11px;
-
-    background: #1b2941;
-    color: white;
-}
-
-/* FOOTER */
-
-.footer {
-    padding: 25px 18px 35px;
-
-    text-align: center;
-
-    color: #59657d;
-
-    font-size: 10px;
-    line-height: 1.6;
-}
-
-.footer a {
-    color: #69dfc4;
-    text-decoration: none;
-}
-
-/* DESKTOP */
-
-@media (min-width: 700px) {
-
-    body {
-        padding: 20px;
-    }
-
-    .app {
-        min-height: calc(100vh - 40px);
-        border-radius: 24px;
-        overflow: hidden;
-
-        box-shadow: 0 30px 80px rgba(0,0,0,.45);
-    }
-
-    .modal {
-        align-items: center;
-    }
-
-    .modal-box {
-        max-width: 650px;
-        border-radius: 22px;
-    }
-}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#070b14;--card:#10182a;--card2:#131e32;--border:rgba(255,255,255,.08);--text:#fff;--muted:#8290a8;--primary:#00cda4;--primary2:#078cf0;--danger:#ff6d8c}
+body{min-height:100vh;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+button,input{font:inherit}button{cursor:pointer}
+.app{width:100%;max-width:900px;min-height:100vh;margin:auto;background:#0b1020}
+.header{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:15px 18px;background:#10182a;border-bottom:1px solid var(--border)}
+.brand{display:flex;align-items:center;gap:11px}
+.logo{width:42px;height:42px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--primary2));color:white;font-size:21px;font-weight:900}
+.brand-name{font-size:19px;font-weight:800}.brand-sub{margin-top:2px;color:var(--muted);font-size:11px}
+.refresh-top{width:42px;height:42px;border:0;border-radius:12px;background:#18243b;color:white;font-size:21px}
+.main{padding:18px}
+.mailbox{padding:18px;border:1px solid var(--border);border-radius:20px;background:linear-gradient(145deg,rgba(0,205,164,.12),rgba(7,140,240,.07))}
+.label{margin-bottom:8px;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.5px}
+.address-row{display:flex;align-items:center;gap:8px}
+.address{flex:1;min-width:0;font-size:18px;font-weight:800;word-break:break-all}
+.copy{flex-shrink:0;border:0;border-radius:10px;padding:10px 12px;background:#1b2941;color:white;font-size:12px;font-weight:700}
+.mailbox-status{display:flex;justify-content:space-between;gap:10px;margin-top:14px;color:var(--muted);font-size:11px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:15px}
+.action{min-height:48px;border:0;border-radius:12px;background:#17233a;color:white;font-size:13px;font-weight:700}
+.action.primary{background:linear-gradient(135deg,var(--primary),var(--primary2))}
+.action.danger{background:#321b28;color:#ff8da7}
+.status{display:none;margin-top:12px;padding:11px 13px;border-radius:11px;background:var(--card2);font-size:12px;line-height:1.5}
+.status.show{display:block}.status.success{color:#57e8bd}.status.error{color:#ff829c}.status.info{color:#aab8cf}
+.inbox-header{display:flex;align-items:center;justify-content:space-between;margin-top:25px;margin-bottom:12px}
+.inbox-title{display:flex;align-items:center;gap:8px;font-size:18px;font-weight:800}
+.badge{min-width:23px;height:23px;display:flex;align-items:center;justify-content:center;padding:0 7px;border-radius:20px;background:var(--primary);color:#001710;font-size:11px;font-weight:900}
+.refresh-small{border:0;border-radius:9px;padding:8px 11px;background:#17233a;color:#d8e0ed;font-size:12px}
+.email-list{display:flex;flex-direction:column;gap:8px}
+.email{padding:15px;border:1px solid rgba(255,255,255,.05);border-radius:15px;background:#10192b}
+.email.unread{border-color:rgba(0,205,164,.2);background:#12263a}
+.email-top{display:flex;justify-content:space-between;gap:10px}
+.sender{min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:13px;font-weight:800}
+.date{flex-shrink:0;color:#68758e;font-size:10px}
+.subject{margin-top:7px;color:#e0e6ef;font-size:13px;font-weight:700}
+.preview{margin-top:6px;color:#75839c;font-size:12px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.unread-dot{display:inline-block;width:7px;height:7px;margin-right:6px;border-radius:50%;background:var(--primary)}
+.empty{padding:55px 20px;text-align:center;color:#64728a}
+.empty-icon{margin-bottom:12px;font-size:42px}.empty-title{color:#cbd4e2;font-size:15px;font-weight:700}.empty-text{max-width:400px;margin:7px auto 0;font-size:12px;line-height:1.55}
+.loader{width:28px;height:28px;margin:0 auto 14px;border:3px solid rgba(255,255,255,.1);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.modal{position:fixed;inset:0;z-index:100;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.75);backdrop-filter:blur(5px)}
+.modal.show{display:flex}
+.modal-box{width:100%;max-width:900px;max-height:92vh;overflow-y:auto;padding:20px;border-radius:22px 22px 0 0;background:#10182a}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.modal-title{font-size:18px;font-weight:800}
+.close{width:38px;height:38px;border:0;border-radius:50%;background:#1b2840;color:white;font-size:19px}
+.message-meta{padding:14px;border-radius:14px;background:#0b1220}
+.meta{display:flex;gap:10px;margin-bottom:10px}.meta-label{width:55px;flex-shrink:0;color:#69758c;font-size:11px}.meta-value{flex:1;color:#dce3ef;font-size:12px;word-break:break-word}
+.message-body{margin-top:14px;padding:16px;border-radius:15px;background:#0b1220;color:#dce3ef;font-size:14px;line-height:1.65;white-space:pre-wrap;word-break:break-word}
+.message-buttons{display:flex;gap:8px;margin-top:14px}.message-buttons button{flex:1;min-height:44px;border:0;border-radius:11px;background:#1b2941;color:white}
+.footer{padding:25px 18px 35px;text-align:center;color:#59657d;font-size:10px;line-height:1.6}.footer a{color:#69dfc4;text-decoration:none}
+@media(min-width:700px){body{padding:20px}.app{min-height:calc(100vh - 40px);border-radius:24px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45)}.modal{align-items:center}.modal-box{max-width:650px;border-radius:22px}}
 </style>
 </head>
-
 <body>
-
 <div class="app">
-
-    <!-- HEADER -->
-
-    <header class="header">
-
-        <div class="brand">
-
-            <div class="logo">@</div>
-
-            <div>
-                <div class="brand-name">
-                    CatchMail
-                </div>
-
-                <div class="brand-sub">
-                    Free temporary email
-                </div>
-            </div>
-
-        </div>
-
-        <button
-            class="refresh-top"
-            onclick="refreshInbox()"
-            aria-label="Refresh inbox">
-            ↻
-        </button>
-
-    </header>
-
-
-    <main class="main">
-
-        <!-- MAILBOX -->
-
-        <section class="mailbox">
-
-            <div class="label">
-                YOUR TEMPORARY EMAIL
-            </div>
-
-            <div class="address-row">
-
-                <div
-                    id="address"
-                    class="address">
-                    Creating email...
-                </div>
-
-                <button
-                    class="copy"
-                    onclick="copyAddress()">
-                    Copy
-                </button>
-
-            </div>
-
-
-            <div class="mailbox-status">
-
-                <span id="accountStatus">
-                    Starting...
-                </span>
-
-                <span id="timer">
-                    Auto refresh: 10s
-                </span>
-
-            </div>
-
-
-            <div class="actions">
-
-                <button
-                    class="action primary"
-                    onclick="newEmail()">
-                    + New Email
-                </button>
-
-                <button
-                    class="action"
-                    onclick="copyAddress()">
-                    Copy Address
-                </button>
-
-                <button
-                    class="action"
-                    onclick="refreshInbox()">
-                    Refresh Inbox
-                </button>
-
-                <button
-                    class="action danger"
-                    onclick="clearMailbox()">
-                    Clear Email
-                </button>
-
-            </div>
-
-
-            <div
-                id="status"
-                class="status">
-            </div>
-
-        </section>
-
-
-        <!-- INBOX -->
-
-        <section>
-
-            <div class="inbox-header">
-
-                <div class="inbox-title">
-
-                    Inbox
-
-                    <span
-                        id="unread"
-                        class="badge">
-                        0
-                    </span>
-
-                </div>
-
-                <button
-                    class="refresh-small"
-                    onclick="refreshInbox()">
-                    Refresh
-                </button>
-
-            </div>
-
-
-            <div
-                id="emailList"
-                class="email-list">
-
-            </div>
-
-        </section>
-
-
-        <footer class="footer">
-
-            Free temporary email powered by
-            <a
-                href="https://catchmail.io/"
-                target="_blank"
-                rel="noopener">
-                Catchmail.io
-            </a>
-
-            <br>
-
-            Messages are provided through the Catchmail API.
-
-        </footer>
-
-    </main>
-
+<header class="header">
+<div class="brand"><div class="logo">@</div><div><div class="brand-name">InboxVeil</div><div class="brand-sub">Free temporary email</div></div></div>
+<button class="refresh-top" onclick="refreshInbox()">↻</button>
+</header>
+<main class="main">
+<section class="mailbox">
+<div class="label">YOUR TEMPORARY EMAIL</div>
+<div class="address-row"><div id="address" class="address">Creating email...</div><button class="copy" onclick="copyAddress()">Copy</button></div>
+<div class="mailbox-status"><span id="accountStatus">Starting...</span><span id="timer">Auto refresh: 10s</span></div>
+<div class="actions">
+<button class="action primary" onclick="newEmail()">+ New Email</button>
+<button class="action" onclick="copyAddress()">Copy Address</button>
+<button class="action" onclick="refreshInbox()">Refresh Inbox</button>
+<button class="action danger" onclick="clearMailbox()">Clear Email</button>
 </div>
-
-
-<!-- MESSAGE MODAL -->
-
-<div
-    id="messageModal"
-    class="modal"
-    onclick="outsideMessage(event)">
-
-    <div class="modal-box">
-
-        <div class="modal-header">
-
-            <div
-                id="messageTitle"
-                class="modal-title">
-                Email
-            </div>
-
-            <button
-                class="close"
-                onclick="closeMessage()">
-                ×
-            </button>
-
-        </div>
-
-
-        <div id="messageContent">
-        </div>
-
-    </div>
-
+<div id="status" class="status"></div>
+</section>
+<section>
+<div class="inbox-header"><div class="inbox-title">Inbox <span id="unread" class="badge">0</span></div><button class="refresh-small" onclick="refreshInbox()">Refresh</button></div>
+<div id="emailList" class="email-list"></div>
+</section>
+<footer class="footer">Free temporary email powered by <a href="https://catchmail.io/" target="_blank">Catchmail.io</a><br>Messages are provided through the Catchmail API.</footer>
+</main>
 </div>
-
-
+<div id="messageModal" class="modal" onclick="outsideMessage(event)">
+<div class="modal-box">
+<div class="modal-header"><div id="messageTitle" class="modal-title">Email</div><button class="close" onclick="closeMessage()">×</button></div>
+<div id="messageContent"></div>
+</div>
+</div>
 <script>
-
-/* =========================================================
-   CATCHMAIL API
-========================================================= */
-
-const API =
-    "https://api.catchmail.io";
-
-
-/* =========================================================
-   STATE
-========================================================= */
-
-let mailbox =
-    localStorage.getItem("catchmail_address");
-
+const API = "https://api.catchmail.io";
+const PROXY = "https://api.codetabs.com/v1/proxy?quest=";
+let mailbox = localStorage.getItem("catchmail_address");
 let messages = [];
-
 let refreshTimer = null;
-
 let seconds = 10;
-
-
-/* =========================================================
-   HELPERS
-========================================================= */
-
-function $(id) {
-    return document.getElementById(id);
+function $(id){return document.getElementById(id)}
+function escapeHTML(v){if(v==null)return"";return String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
+function stripHTML(h){const d=document.createElement("div");d.innerHTML=h;return d.textContent||d.innerText||""}
+function showStatus(t,type="info"){const b=$("status");b.textContent=t;b.className="status show "+type;setTimeout(()=>{b.className="status"},3000)}
+function generateLocalPart(){const l="abcdefghijklmnopqrstuvwxyz";let n="";for(let i=0;i<9;i++){n+=l[Math.floor(Math.random()*l.length)]}return n+Math.floor(100+Math.random()*900)}
+function newEmail(){
+  if(mailbox && !confirm("Create a new temporary email address? Your current address will be replaced.")) return;
+  mailbox=generateLocalPart()+"@catchmail.io";
+  localStorage.setItem("catchmail_address",mailbox);
+  messages=[];
+  $("address").textContent=mailbox;
+  $("accountStatus").textContent="Mailbox ready";
+  $("accountStatus").style.color="#57e8bd";
+  renderEmpty();
+  showStatus("New temporary email created.","success");
+  startAutoRefresh();
+  refreshInbox();
 }
-
-
-function escapeHTML(value) {
-
-    if (
-        value === null ||
-        value === undefined
-    ) {
-        return "";
-    }
-
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+function initialize(){
+  if(!mailbox){
+    mailbox=generateLocalPart()+"@catchmail.io";
+    localStorage.setItem("catchmail_address",mailbox);
+  }
+  $("address").textContent=mailbox;
+  $("accountStatus").textContent="Mailbox ready";
+  $("accountStatus").style.color="#57e8bd";
+  refreshInbox();
+  startAutoRefresh();
 }
-
-
-function stripHTML(html) {
-
-    const div =
-        document.createElement("div");
-
-    div.innerHTML = html;
-
-    return div.textContent ||
-           div.innerText ||
-           "";
+async function refreshInbox(){
+  if(!mailbox) return;
+  $("accountStatus").textContent="Checking inbox...";
+  try{
+    const url = API+"/api/v1/mailbox?address="+encodeURIComponent(mailbox)+"&page=1&page_size=50";
+    const response = await fetch(PROXY+encodeURIComponent(url),{cache:"no-store"});
+    if(!response.ok) throw new Error("HTTP "+response.status);
+    const data = await response.json();
+    messages = Array.isArray(data.messages) ? data.messages : [];
+    $("accountStatus").textContent="Mailbox active";
+    $("accountStatus").style.color="#57e8bd";
+    renderMessages();
+    seconds=10;updateTimer();
+  }catch(error){
+    console.error(error);
+    $("accountStatus").textContent="Connection error";
+    $("accountStatus").style.color="#ff829c";
+    $("emailList").innerHTML=`<div class="empty"><div class="empty-icon">⚠️</div><div class="empty-title">Could not load inbox</div><div class="empty-text">${escapeHTML(error.message)}<br><br>Tap Refresh to try again.</div></div>`;
+  }
 }
-
-
-/* =========================================================
-   STATUS
-========================================================= */
-
-function showStatus(
-    text,
-    type = "info"
-) {
-
-    const box = $("status");
-
-    box.textContent = text;
-
-    box.className =
-        "status show " + type;
+function renderMessages(){
+  const list=$("emailList");
+  if(!messages.length){renderEmpty();$("unread").textContent="0";return;}
+  const readIds=JSON.parse(localStorage.getItem("catchmail_read")||"[]");
+  const unreadMessages=messages.filter(m=>!readIds.includes(String(m.id)));
+  $("unread").textContent=unreadMessages.length;
+  list.innerHTML="";
+  messages.forEach(message=>{
+    const id=String(message.id);
+    const isRead=readIds.includes(id);
+    const item=document.createElement("div");
+    item.className="email"+(isRead?"":" unread");
+    const from=message.from||"Unknown sender";
+    const subject=message.subject||"(No subject)";
+    const date=formatDate(message.date);
+    item.innerHTML=`<div class="email-top"><div class="sender">${isRead?"":'<span class="unread-dot"></span>'}${escapeHTML(from)}</div><div class="date">${escapeHTML(date)}</div></div><div class="subject">${escapeHTML(subject)}</div><div class="preview">Tap to open message</div>`;
+    item.onclick=()=>openMessage(message);
+    list.appendChild(item);
+  });
 }
-
-
-function hideStatus() {
-
-    $("status").className =
-        "status";
+function renderEmpty(){
+  $("emailList").innerHTML=`<div class="empty"><div class="empty-icon">📭</div><div class="empty-title">Your inbox is empty</div><div class="empty-text">Send an email to<br><strong style="color:#aab6ca">${escapeHTML(mailbox)}</strong><br><br>New messages will appear here automatically.</div></div>`;
 }
-
-
-/* =========================================================
-   RANDOM EMAIL
-========================================================= */
-
-function generateLocalPart() {
-
-    const letters =
-        "abcdefghijklmnopqrstuvwxyz";
-
-    let name = "";
-
-    for (
-        let i = 0;
-        i < 9;
-        i++
-    ) {
-
-        name +=
-            letters[
-                Math.floor(
-                    Math.random() *
-                    letters.length
-                )
-            ];
-    }
-
-
-    name +=
-        Math.floor(
-            100 +
-            Math.random() * 900
-        );
-
-
-    return name;
+async function openMessage(message){
+  $("messageTitle").textContent=message.subject||"(No subject)";
+  $("messageContent").innerHTML=`<div class="empty"><div class="loader"></div><div class="empty-title">Loading email...</div></div>`;
+  $("messageModal").classList.add("show");
+  try{
+    const url=API+"/api/v1/message/"+encodeURIComponent(message.id)+"?mailbox="+encodeURIComponent(mailbox);
+    const response=await fetch(PROXY+encodeURIComponent(url),{cache:"no-store"});
+    if(!response.ok) throw new Error("HTTP "+response.status);
+    const full=await response.json();
+    markAsRead(String(message.id));
+    renderFullMessage(full);
+    renderMessages();
+  }catch(error){
+    $("messageContent").innerHTML=`<div class="empty"><div class="empty-icon">⚠️</div><div class="empty-title">Could not open email</div><div class="empty-text">${escapeHTML(error.message)}</div></div>`;
+  }
 }
-
-
-/* =========================================================
-   CREATE NEW EMAIL
-========================================================= */
-
-function newEmail() {
-
-    const confirmed =
-        mailbox
-            ? confirm(
-                "Create a new temporary email address?\n\n" +
-                "Your current address will be replaced."
-            )
-            : true;
-
-    if (!confirmed) {
-        return;
-    }
-
-
-    mailbox =
-        generateLocalPart() +
-        "@catchmail.io";
-
-
-    localStorage.setItem(
-        "catchmail_address",
-        mailbox
-    );
-
-
-    messages = [];
-
-
-    $("address").textContent =
-        mailbox;
-
-
-    $("accountStatus").textContent =
-        "Mailbox ready";
-
-
-    $("accountStatus").style.color =
-        "#57e8bd";
-
-
-    renderEmpty();
-
-
-    showStatus(
-        "New temporary email created.",
-        "success"
-    );
-
-
-    startAutoRefresh();
-
-
-    refreshInbox();
+function markAsRead(id){
+  let readIds=JSON.parse(localStorage.getItem("catchmail_read")||"[]");
+  if(!readIds.includes(id)){readIds.push(id)}
+  if(readIds.length>500){readIds=readIds.slice(-500)}
+  localStorage.setItem("catchmail_read",JSON.stringify(readIds));
 }
-
-
-/* =========================================================
-   INITIALIZE
-========================================================= */
-
-function initialize() {
-
-    if (!mailbox) {
-
-        mailbox =
-            generateLocalPart() +
-            "@catchmail.io";
-
-        localStorage.setItem(
-            "catchmail_address",
-            mailbox
-        );
-
-    }
-
-
-    $("address").textContent =
-        mailbox;
-
-
-    $("accountStatus").textContent =
-        "Mailbox ready";
-
-
-    $("accountStatus").style.color =
-        "#57e8bd";
-
-
-    refreshInbox();
-
-    startAutoRefresh();
+function renderFullMessage(message){
+  const body=message.body||{};
+  const text=body.text||stripHTML(body.html||"")||"This email has no text content.";
+  const from=message.from||"Unknown";
+  let to=Array.isArray(message.to)?message.to.join(", "):mailbox;
+  $("messageContent").innerHTML=`<div class="message-meta"><div class="meta"><div class="meta-label">From</div><div class="meta-value">${escapeHTML(from)}</div></div><div class="meta"><div class="meta-label">To</div><div class="meta-value">${escapeHTML(to)}</div></div><div class="meta"><div class="meta-label">Date</div><div class="meta-value">${escapeHTML(formatDate(message.date))}</div></div><div class="meta"><div class="meta-label">Size</div><div class="meta-value">${escapeHTML(formatSize(message.size))}</div></div></div><div class="message-body">${escapeHTML(text)}</div><div class="message-buttons"><button onclick="copyText(${JSON.stringify(text).replace(/"/g,'&quot;')})">Copy</button><button onclick="deleteMessage('${String(message.id)}')">Delete</button></div>`;
 }
-
-
-/* =========================================================
-   LIST MESSAGES
-========================================================= */
-
-async function refreshInbox() {
-
-    if (!mailbox) {
-        return;
-    }
-
-
-    $("accountStatus").textContent =
-        "Checking inbox...";
-
-
-    try {
-
-        const url =
-            API +
-            "/api/v1/mailbox?address=" +
-            encodeURIComponent(mailbox) +
-            "&page=1&page_size=50";
-
-
-        const response =
-            await fetch(
-                url,
-                {
-                    method: "GET",
-                    headers: {
-                        "Accept": "application/json"
-                    },
-                    cache: "no-store"
-                }
-            );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "HTTP " +
-                response.status
-            );
-
-        }
-
-
-        const data =
-            await response.json();
-
-
-        /*
-         * Catchmail response:
-         *
-         * {
-         *   address,
-         *   page,
-         *   page_size,
-         *   count,
-         *   total,
-         *   messages: []
-         * }
-         */
-
-
-        messages =
-            Array.isArray(data.messages)
-                ? data.messages
-                : [];
-
-
-        $("accountStatus").textContent =
-            "Mailbox active";
-
-
-        $("accountStatus").style.color =
-            "#57e8bd";
-
-
-        renderMessages();
-
-
-        seconds = 10;
-
-        updateTimer();
-
-
-    }
-    catch (error) {
-
-        console.error(
-            "Catchmail error:",
-            error
-        );
-
-
-        $("accountStatus").textContent =
-            "Connection error";
-
-
-        $("accountStatus").style.color =
-            "#ff829c";
-
-
-        $("emailList").innerHTML = `
-
-            <div class="empty">
-
-                <div class="empty-icon">
-                    ⚠️
-                </div>
-
-                <div class="empty-title">
-                    Could not load inbox
-                </div>
-
-                <div class="empty-text">
-                    ${escapeHTML(
-                        error.message
-                    )}
-                    <br><br>
-                    Tap Refresh to try again.
-                </div>
-
-            </div>
-
-        `;
-
-    }
-
+async function deleteMessage(id){
+  if(!confirm("Permanently delete this email?")) return;
+  try{
+    const url=API+"/api/v1/message/"+encodeURIComponent(id)+"?mailbox="+encodeURIComponent(mailbox);
+    const response=await fetch(PROXY+encodeURIComponent(url),{method:"DELETE"});
+    messages=messages.filter(m=>String(m.id)!==String(id));
+    closeMessage();renderMessages();showStatus("Email deleted.","success");
+  }catch(error){showStatus("Could not delete email: "+error.message,"error")}
 }
-
-
-/* =========================================================
-   RENDER MESSAGES
-========================================================= */
-
-function renderMessages() {
-
-    const list =
-        $("emailList");
-
-
-    if (!messages.length) {
-
-        renderEmpty();
-
-        $("unread").textContent =
-            "0";
-
-        return;
-    }
-
-
-    /*
-     * Catchmail's public mailbox endpoint
-     * provides message metadata.
-     *
-     * There isn't a "seen" property in
-     * the documented response, so unread
-     * status is maintained locally.
-     */
-
-    const readIds =
-        JSON.parse(
-            localStorage.getItem(
-                "catchmail_read"
-            ) || "[]"
-        );
-
-
-    const unreadMessages =
-        messages.filter(
-            message =>
-                !readIds.includes(
-                    String(message.id)
-                )
-        );
-
-
-    $("unread").textContent =
-        unreadMessages.length;
-
-
-    list.innerHTML = "";
-
-
-    messages.forEach(message => {
-
-        const id =
-            String(message.id);
-
-
-        const isRead =
-            readIds.includes(id);
-
-
-        const item =
-            document.createElement("div");
-
-
-        item.className =
-            "email" +
-            (isRead ? "" : " unread");
-
-
-        const from =
-            message.from ||
-            "Unknown sender";
-
-
-        const subject =
-            message.subject ||
-            "(No subject)";
-
-
-        const date =
-            formatDate(
-                message.date
-            );
-
-
-        item.innerHTML = `
-
-            <div class="email-top">
-
-                <div class="sender">
-
-          
+function clearMailbox(){
+  if(!confirm("Remove this temporary email from this browser?")) return;
+  localStorage.removeItem("catchmail_address");localStorage.removeItem("catchmail_read");
+  mailbox=null;messages=[];stopAutoRefresh();
+  $("address").textContent="Creating email...";$("accountStatus").textContent="Creating new mailbox...";
+  newEmail();
+}
+async function copyAddress(){
+  if(!mailbox){showStatus("No email address available.","error");return;}
+  const ok=await copyText(mailbox);if(ok) showStatus("Email address copied.","success");
+}
+async function copyText(text){
+  try{
+    if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);return true;}
+    const ta=document.createElement("textarea");ta.value=text;ta.style.position="fixed";ta.style.left="-9999px";document.body.appendChild(ta);ta.focus();ta.select();const ok=document.execCommand("copy");ta.remove();return ok;
+  }catch(e){return false}
+}
+function startAutoRefresh(){stopAutoRefresh();seconds=10;refreshTimer=setInterval(async()=>{seconds--;if(seconds<=0){seconds=10;await refreshInbox()}updateTimer()},1000)}
+function stopAutoRefresh(){if(refreshTimer){clearInterval(refreshTimer);refreshTimer=null}}
+function updateTimer(){$("timer").textContent="Auto refresh: "+seconds+"s"}
+function closeMessage(){$("messageModal").classList.remove("show")}
+function outsideMessage(e){if(e.target===$("messageModal")){closeMessage()}}
+function formatDate(v){if(!v) return "";try{const d=new Date(v);const now=new Date();if(d.toDateString()===now.toDateString()){return d.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})}return d.toLocaleDateString([],{month:"short",day:"numeric"})}catch{return""}}
+function formatSize(b){if(b==null) return "Unknown";const n=Number(b);if(n<1024) return n+" B";if(n<1024*1024) return (n/1024).toFixed(1)+" KB";return (n/(1024*1024)).toFixed(1)+" MB"}
+document.addEventListener("DOMContentLoaded",initialize);
+document.addEventListener("visibilitychange",()=>{if(document.hidden){stopAutoRefresh()}else{refreshInbox();startAutoRefresh()}});
+</script>
+</body>
+</html>
