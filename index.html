@@ -1,117 +1,1222 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>InboxVeil - Free Disposable Email</title>
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{background:linear-gradient(135deg,#05050F 0%,#0A0A1A 100%);color:white;font-family:'Segoe UI', sans-serif;min-height:100vh}
-  .container{max-width:900px;margin:auto;padding:20px}
-  .logo{font-size:24px;font-weight:800;display:flex;gap:12px;align-items:center;padding:20px 0}
-  .logo-box{background:linear-gradient(135deg,#8B5CF6,#EC4899);padding:10px 14px;border-radius:14px;font-size:20px}
-    h1{text-align:center;font-size:32px;margin:10px 0 30px;background:linear-gradient(90deg,#8B5CF6,#EC4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800}
-  .box{background:rgba(15,15,30,0.8);border:1px solid rgba(139,92,246,0.4);border-radius:20px;padding:25px}
-  .input-group{display:flex;gap:10px;margin-bottom:15px}
-  .input{background:#0A0A1A;border:2px solid #8B5CF6;padding:14px;border-radius:12px;color:white;width:100%;font-size:16px}
-  .domain{background:#0A0A1A;border:2px solid #8B5CF6;padding:14px;border-radius:12px;color:#A78BFA;font-weight:bold;white-space:nowrap}
-  .email-display{background:#0A0A1A;border:2px dashed #8B5CF6;padding:15px;border-radius:12px;display:flex;justify-content:space-between;margin:15px 0;word-break:break-all}
-  .btn{background:linear-gradient(90deg,#8B5CF6,#EC4899);border:none;padding:14px;border-radius:12px;color:white;font-weight:bold;width:100%;margin-top:10px;cursor:pointer;font-size:16px}
-  .btn:active{transform:scale(0.98)}
-  .mail{background:#0A0A1A;padding:18px;border-radius:12px;margin-bottom:12px;border-left:4px solid #EC4899}
-  .mail-body{background:#000;padding:14px;border-radius:8px;margin-top:10px;white-space:pre-wrap;word-break:break-all;color:#4ADE80;font-family:'Courier New', monospace}
-  .error{color:#F87171;text-align:center;padding:10px}
-  .loading{text-align:center;padding:10px;color:#A78BFA}
-  .success{color:#4ADE80;text-align:center;padding:10px}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#061019">
+<meta name="description" content="InboxVeil - Temporary email made simple.">
+
+<title>InboxVeil - Temporary Email</title>
+
+<style>
+:root{
+  --bg:#061019;
+  --panel:#0b1721;
+  --panel2:#0f1d28;
+  --panel3:#142531;
+  --primary:#00c2a8;
+  --primary2:#00e0c2;
+  --blue:#1687ff;
+  --text:#f3f8fa;
+  --muted:#8ea3b3;
+  --line:#203340;
+  --danger:#ff5268;
+  --success:#20d69b;
+  --warning:#ffc857;
+  --shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html,body{
+  width:100%;
+  min-height:100%;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+body{
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+button,
+input,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* =========================
+   APP
+========================= */
+
+.app{
+  width:100%;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 10% 0%,rgba(0,194,168,.12),transparent 30%),
+    radial-gradient(circle at 90% 10%,rgba(22,135,255,.12),transparent 28%),
+    var(--bg);
+}
+
+.container{
+  width:min(1100px,100%);
+  margin:auto;
+  padding:20px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+  height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo{
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,var(--primary),var(--blue));
+  color:#031017;
+  font-size:23px;
+  font-weight:900;
+  box-shadow:0 8px 25px rgba(0,194,168,.2);
+}
+
+.brand h1{
+  font-size:21px;
+  letter-spacing:.3px;
+}
+
+.brand span{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  margin-top:2px;
+}
+
+.menu-btn{
+  width:44px;
+  height:44px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--panel);
+  color:white;
+  font-size:21px;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+  padding:45px 0 28px;
+  text-align:center;
+}
+
+.hero h2{
+  font-size:clamp(30px,6vw,52px);
+  line-height:1.05;
+  max-width:750px;
+  margin:auto;
+  letter-spacing:-1.5px;
+}
+
+.hero h2 strong{
+  color:var(--primary);
+}
+
+.hero p{
+  color:var(--muted);
+  max-width:650px;
+  margin:17px auto 0;
+  line-height:1.7;
+}
+
+/* =========================
+   GENERATOR
+========================= */
+
+.generator{
+  background:linear-gradient(145deg,rgba(15,29,40,.96),rgba(8,21,30,.96));
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:22px;
+  box-shadow:var(--shadow);
+}
+
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:17px;
+}
+
+.section-title h3{
+  font-size:16px;
+}
+
+.badge{
+  font-size:11px;
+  color:var(--primary2);
+  border:1px solid rgba(0,194,168,.25);
+  background:rgba(0,194,168,.08);
+  padding:6px 9px;
+  border-radius:999px;
+}
+
+.provider-row{
+  display:grid;
+  grid-template-columns:180px 1fr;
+  gap:12px;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.field label{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.field input,
+.field select{
+  width:100%;
+  height:50px;
+  border:1px solid var(--line);
+  outline:none;
+  border-radius:13px;
+  background:#08151e;
+  color:white;
+  padding:0 14px;
+}
+
+.field input:focus,
+.field select:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 0 3px rgba(0,194,168,.08);
+}
+
+.address-preview{
+  margin-top:15px;
+  padding:15px;
+  border:1px dashed rgba(0,194,168,.3);
+  background:rgba(0,194,168,.04);
+  border-radius:14px;
+  color:var(--primary2);
+  word-break:break-all;
+  font-size:14px;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+
+.btn{
+  min-height:48px;
+  border:0;
+  border-radius:13px;
+  padding:0 18px;
+  font-weight:700;
+  color:white;
+  background:var(--panel3);
+  border:1px solid var(--line);
+}
+
+.btn:hover{
+  filter:brightness(1.1);
+}
+
+.btn-primary{
+  flex:1;
+  background:linear-gradient(135deg,var(--primary),#008fca);
+  color:#031017;
+  border:0;
+}
+
+.btn-blue{
+  background:var(--blue);
+  border:0;
+}
+
+.btn-danger{
+  background:rgba(255,82,104,.1);
+  color:#ff7182;
+  border-color:rgba(255,82,104,.25);
+}
+
+/* =========================
+   MAILBOX
+========================= */
+
+.mailbox{
+  margin-top:22px;
+  border:1px solid var(--line);
+  background:var(--panel);
+  border-radius:22px;
+  overflow:hidden;
+}
+
+.mailbox-head{
+  padding:20px;
+  border-bottom:1px solid var(--line);
+}
+
+.mailbox-address{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.address{
+  font-size:18px;
+  font-weight:700;
+  word-break:break-all;
+  color:white;
+}
+
+.copy-btn{
+  flex-shrink:0;
+  border:1px solid var(--line);
+  background:var(--panel2);
+  color:var(--primary2);
+  border-radius:10px;
+  padding:9px 12px;
+}
+
+.mailbox-tools{
+  display:flex;
+  gap:8px;
+  margin-top:15px;
+  flex-wrap:wrap;
+}
+
+.small-btn{
+  height:38px;
+  border-radius:10px;
+  padding:0 13px;
+  background:var(--panel2);
+  color:white;
+  border:1px solid var(--line);
+}
+
+.status{
+  margin-top:13px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.status-dot{
+  display:inline-block;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--success);
+  margin-right:6px;
+}
+
+/* =========================
+   DOMAIN LOADER
+========================= */
+
+.domain-loader{
+  margin-top:12px;
+}
+
+.load-more{
+  width:100%;
+  min-height:42px;
+}
+
+/* =========================
+   MESSAGES
+========================= */
+
+.messages{
+  min-height:230px;
+}
+
+.empty{
+  min-height:230px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  padding:30px;
+  text-align:center;
+  color:var(--muted);
+}
+
+.empty-icon{
+  width:64px;
+  height:64px;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,194,168,.07);
+  color:var(--primary);
+  font-size:28px;
+  margin-bottom:13px;
+}
+
+.message{
+  display:flex;
+  gap:14px;
+  padding:17px 20px;
+  border-bottom:1px solid rgba(255,255,255,.055);
+  transition:.2s;
+}
+
+.message:hover{
+  background:rgba(255,255,255,.025);
+}
+
+.message-icon{
+  width:44px;
+  height:44px;
+  flex-shrink:0;
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(22,135,255,.12);
+  color:#5fa9ff;
+}
+
+.message-content{
+  min-width:0;
+  flex:1;
+}
+
+.message-top{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.message-from{
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.message-time{
+  color:var(--muted);
+  font-size:11px;
+  white-space:nowrap;
+}
+
+.message-subject{
+  margin-top:5px;
+  font-size:14px;
+  color:#dce7eb;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.message-preview{
+  margin-top:5px;
+  color:var(--muted);
+  font-size:12px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.message.unread{
+  background:rgba(0,194,168,.035);
+}
+
+.unread-dot{
+  width:7px;
+  height:7px;
+  background:var(--primary);
+  border-radius:50%;
+  margin-top:6px;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(8px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+}
+
+.modal-box{
+  width:min(850px,100%);
+  max-height:90vh;
+  background:#091721;
+  border:1px solid var(--line);
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 30px 100px rgba(0,0,0,.55);
+  display:flex;
+  flex-direction:column;
+}
+
+.modal-head{
+  padding:17px 18px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.modal-title{
+  min-width:0;
+}
+
+.modal-title strong{
+  display:block;
+  font-size:16px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.modal-title span{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  margin-top:5px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.close{
+  width:38px;
+  height:38px;
+  border-radius:10px;
+  background:var(--panel2);
+  color:white;
+  border:1px solid var(--line);
+  flex-shrink:0;
+}
+
+.modal-body{
+  overflow:auto;
+  padding:18px;
+}
+
+.email-meta{
+  padding:14px;
+  background:var(--panel2);
+  border-radius:13px;
+  margin-bottom:15px;
+}
+
+.email-meta div{
+  margin:5px 0;
+  font-size:13px;
+  word-break:break-word;
+}
+
+.email-meta b{
+  color:var(--muted);
+  font-weight:500;
+}
+
+.email-frame{
+  width:100%;
+  min-height:350px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:white;
+}
+
+/* =========================
+   SIDE MENU
+========================= */
+
+.drawer-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.5);
+  z-index:150;
+}
+
+.drawer{
+  position:fixed;
+  top:0;
+  right:0;
+  width:min(350px,90%);
+  height:100%;
+  z-index:151;
+  background:#08151e;
+  border-left:1px solid var(--line);
+  padding:22px;
+  transform:translateX(100%);
+  transition:.25s ease;
+}
+
+.drawer.open{
+  transform:translateX(0);
+}
+
+.drawer-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
+}
+
+.drawer-header h3{
+  font-size:18px;
+}
+
+.menu-item{
+  width:100%;
+  text-align:left;
+  padding:15px;
+  border-radius:12px;
+  background:transparent;
+  border:1px solid transparent;
+  color:white;
+  margin-bottom:7px;
+}
+
+.menu-item:hover{
+  background:var(--panel2);
+  border-color:var(--line);
+}
+
+.menu-item small{
+  display:block;
+  color:var(--muted);
+  margin-top:4px;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:25px;
+  transform:translate(-50%,20px);
+  opacity:0;
+  pointer-events:none;
+  z-index:300;
+  background:#10232d;
+  border:1px solid var(--line);
+  padding:12px 17px;
+  border-radius:12px;
+  box-shadow:var(--shadow);
+  transition:.25s;
+  font-size:13px;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+  padding:35px;
+  text-align:center;
+  color:var(--muted);
+}
+
+.spinner{
+  width:28px;
+  height:28px;
+  border:3px solid rgba(255,255,255,.1);
+  border-top-color:var(--primary);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin:0 auto 12px;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+  text-align:center;
+  color:#607583;
+  font-size:11px;
+  padding:30px 10px;
+  line-height:1.7;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:650px){
+
+  .container{
+    padding:12px;
+  }
+
+  .header{
+    height:62px;
+  }
+
+  .hero{
+    padding:32px 7px 22px;
+  }
+
+  .hero h2{
+    font-size:34px;
+  }
+
+  .generator{
+    padding:15px;
+    border-radius:18px;
+  }
+
+  .provider-row{
+    grid-template-columns:1fr;
+  }
+
+  .actions{
+    flex-direction:column;
+  }
+
+  .btn{
+    width:100%;
+  }
+
+  .mailbox-address{
+    align-items:flex-start;
+  }
+
+  .address{
+    font-size:15px;
+  }
+
+  .message{
+    padding:14px;
+  }
+
+  .message-icon{
+    width:38px;
+    height:38px;
+  }
+
+  .message-time{
+    font-size:10px;
+  }
+
+  .modal{
+    padding:0;
+  }
+
+  .modal-box{
+    width:100%;
+    height:100%;
+    max-height:100%;
+    border-radius:0;
+  }
+
+  .email-frame{
+    min-height:450px;
+  }
+}
+</style>
 </head>
+
 <body>
-  <div class="container">
-    <div class="logo"><div class="logo-box">✉️</div> InboxVeil</div>
-    <h1>Free Disposable Email</h1>
-    <div class="box">
-      <div class="input-group">
-        <input type="text" id="customName" class="input" placeholder="type name: tiktok123">
-        <div class="domain">@catchmail.io</div>
-      </div>
-      <button class="btn" onclick="generateEmail()">Generate Email</button>
-      <div class="email-display">
-        <span id="email">Your email will appear here</span>
-        <span onclick="copyEmail()" style="color:#EC4899;cursor:pointer;font-weight:bold">Copy</span>
-      </div>
-      <button class="btn" id="refBtn" onclick="checkInbox()">Refresh Inbox 🔄</button>
-      <div id="status"></div>
-      <div id="inbox"><div style="text-align:center;color:#888;padding:30px">No emails yet</div></div>
+
+<div class="app">
+
+<div class="container">
+
+<header class="header">
+  <div class="brand">
+    <div class="logo">◈</div>
+    <div>
+      <h1>InboxVeil</h1>
+      <span>Private temporary inbox</span>
     </div>
   </div>
 
-<script>
-let address = '';
-const PROXY = 'https://api.codetabs.com/v1/proxy?quest=';
-const API = 'https://api.catchmail.io/api/v1'; // NEW API
+  <button class="menu-btn" onclick="openDrawer()">☰</button>
+</header>
 
-window.onload = function(){
-  let saved = localStorage.getItem('inboxveil_address');
-  if(saved){
-    address = saved;
-    document.getElementById('email').innerText = address;
-    document.getElementById('customName').value = address.split('@')[0];
-  }
-}
 
-function generateEmail(){
-  let name = document.getElementById('customName').value.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
-  if(name === ''){alert('Type a name first!');return;}
-  address = `${name}@catchmail.io`;
-  localStorage.setItem('inboxveil_address', address);
-  document.getElementById('email').innerText = address;
-  document.getElementById('status').innerHTML = '<div class="success">✓ Email ready! Use it now</div>';
-  checkInbox();
-}
+<section class="hero">
+  <h2>
+    Temporary Email<br>
+    <strong>Behind the Veil.</strong>
+  </h2>
 
-async function checkInbox(){
-  if(!address){alert('Generate email first!');return;}
-  document.getElementById('refBtn').innerText = 'Refreshing...';
-  document.getElementById('status').innerHTML = '<div class="loading">Checking for new emails...</div>';
-  try{
-    let url = `${API}/mailbox?address=${address}`;
-    let res = await fetch(PROXY + encodeURIComponent(url));
-    let data = await res.json();
-    
-    let messages = data.messages || []; // NEW: data.messages
-    if(messages.length === 0){
-      document.getElementById('inbox').innerHTML = '<div style="text-align:center;color:#888;padding:30px">No emails yet. Send mail to this address then refresh</div>';
-      document.getElementById('status').innerHTML = '';
-    }else{
-      let html = '';
-      for(let m of messages){
-        // NEW: need to fetch each message body
-        let msgUrl = `${API}/message/${m.id}?mailbox=${address}`;
-        let msgRes = await fetch(PROXY + encodeURIComponent(msgUrl));
-        let msgData = await msgRes.json();
-        
-        html += `<div class="mail">
-          <b>From:</b> ${msgData.from}<br>
-          <b>Subject:</b> ${msgData.subject}<br>
-          <b>Time:</b> ${new Date(msgData.date).toLocaleString()}<br>
-          <div class="mail-body">${msgData.body}</div>
-        </div>`;
-      }
-      document.getElementById('inbox').innerHTML = html;
-      document.getElementById('status').innerHTML = '<div class="success">✓ New mail loaded</div>';
+  <p>
+    Create a temporary inbox, receive emails instantly,
+    and keep your real email address private.
+  </p>
+</section>
+
+
+<section class="generator">
+
+  <div class="section-title">
+    <h3>Create your temporary inbox</h3>
+    <span class="badge">FREE</span>
+  </div>
+
+  <div class="provider-row">
+
+    <div class="field">
+      <label>Email provider</label>
+
+      <select id="provider" onchange="providerChanged()">
+        <option value="mailtm">Mail.tm</option>
+        <option value="catchmail">Catchmail</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Username</label>
+
+      <input
+        id="username"
+        type="text"
+        autocomplete="off"
+        placeholder="example"
+        oninput="updatePreview()"
+      >
+    </div>
+
+  </div>
+
+  <div class="field" style="margin-top:12px;">
+    <label>Domain</label>
+
+    <select id="domainSelect" onchange="updatePreview()">
+      <option value="">Loading domains...</option>
+    </select>
+  </div>
+
+  <div class="address-preview" id="addressPreview">
+    Your temporary address will appear here
+  </div>
+
+  <div class="domain-loader hidden" id="domainLoader">
+    <button
+      class="btn small-btn load-more"
+      id="loadMoreDomains"
+      onclick="loadMoreDomains()"
+    >
+      Load More Domains
+    </button>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="createInbox()">
+      Create Temporary Inbox
+    </button>
+  </div>
+
+</section>
+
+
+<section class="mailbox hidden" id="mailbox">
+
+  <div class="mailbox-head">
+
+    <div class="mailbox-address">
+
+      <div class="address" id="currentAddress">
+        -
+      </div>
+
+      <button class="copy-btn" onclick="copyAddress()">
+        Copy
+      </button>
+
+    </div>
+
+    <div class="mailbox-tools">
+
+      <button class="small-btn" onclick="refreshInbox()">
+        ↻ Refresh
+      </button>
+
+      <button class="small-btn" onclick="newInbox()">
+        + New Inbox
+      </button>
+
+    </div>
+
+    <div class="status" id="status">
+      <span class="status-dot"></span>
+      Ready
+    </div>
+
+  </div>
+
+
+  <div class="messages" id="messages">
+
+    <div class="empty">
+      <div class="empty-icon">✉</div>
+
+      <strong>No messages yet</strong>
+
+      <p style="margin-top:7px;">
+        Emails sent to this address will appear here.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<footer class="footer">
+  InboxVeil is a temporary email interface.<br>
+  Do not use temporary email for sensitive or important accounts.
+</footer>
+
+</div>
+</div>
+
+
+<!-- EMAIL MODAL -->
+
+<div class="modal hidden" id="emailModal">
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <div class="modal-title">
+        <strong id="modalSubject">Message</strong>
+        <span id="modalFrom"></span>
+      </div>
+
+      <button class="close" onclick="closeModal()">×</button>
+
+    </div>
+
+    <div class="modal-body">
+
+      <div class="email-meta">
+
+        <div>
+          <b>From:</b>
+          <span id="metaFrom"></span>
+        </div>
+
+        <div>
+          <b>To:</b>
+          <span id="metaTo"></span>
+        </div>
+
+        <div>
+          <b>Date:</b>
+          <span id="metaDate"></span>
+        </div>
+
+      </div>
+
+      <iframe
+        id="emailFrame"
+        class="email-frame"
+        sandbox="allow-same-origin"
+      ></iframe>
+
+      <div style="display:flex;gap:8px;margin-top:12px;">
+
+        <button
+          class="btn btn-danger"
+          onclick="deleteCurrentMessage()"
+          style="flex:1;"
+        >
+          Delete Message
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- DRAWER -->
+
+<div
+  class="drawer-overlay hidden"
+  id="drawerOverlay"
+  onclick="closeDrawer()"
+></div>
+
+<aside class="drawer" id="drawer">
+
+  <div class="drawer-header">
+    <h3>InboxVeil</h3>
+
+    <button class="close" onclick="closeDrawer()">×</button>
+  </div>
+
+  <button class="menu-item" onclick="newInbox();closeDrawer();">
+    ✉ New Inbox
+    <small>Create another temporary email.</small>
+  </button>
+
+  <button class="menu-item" onclick="copyAddress();closeDrawer();">
+    ⧉ Copy Address
+    <small>Copy your current temporary address.</small>
+  </button>
+
+  <button class="menu-item" onclick="refreshInbox();closeDrawer();">
+    ↻ Refresh Inbox
+    <small>Check for new messages.</small>
+  </button>
+
+  <button class="menu-item" onclick="showAbout();">
+    ℹ About
+    <small>About InboxVeil.</small>
+  </button>
+
+  <button class="menu-item" onclick="showPrivacy();">
+    🔒 Privacy
+    <small>Temporary email privacy information.</small>
+  </button>
+
+  <button class="menu-item" onclick="clearSavedInbox();">
+    🗑 Clear Saved Inbox
+    <small>Remove the locally saved inbox.</small>
+  </button>
+
+</aside>
+
+
+<div class="toast" id="toast"></div>
+
+
+<script type="module">
+
+/* =====================================================
+   API CONFIGURATION
+===================================================== */
+
+const CATCHMAIL_API =
+  "https://api.catchmail.io/api/v1";
+
+const MAILTM_API =
+  "https://api.mail.tm";
+
+
+/* =====================================================
+   APPLICATION STATE
+===================================================== */
+
+const state = {
+
+  provider: "mailtm",
+
+  address: "",
+
+  password: "",
+
+  token: "",
+
+  messages: [],
+
+  currentMessage: null,
+
+  mailTmPage: 1,
+
+  mailTmTotal: 0,
+
+  mailTmLoadedDomains: [],
+
+  mailTmHasNext: true,
+
+  catchmailDomain: "catchmail.io"
+
+};
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const provider =
+  document.getElementById("provider");
+
+const username =
+  document.getElementById("username");
+
+const domainSelect =
+  document.getElementById("domainSelect");
+
+const addressPreview =
+  document.getElementById("addressPreview");
+
+const mailbox =
+  document.getElementById("mailbox");
+
+const currentAddress =
+  document.getElementById("currentAddress");
+
+const messages =
+  document.getElementById("messages");
+
+const status =
+  document.getElementById("status");
+
+const domainLoader =
+  document.getElementById("domainLoader");
+
+const loadMoreDomains =
+  document.getElementById("loadMoreDomains");
+
+const emailModal =
+  document.getElementById("emailModal");
+
+const modalSubject =
+  document.getElementById("modalSubject");
+
+const modalFrom =
+  document.getElementById("modalFrom");
+
+const metaFrom =
+  document.getElementById("metaFrom");
+
+const metaTo =
+  document.getElementById("metaTo");
+
+const metaDate =
+  document.getElementById("metaDate");
+
+const emailFrame =
+  document.getElementById("emailFrame");
+
+
+/* =====================================================
+   INITIALIZATION
+===================================================== */
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+  providerChanged();
+
+  await loadMailTmDomains(true);
+
+  restoreSavedInbox();
+
+  setInterval(() => {
+
+    if(state.address){
+      refreshInbox(true);
     }
-  }catch(e){
-    document.getElementById('status').innerHTML = `<div class="error">Error: ${e.message}. Wait 10s then refresh</div>`;
-  }
-  document.getElementById('refBtn').innerText = 'Refresh Inbox 🔄';
-}
 
-function copyEmail(){
-  if(address){
-    navigator.clipboard.writeText(address);
-    document.getElementById('status').innerHTML = '<div class="success">✓ Copied!</div>';
+  },30000);
+
+});
+
+
+/* =====================================================
+   PROVIDER CHANGE
+===================================================== */
+
+window.providerChanged = async function(){
+
+  state.provider = provider.value;
+
+  if(state.provider === "catchmail"){
+
+    domainSelect.innerHTML = `
+      <option value="catchmail.io">
+        catchmail.io
+      </option>
+    `;
+
+    domainLoader.classList.add("hidden");
+
+    username.placeholder = "example";
+
+  }else{
+
+    username.placeholder = "example";
+
+    if(state.mailTmLoadedDomains.length === 0){
+
+      domainSelect.innerHTML =
+        `<option value="">Loading domains...</option>`;
+
+      await loadMailTmDomains(true);
+
+    }else{
+
+      renderMailTmDomains();
+
+    }
+
+    domainLoader.classList.remove("hidden");
   }
-}
-</script>
-</body>
-</html>
+
+  updatePreview();
+};
+
+
+/* =====================================================
+   ADDRESS PREVIEW
+===================================================== */
+
+window.updatePreview = function(){
+
+  let name =
+    username.value.trim()
+      .replace
