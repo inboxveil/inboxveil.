@@ -3,13 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0b1020">
 <title>InboxVeil - Temporary Email</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#070b14;--card:#10182a;--card2:#131e32;--border:rgba(255,255,255,.08);--text:#fff;--muted:#8290a8;--primary:#00cda4;--primary2:#078cf0;--danger:#ff6d8c}
+:root{--bg:#070b14;--card:#10182a;--card2:#131e32;--border:rgba(255,255,255,.08);--text:#fff;--muted:#8290a8;--primary:#00cda4;--primary2:#078cf0}
 body{min-height:100vh;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
-button,input{font:inherit}button{cursor:pointer}
+button{cursor:pointer;font:inherit}
 .app{width:100%;max-width:900px;min-height:100vh;margin:auto;background:#0b1020}
 .header{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:15px 18px;background:#10182a;border-bottom:1px solid var(--border)}
 .brand{display:flex;align-items:center;gap:11px}
@@ -27,14 +26,14 @@ button,input{font:inherit}button{cursor:pointer}
 .action{min-height:48px;border:0;border-radius:12px;background:#17233a;color:white;font-size:13px;font-weight:700}
 .action.primary{background:linear-gradient(135deg,var(--primary),var(--primary2))}
 .action.danger{background:#321b28;color:#ff8da7}
-.status{display:none;margin-top:12px;padding:11px 13px;border-radius:11px;background:var(--card2);font-size:12px;line-height:1.5}
-.status.show{display:block}.status.success{color:#57e8bd}.status.error{color:#ff829c}.status.info{color:#aab8cf}
+.status{display:none;margin-top:12px;padding:11px 13px;border-radius:11px;background:var(--card2);font-size:12px}
+.status.show{display:block}.status.success{color:#57e8bd}.status.error{color:#ff829c}
 .inbox-header{display:flex;align-items:center;justify-content:space-between;margin-top:25px;margin-bottom:12px}
 .inbox-title{display:flex;align-items:center;gap:8px;font-size:18px;font-weight:800}
 .badge{min-width:23px;height:23px;display:flex;align-items:center;justify-content:center;padding:0 7px;border-radius:20px;background:var(--primary);color:#001710;font-size:11px;font-weight:900}
 .refresh-small{border:0;border-radius:9px;padding:8px 11px;background:#17233a;color:#d8e0ed;font-size:12px}
 .email-list{display:flex;flex-direction:column;gap:8px}
-.email{padding:15px;border:1px solid rgba(255,255,255,.05);border-radius:15px;background:#10192b}
+.email{padding:15px;border:1px solid rgba(255,255,255,.05);border-radius:15px;background:#10192b;cursor:pointer}
 .email.unread{border-color:rgba(0,205,164,.2);background:#12263a}
 .email-top{display:flex;justify-content:space-between;gap:10px}
 .sender{min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:13px;font-weight:800}
@@ -44,7 +43,7 @@ button,input{font:inherit}button{cursor:pointer}
 .unread-dot{display:inline-block;width:7px;height:7px;margin-right:6px;border-radius:50%;background:var(--primary)}
 .empty{padding:55px 20px;text-align:center;color:#64728a}
 .empty-icon{margin-bottom:12px;font-size:42px}.empty-title{color:#cbd4e2;font-size:15px;font-weight:700}.empty-text{max-width:400px;margin:7px auto 0;font-size:12px;line-height:1.55}
-.loader{width:28px;height:28px;margin:0 auto 14px;border:3px solid rgba(255,255,255,.1);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
+.loader{width:28px;height:28px;margin:0 auto 14px;border:3px solid rgba(255,255,255,.1);border-top-color:var(--primary);border-radius:50%;animation:spin.8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .modal{position:fixed;inset:0;z-index:100;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.75);backdrop-filter:blur(5px)}
 .modal.show{display:flex}
@@ -56,8 +55,8 @@ button,input{font:inherit}button{cursor:pointer}
 .meta{display:flex;gap:10px;margin-bottom:10px}.meta-label{width:55px;flex-shrink:0;color:#69758c;font-size:11px}.meta-value{flex:1;color:#dce3ef;font-size:12px;word-break:break-word}
 .message-body{margin-top:14px;padding:16px;border-radius:15px;background:#0b1220;color:#dce3ef;font-size:14px;line-height:1.65;white-space:pre-wrap;word-break:break-word}
 .message-buttons{display:flex;gap:8px;margin-top:14px}.message-buttons button{flex:1;min-height:44px;border:0;border-radius:11px;background:#1b2941;color:white}
-.footer{padding:25px 18px 35px;text-align:center;color:#59657d;font-size:10px;line-height:1.6}.footer a{color:#69dfc4;text-decoration:none}
-@media(min-width:700px){body{padding:20px}.app{min-height:calc(100vh - 40px);border-radius:24px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45)}.modal{align-items:center}.modal-box{max-width:650px;border-radius:22px}}
+.footer{padding:25px 18px 35px;text-align:center;color:#59657d;font-size:10px;line-height:1.6}
+@media(min-width:700px){body{padding:20px}.app{min-height:calc(100vh - 40px);border-radius:24px;overflow:hidden}.modal{align-items:center}.modal-box{max-width:650px;border-radius:22px}}
 </style>
 </head>
 <body>
@@ -73,9 +72,9 @@ button,input{font:inherit}button{cursor:pointer}
 <div class="mailbox-status"><span id="accountStatus">Starting...</span><span id="timer">Auto refresh: 10s</span></div>
 <div class="actions">
 <button class="action primary" onclick="newEmail()">+ New Email</button>
-<button class="action" onclick="copyAddress()">Copy Address</button>
-<button class="action" onclick="refreshInbox()">Refresh Inbox</button>
-<button class="action danger" onclick="clearMailbox()">Clear Email</button>
+<button class="action" onclick="copyAddress()">Copy</button>
+<button class="action" onclick="refreshInbox()">Refresh</button>
+<button class="action danger" onclick="clearMailbox()">Clear</button>
 </div>
 <div id="status" class="status"></div>
 </section>
@@ -83,172 +82,167 @@ button,input{font:inherit}button{cursor:pointer}
 <div class="inbox-header"><div class="inbox-title">Inbox <span id="unread" class="badge">0</span></div><button class="refresh-small" onclick="refreshInbox()">Refresh</button></div>
 <div id="emailList" class="email-list"></div>
 </section>
-<footer class="footer">Free temporary email powered by <a href="https://catchmail.io/" target="_blank">Catchmail.io</a></footer>
 </main>
 </div>
-<div id="messageModal" class="modal" onclick="outsideMessage(event)">
+<div id="messageModal" class="modal" onclick="if(event.target==this)closeMessage()">
 <div class="modal-box">
 <div class="modal-header"><div id="messageTitle" class="modal-title">Email</div><button class="close" onclick="closeMessage()">×</button></div>
 <div id="messageContent"></div>
 </div>
 </div>
 <script>
-const API = "https://api.catchmail.io";
-const PROXIES = [
-  "https://corsproxy.io/?",
-  "https://api.allorigins.win/raw?url=",
-  "https://thingproxy.freeboard.name/fetch/"
-];
-let mailbox = localStorage.getItem("catchmail_address");
+const API = "https://api.mail.tm";
+let mailbox = null;
+let token = null;
+let password = null;
 let messages = [];
 let refreshTimer = null;
 let seconds = 10;
 function $(id){return document.getElementById(id)}
-function escapeHTML(v){if(v==null)return"";return String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
-function stripHTML(h){const d=document.createElement("div");d.innerHTML=h;return d.textContent||d.innerText||""}
-function showStatus(t,type="info"){const b=$("status");b.textContent=t;b.className="status show "+type;setTimeout(()=>{b.className="status"},3500)}
-function generateLocalPart(){const l="abcdefghijklmnopqrstuvwxyz";let n="";for(let i=0;i<9;i++){n+=l[Math.floor(Math.random()*l.length)]}return n+Math.floor(100+Math.random()*900)}
+function escapeHTML(v){if(v==null)return"";return String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function showStatus(t,type="info"){const b=$("status");b.textContent=t;b.className="status show "+type;setTimeout(()=>{b.className="status"},3000)}
+function randStr(len){const c="abcdefghijklmnopqrstuvwxyz0123456789";let s="";for(let i=0;i<len;i++)s+=c[Math.floor(Math.random()*c.length)];return s;}
 
-async function fetchWithProxy(url, options={}){
-  for(let proxy of PROXIES){
-    try{
-      const res = await fetch(proxy+encodeURIComponent(url), {cache:"no-store", ...options});
-      if(res.ok) return res;
-    }catch(e){ continue; }
-  }
-  // last try direct (for local testing)
-  return fetch(url, {cache:"no-store", ...options});
+async function getDomain(){
+  const res = await fetch(API+"/domains");
+  const data = await res.json();
+  return data["hydra:member"][0].domain;
 }
 
-function newEmail(){
-  if(mailbox && !confirm("Create a new temporary email address? Your current address will be replaced.")) return;
-  mailbox=generateLocalPart()+"@catchmail.io";
-  localStorage.setItem("catchmail_address",mailbox);
-  messages=[];
-  $("address").textContent=mailbox;
-  $("accountStatus").textContent="Mailbox ready";
-  $("accountStatus").style.color="#57e8bd";
-  renderEmpty();
-  showStatus("New temporary email created.","success");
-  startAutoRefresh();
-  refreshInbox();
+async function createAccount(){
+  const domain = await getDomain();
+  const local = randStr(10);
+  const address = local+"@"+domain;
+  const pass = randStr(12)+"A1!";
+  const res = await fetch(API+"/accounts",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({address,password:pass})});
+  if(!res.ok) throw new Error("Could not create account");
+  const tokenRes = await fetch(API+"/token",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({address,password:pass})});
+  const tokenData = await tokenRes.json();
+  mailbox=address; password=pass; token=tokenData.token;
+  localStorage.setItem("mailtm_address",address);
+  localStorage.setItem("mailtm_password",pass);
+  localStorage.setItem("mailtm_token",token);
+  return address;
 }
-function initialize(){
-  if(!mailbox){
-    mailbox=generateLocalPart()+"@catchmail.io";
-    localStorage.setItem("catchmail_address",mailbox);
+
+async function initialize(){
+  const savedAddr = localStorage.getItem("mailtm_address");
+  const savedPass = localStorage.getItem("mailtm_password");
+  const savedToken = localStorage.getItem("mailtm_token");
+  if(savedAddr && savedPass && savedToken){
+    mailbox=savedAddr; password=savedPass; token=savedToken;
+    $("address").textContent=mailbox;
+    $("accountStatus").textContent="Mailbox ready";
+    $("accountStatus").style.color="#57e8bd";
+    // verify token still valid
+    try{ await refreshInbox(); }catch{ await newEmail(); }
+  }else{
+    await newEmail();
   }
-  $("address").textContent=mailbox;
-  $("accountStatus").textContent="Mailbox ready";
-  $("accountStatus").style.color="#57e8bd";
-  refreshInbox();
   startAutoRefresh();
 }
+
+async function newEmail(){
+  if(mailbox &&!confirm("Create new email? Current will be replaced.")) return;
+  $("address").textContent="Creating email...";
+  $("accountStatus").textContent="Creating mailbox...";
+  try{
+    await createAccount();
+    $("address").textContent=mailbox;
+    $("accountStatus").textContent="Mailbox ready";
+    $("accountStatus").style.color="#57e8bd";
+    messages=[]; renderEmpty();
+    showStatus("New email created: "+mailbox,"success");
+    await refreshInbox();
+  }catch(e){
+    $("accountStatus").textContent="Failed to create";
+    showStatus(e.message,"error");
+  }
+}
+
 async function refreshInbox(){
-  if(!mailbox) return;
+  if(!mailbox ||!token) return;
   $("accountStatus").textContent="Checking inbox...";
   try{
-    const url = API+"/api/v1/mailbox?address="+encodeURIComponent(mailbox)+"&page=1&page_size=50";
-    const response = await fetchWithProxy(url);
-    const data = await response.json();
-    messages = Array.isArray(data.messages) ? data.messages : [];
-    $("accountStatus").textContent="Mailbox active";
+    const res = await fetch(API+"/messages",{headers:{Authorization:"Bearer "+token}});
+    if(!res.ok) throw new Error("Auth failed - creating new");
+    const data = await res.json();
+    messages = data["hydra:member"] || [];
+    $("accountStatus").textContent="Mailbox active - "+messages.length+" emails";
     $("accountStatus").style.color="#57e8bd";
     renderMessages();
-    seconds=10;updateTimer();
-  }catch(error){
-    console.error(error);
-    $("accountStatus").textContent="Connection error - retrying...";
-    $("accountStatus").style.color="#ff829c";
-    setTimeout(refreshInbox, 3000);
+    seconds=10;
+  }catch(e){
+    console.error(e);
+    if(e.message.includes("Auth failed")){
+      localStorage.clear();
+      await newEmail();
+    }else{
+      $("accountStatus").textContent="Connection error";
+      $("accountStatus").style.color="#ff829c";
+    }
   }
 }
+
 function renderMessages(){
   const list=$("emailList");
-  if(!messages.length){renderEmpty();$("unread").textContent="0";return;}
-  const readIds=JSON.parse(localStorage.getItem("catchmail_read")||"[]");
-  const unreadMessages=messages.filter(m=>!readIds.includes(String(m.id)));
-  $("unread").textContent=unreadMessages.length;
+  const readIds=JSON.parse(localStorage.getItem("mailtm_read")||"[]");
+  const unread = messages.filter(m=>!readIds.includes(m.id)).length;
+  $("unread").textContent=unread;
+  if(!messages.length){renderEmpty();return;}
   list.innerHTML="";
-  messages.forEach(message=>{
-    const id=String(message.id);
-    const isRead=readIds.includes(id);
-    const item=document.createElement("div");
-    item.className="email"+(isRead?"":" unread");
-    const from=message.from||"Unknown sender";
-    const subject=message.subject||"(No subject)";
-    const date=formatDate(message.date);
-    item.innerHTML=`<div class="email-top"><div class="sender">${isRead?"":'<span class="unread-dot"></span>'}${escapeHTML(from)}</div><div class="date">${escapeHTML(date)}</div></div><div class="subject">${escapeHTML(subject)}</div><div class="preview">Tap to open message</div>`;
-    item.onclick=()=>openMessage(message);
-    list.appendChild(item);
+  messages.forEach(m=>{
+    const isRead=readIds.includes(m.id);
+    const div=document.createElement("div");
+    div.className="email"+(isRead?"":" unread");
+    div.innerHTML=`<div class="email-top"><div class="sender">${isRead?"":'<span class="unread-dot"></span>'}${escapeHTML(m.from.address)}</div><div class="date">${escapeHTML(new Date(m.createdAt).toLocaleTimeString())}</div></div><div class="subject">${escapeHTML(m.subject||"(No subject)")}</div><div class="preview">${escapeHTML(m.intro||"Tap to open")}</div>`;
+    div.onclick=()=>openMessage(m);
+    list.appendChild(div);
   });
 }
 function renderEmpty(){
-  $("emailList").innerHTML=`<div class="empty"><div class="empty-icon">📭</div><div class="empty-title">Your inbox is empty</div><div class="empty-text">Send an email to<br><strong style="color:#aab6ca">${escapeHTML(mailbox)}</strong><br><br>New messages will appear here automatically.</div></div>`;
+  $("emailList").innerHTML=`<div class="empty"><div class="empty-icon">📭</div><div class="empty-title">Inbox empty</div><div class="empty-text">Send email to<br><strong style="color:#aab6ca">${escapeHTML(mailbox||"")}</strong><br><br>Code go appear here in 5-10 seconds.</div></div>`;
+  $("unread").textContent="0";
 }
-async function openMessage(message){
-  $("messageTitle").textContent=message.subject||"(No subject)";
-  $("messageContent").innerHTML=`<div class="empty"><div class="loader"></div><div class="empty-title">Loading email...</div></div>`;
+async function openMessage(m){
+  $("messageTitle").textContent=m.subject||"(No subject)";
+  $("messageContent").innerHTML=`<div class="empty"><div class="loader"></div><div class="empty-title">Loading...</div></div>`;
   $("messageModal").classList.add("show");
   try{
-    const url=API+"/api/v1/message/"+encodeURIComponent(message.id)+"?mailbox="+encodeURIComponent(mailbox);
-    const response=await fetchWithProxy(url);
-    const full=await response.json();
-    markAsRead(String(message.id));
-    renderFullMessage(full);
+    const res = await fetch(API+"/messages/"+m.id,{headers:{Authorization:"Bearer "+token}});
+    const full = await res.json();
+    const readIds=JSON.parse(localStorage.getItem("mailtm_read")||"[]");
+    if(!readIds.includes(m.id)){readIds.push(m.id); localStorage.setItem("mailtm_read",JSON.stringify(readIds));}
+    renderFull(full);
     renderMessages();
-  }catch(error){
-    $("messageContent").innerHTML=`<div class="empty"><div class="empty-icon">⚠️</div><div class="empty-title">Could not open email</div><div class="empty-text">${escapeHTML(error.message)}</div></div>`;
+  }catch(e){
+    $("messageContent").innerHTML=`<div class="empty">Failed to load</div>`;
   }
 }
-function markAsRead(id){
-  let readIds=JSON.parse(localStorage.getItem("catchmail_read")||"[]");
-  if(!readIds.includes(id)){readIds.push(id)}
-  if(readIds.length>500){readIds=readIds.slice(-500)}
-  localStorage.setItem("catchmail_read",JSON.stringify(readIds));
-}
-function renderFullMessage(message){
-  const body=message.body||{};
-  const text=body.text||stripHTML(body.html||"")||"This email has no text content.";
-  const from=message.from||"Unknown";
-  let to=Array.isArray(message.to)?message.to.join(", "):mailbox;
-  $("messageContent").innerHTML=`<div class="message-meta"><div class="meta"><div class="meta-label">From</div><div class="meta-value">${escapeHTML(from)}</div></div><div class="meta"><div class="meta-label">To</div><div class="meta-value">${escapeHTML(to)}</div></div><div class="meta"><div class="meta-label">Date</div><div class="meta-value">${escapeHTML(formatDate(message.date))}</div></div></div><div class="message-body">${escapeHTML(text)}</div><div class="message-buttons"><button onclick="copyText('${escapeHTML(text).replace(/'/g,"\\'")}')">Copy</button><button onclick="deleteMessage('${String(message.id)}')">Delete</button></div>`;
+function renderFull(msg){
+  const text = msg.text || msg.html?.replace(/<[^>]*>/g,"") || "No content";
+  $("messageContent").innerHTML=`<div class="message-meta"><div class="meta"><div class="meta-label">From</div><div class="meta-value">${escapeHTML(msg.from.address)}</div></div><div class="meta"><div class="meta-label">Subject</div><div class="meta-value">${escapeHTML(msg.subject)}</div></div></div><div class="message-body">${escapeHTML(text)}</div><div class="message-buttons"><button onclick="navigator.clipboard.writeText('${escapeHTML(text).replace(/'/g,"\\'")}');showStatus('Copied!','success')">Copy Code</button><button onclick="deleteMessage('${msg.id}')">Delete</button></div>`;
 }
 async function deleteMessage(id){
-  if(!confirm("Permanently delete this email?")) return;
-  try{
-    const url=API+"/api/v1/message/"+encodeURIComponent(id)+"?mailbox="+encodeURIComponent(mailbox);
-    await fetchWithProxy(url,{method:"DELETE"});
-    messages=messages.filter(m=>String(m.id)!==String(id));
-    closeMessage();renderMessages();showStatus("Email deleted.","success");
-  }catch(error){showStatus("Could not delete email","error")}
+  if(!confirm("Delete?")) return;
+  await fetch(API+"/messages/"+id,{method:"DELETE",headers:{Authorization:"Bearer "+token}});
+  messages=messages.filter(m=>m.id!==id);
+  closeMessage(); renderMessages(); showStatus("Deleted","success");
 }
 function clearMailbox(){
-  if(!confirm("Remove this temporary email from this browser?")) return;
-  localStorage.removeItem("catchmail_address");localStorage.removeItem("catchmail_read");
-  mailbox=null;messages=[];stopAutoRefresh();
-  $("address").textContent="Creating email...";$("accountStatus").textContent="Creating new mailbox...";
-  newEmail();
+  if(!confirm("Clear this email?")) return;
+  localStorage.clear(); mailbox=null; token=null; messages=[]; stopAutoRefresh();
+  $("address").textContent="Creating..."; newEmail(); startAutoRefresh();
 }
 async function copyAddress(){
-  if(!mailbox){showStatus("No email address available.","error");return;}
-  const ok=await copyText(mailbox);if(ok) showStatus("Email address copied.","success");
+  if(!mailbox) return;
+  await navigator.clipboard.writeText(mailbox);
+  showStatus("Copied: "+mailbox,"success");
 }
-async function copyText(text){
-  try{
-    if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);return true;}
-    const ta=document.createElement("textarea");ta.value=text;ta.style.position="fixed";ta.style.left="-9999px";document.body.appendChild(ta);ta.focus();ta.select();const ok=document.execCommand("copy");ta.remove();return ok;
-  }catch(e){return false}
-}
-function startAutoRefresh(){stopAutoRefresh();seconds=10;refreshTimer=setInterval(async()=>{seconds--;if(seconds<=0){seconds=10;await refreshInbox()}updateTimer()},1000)}
+function startAutoRefresh(){stopAutoRefresh();seconds=10;refreshTimer=setInterval(async()=>{seconds--;if(seconds<=0){seconds=10;await refreshInbox()} $("timer").textContent="Auto refresh: "+seconds+"s";},1000)}
 function stopAutoRefresh(){if(refreshTimer){clearInterval(refreshTimer);refreshTimer=null}}
-function updateTimer(){$("timer").textContent="Auto refresh: "+seconds+"s"}
 function closeMessage(){$("messageModal").classList.remove("show")}
-function outsideMessage(e){if(e.target===$("messageModal")){closeMessage()}}
-function formatDate(v){if(!v) return "";try{const d=new Date(v);const now=new Date();if(d.toDateString()===now.toDateString()){return d.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})}return d.toLocaleDateString([],{month:"short",day:"numeric"})}catch{return""}}
-function formatSize(b){if(b==null) return "Unknown";const n=Number(b);if(n<1024) return n+" B";if(n<1024*1024) return (n/1024).toFixed(1)+" KB";return (n/(1024*1024)).toFixed(1)+" MB"}
 document.addEventListener("DOMContentLoaded",initialize);
-document.addEventListener("visibilitychange",()=>{if(document.hidden){stopAutoRefresh()}else{refreshInbox();startAutoRefresh()}});
 </script>
 </body>
 </html>
